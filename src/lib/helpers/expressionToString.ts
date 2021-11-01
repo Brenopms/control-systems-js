@@ -1,3 +1,10 @@
+const shouldAddNumberToExpression = (num: number, expressionLength: number, index: number) =>
+  index < expressionLength && Math.abs(num) !== 1;
+
+const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 0;
+const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 1;
+const shouldAddOperationSignalToExpression = (num: number, index: number) => index !== 0 || (index == 0 && num < 0);
+
 /**
  * Accepts a polynomial expression and return a string formatted
  * @param expr
@@ -9,13 +16,6 @@
  */
 export const expressionToString = (expr: number[], variable = 's'): string => {
   let stringExpression = '';
-
-  const shouldAddNumberToExpression = (num: number, expressionLength: number, index: number) =>
-    index < expressionLength && Math.abs(num) !== 1;
-  const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 0;
-  const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 1;
-  const shouldAddOperationSignalToExpression = (num: number, index: number) => index !== 0 || (index == 0 && num < 0);
-
   expr.forEach((num, index) => {
     if (Math.abs(num) > 0) {
       if (shouldAddOperationSignalToExpression(num, index)) {
