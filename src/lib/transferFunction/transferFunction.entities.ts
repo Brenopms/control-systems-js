@@ -1,5 +1,5 @@
 export type TransferFunctionInput = [number[], number[]];
-export interface TransferFunction {
+export interface Expression {
   numerator: number[];
   denominator: number[];
 }

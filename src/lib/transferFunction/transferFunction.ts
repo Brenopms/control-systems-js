@@ -1,9 +1,9 @@
 import { expressionToString } from '../helpers/expressionToString';
 
-import { TransferFunction, TransferFunctionInput } from './control.entities';
+import { Expression, TransferFunctionInput } from './transferFunction.entities';
 
-export class Control {
-  private readonly tf: TransferFunction;
+export class TransferFunction {
+  private readonly tf: Expression;
 
   constructor(transferFunctionInput: TransferFunctionInput) {
     this.validateTransferFunctionInput(transferFunctionInput);
@@ -29,3 +29,5 @@ export class Control {
     return `${numeratorString} / ${denominatorString}`;
   }
 }
+
+// https://wiki.octave.org/Control_package
