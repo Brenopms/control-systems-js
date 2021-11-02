@@ -18,8 +18,10 @@ export class TransferFunction {
       throw new Error('Please input a valid transfer function');
     }
 
-    if (input[1]?.length > input[0]?.length) {
-      throw new Error('The package only accepts transfer functions where the denominator is not a higher order');
+    if (input[0]?.length > input[0]?.length) {
+      throw new Error(
+        'The package only accepts transfer functions where the denominator is a higher order than the numerator'
+      );
     }
   }
 
