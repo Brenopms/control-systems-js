@@ -60,7 +60,21 @@ export class NewtonRaphson implements INewtonRaphson {
     return roots?.map((root) => complex(root.format(precision)));
   }
 
-  private findRootGuesses(fn: EvalFunction, variable: string, minValue: number, maxValue: number, step = 10e-3) {
+  private findRootGuesses({
+    fn,
+    fnOrder,
+    variable,
+    minValue,
+    maxValue,
+    step = 10e-3,
+  }: {
+    fn: EvalFunction;
+    fnOrder: number;
+    variable: string;
+    minValue: number;
+    maxValue: number;
+    step?: number;
+  }): number[] {
     const results = [];
     const crossZeroValues = [];
     let pointer = minValue;
@@ -76,17 +90,31 @@ export class NewtonRaphson implements INewtonRaphson {
 
       index += 1;
     }
+
+    // TODO: expand search to find roots instead of throwing error
+    if (crossZeroValues.length !== fnOrder) {
+      throw new Error('Could not find all root guesses for given function');
+    }
+
     return crossZeroValues;
   }
 
   findRoots(variable = 's', tolerance = DEFAULT_TOLERANCE): Complex[] {
     const { fun, derivativeFun } = this.getEvalFunctions(this.funExpression, variable);
-    const initialValue = -5;
 
-    const roots = this.findRoot(fun, derivativeFun, { variable, initialValue, tolerance });
-    const rootsWithPrecision = this.setRootsPrecision([roots], DEFAULT_PRECISION);
-    console.log(this.functionOrder);
-    console.log(this.findRootGuesses(fun, variable, -5, 5));
+    const rootGuesses = this.findRootGuesses({
+      fn: fun,
+      fnOrder: this.functionOrder,
+      variable,
+      minValue: -5,
+      maxValue: 5,
+    });
+
+    const roots = rootGuesses?.map((guess) =>
+      this.findRoot(fun, derivativeFun, { variable, initialValue: guess, tolerance })
+    );
+
+    const rootsWithPrecision = this.setRootsPrecision(roots, DEFAULT_PRECISION);
     return rootsWithPrecision;
   }
 }
