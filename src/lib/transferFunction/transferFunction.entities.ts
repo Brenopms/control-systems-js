@@ -1,7 +1,17 @@
-export type TransferFunctionInput = [number[], number[]];
+import { Complex } from 'mathjs';
+
+export interface ComplexNumber {
+  re: number;
+  im: number;
+}
+export interface TransferFunctionInput {
+  numerator: ComplexNumber[];
+  denominator: ComplexNumber[];
+}
+
 export interface Expression {
-  numerator: number[];
-  denominator: number[];
+  numerator: Complex[];
+  denominator: Complex[];
 }
 
 export interface ChartOptions {
@@ -35,11 +45,16 @@ export interface RootLocusOutput {
   realAndImaginary: ChartOutput;
 }
 
-export interface ComplexNumber {
-  re: number;
-  im: number;
-}
-
+/**
+ * Transfer function interface.
+ * 
+ * @example
+ * const tf = new TransferFunction({
+ *  numerator: [{ re: 1, im: 1 }, { re: -2, im: 0 }],
+ *  denominator: [{ re: 1, im: 0 }, { re: -2, im: 0 }, { re: -3, im: 0 }],
+ * });
+});
+ */
 export interface ITransferFunction {
   /****************************
    *
@@ -51,9 +66,12 @@ export interface ITransferFunction {
    * Return the transfer function expression in a string format
    *
    * @example
-   * const tf = new TransferFunction([[-1, -2, 3], [1, -2]])
+   * const tf = new TransferFunction({
+   *  numerator: [{ re: 1, im: 1 }, { re: -2, im: 0 }],
+   *  denominator: [{ re: 1, im: 0 }, { re: -2, im: 0 }, { re: -3, im: 0 }],
+   * });
    * console.log(tf.toString())
-   * // Output: -s^2 - 2s + 3 / s - 2
+   * // Output: -(1 + i)s - 2 / s^2 - 2s - 3
    */
   toString(): string;
 
@@ -63,7 +81,10 @@ export interface ITransferFunction {
    * @param options
    * @alias tfdata
    * @example
-   * const tf = new TransferFunction([[-1, -2, 3], [1, -2]])
+   * const tf = new TransferFunction({
+   *  numerator: [{ re: 1, im: 1 }, { re: -2, im: 0 }],
+   *  denominator: [{ re: 1, im: 0 }, { re: -2, im: 0 }, { re: -3, im: 0 }],
+   * });
    * console.log(tf.getExpression())
    * // Output: { numerator: [-1, -2, 3], denominator: [1, -2] }
    */
@@ -132,7 +153,7 @@ export interface ITransferFunction {
    *
    * @alias pole
    */
-  pole(): ComplexNumber[];
+  pole(): Complex[];
 
   /**
    * Calculates the zeros of a dynamic system model. Meaning, the values that will make the system
@@ -140,7 +161,7 @@ export interface ITransferFunction {
    *
    * @alias zero
    */
-  zero(): ComplexNumber[];
+  zero(): Complex[];
 
   /****************************
    *

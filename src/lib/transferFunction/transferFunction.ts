@@ -1,5 +1,6 @@
 import { complex, Complex } from 'mathjs';
 
+import { expressionToString } from '../helpers/expressionToString';
 import { DurandKerner } from '../math/rootFinding/implementations/durandKerner';
 
 import { ComplexNumber, Expression, TransferFunctionInput } from './transferFunction.entities';
@@ -49,10 +50,9 @@ export class TransferFunction {
   };
 
   toString(): string {
-    /*     const numeratorString = expressionToString(this.tf.numerator as);
+    const numeratorString = expressionToString(this.tf.numerator);
     const denominatorString = expressionToString(this.tf.denominator);
-    return `${numeratorString} / ${denominatorString}`; */
-    return 'a';
+    return `${numeratorString} / ${denominatorString}`;
   }
 
   pole() {
