@@ -12,7 +12,8 @@ module.exports = {
     '/node_modules/',
     'types\\.ts',
     'index\\.ts',
-    '.+\\.d\\.ts'
+    '.+\\.d\\.ts',
+    '/build/'
   ],
   clearMocks: true,
   roots: ['<rootDir>'],
