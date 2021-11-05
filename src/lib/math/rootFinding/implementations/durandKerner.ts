@@ -1,12 +1,14 @@
 import { abs, add, Complex, complex, divide, multiply, round, subtract } from 'mathjs';
 
+import { IRootFinding } from '../rootFinding';
+
 const COMPLEX_ONE = complex(1, 0);
 
 /**
  * Implementation of a root finding algorithm.
  * Based on Dr. John B. Matthews's [Java implementation](https://sites.google.com/site/drjohnbmatthews/polyroots/source)
  */
-export class DurandKerner {
+export class DurandKerner implements IRootFinding {
   /**
    * Monic form of passed coefficients
    */
@@ -26,7 +28,7 @@ export class DurandKerner {
   private toMonicForm = (coefficients: Complex[]) => {
     let monicCoefficients = [...coefficients];
     if (!coefficients[0].equals(COMPLEX_ONE)) {
-      monicCoefficients = coefficients.map((coefficient) => divide(coefficient, this.coefficients[0]) as Complex);
+      monicCoefficients = coefficients.map((coefficient) => divide(coefficient, coefficients[0]) as Complex);
     }
 
     return monicCoefficients;
@@ -94,6 +96,7 @@ export class DurandKerner {
    * @param tolerance
    */
   private calculateRoots(
+    coefficients: Complex[],
     initialRoots: Complex[],
     initialResult: Complex,
     maxIterations: number,
@@ -114,7 +117,9 @@ export class DurandKerner {
           }
         }
 
-        a1[i] = subtract(a0[i], divide(this.evalPolynomial(this.coefficients, a0[i]), result)) as Complex;
+        // fixed point iteration
+        // x_(n+1) = x_n - f(x_n)/(x_n - q)(x_n-r)(x_n - p)...
+        a1[i] = subtract(a0[i], divide(this.evalPolynomial(coefficients, a0[i]), result)) as Complex;
       }
 
       iterCount += 1;
@@ -150,7 +155,7 @@ export class DurandKerner {
 
     const initialResult = complex(0.4, 0.9);
     const initialRoots: Complex[] = this.generateInitialRootGuess(this.coefficients.length, initialResult);
-    const roots = this.calculateRoots(initialRoots, initialResult, maxIterations, tolerance);
+    const roots = this.calculateRoots(this.coefficients, initialRoots, initialResult, maxIterations, tolerance);
     const rootsWithPrecision = this.setRootsPrecision(roots, precision);
     return rootsWithPrecision;
   }
