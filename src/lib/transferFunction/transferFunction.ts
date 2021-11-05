@@ -25,7 +25,7 @@ export class TransferFunction {
     }
   }
 
-  public toString(): string {
+  toString(): string {
     const numeratorString = expressionToString(this.tf.numerator);
     const denominatorString = expressionToString(this.tf.denominator);
     return `${numeratorString} / ${denominatorString}`;

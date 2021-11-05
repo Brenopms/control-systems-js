@@ -66,11 +66,11 @@ export class DurandKerner implements IRootFinding {
    * @param value
    */
   private evalPolynomial(coefficients: Complex[], value: Complex): Complex {
-    // change to reduce
-    let result = coefficients[0];
-    for (let i = 1; i < coefficients.length; i++) {
-      result = add(multiply(result, value), coefficients[i]) as Complex;
-    }
+    // Slice(1) to start from index 1 the reduce function
+    const result: Complex = coefficients.slice(1).reduce((prev, curr) => {
+      return add(multiply(prev, value), curr) as Complex;
+    }, coefficients[0]);
+
     return result;
   }
 
