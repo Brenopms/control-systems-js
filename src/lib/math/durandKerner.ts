@@ -1,4 +1,4 @@
-import { abs, add, Complex, complex, divide, multiply, subtract } from 'mathjs';
+import { abs, add, Complex, complex, divide, multiply, round, subtract } from 'mathjs';
 
 const COMPLEX_ONE = complex(1, 0);
 
@@ -25,23 +25,24 @@ export class DurandKerner {
     return monicCoefficients;
   };
 
-  private hasConverged(valuesA: Complex[], valuesB: Complex[], tolerance: number) {
+  private hasConverged(valuesA: Complex[], valuesB: Complex[], tolerance: number): boolean {
     for (const [index, a] of valuesA.entries()) {
       const b = valuesB[index];
+
       if (!a || !b) {
         return false;
       }
 
       const delta = subtract(a, b) as Complex;
-      //console.log({ a, b, delta });
       if (!(abs(delta.re) < tolerance) || !(abs(delta.im) < tolerance)) {
         return false;
       }
     }
+
     return true;
   }
 
-  private evalPolynomial(coefficients: Complex[], value: Complex) {
+  private evalPolynomial(coefficients: Complex[], value: Complex): Complex {
     // change to reduce
     let result = coefficients[0];
     for (let i = 1; i < coefficients.length; i++) {
@@ -50,7 +51,7 @@ export class DurandKerner {
     return result;
   }
 
-  private generateInitialGuess(polynomialOrder: number, initialResult: Complex = complex(0.4, 0.9)) {
+  private generateInitialRootGuess(polynomialOrder: number, initialResult: Complex = complex(0.4, 0.9)): Complex[] {
     const initialGuess = [];
     initialGuess.push(COMPLEX_ONE);
     for (let i = 1; i < polynomialOrder - 1; i++) {
@@ -59,15 +60,16 @@ export class DurandKerner {
     return initialGuess;
   }
 
-  findRoots(maxIterations = 20 * Math.pow(this.coefficients?.length, 2), tolerance = 10e-6) {
-    if (this.coefficients.length === 0) {
-      return [];
-    }
+  private calculateRoots(
+    initialRoots: Complex[],
+    initialResult: Complex,
+    maxIterations: number,
+    tolerance: number
+  ): Complex[] {
+    let a0 = [...initialRoots];
+    const a1 = [];
 
-    let result = complex(0.4, 0.9);
-    let a0: Complex[] = this.generateInitialGuess(this.coefficients.length, result);
-    const a1: Complex[] = [];
-
+    let result = initialResult;
     let iterCount = 0;
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -89,15 +91,21 @@ export class DurandKerner {
 
       a0 = [...a1];
     }
-
     return a1;
   }
-}
+  private setRootsPrecision(roots: Complex[], precision: number): Complex[] {
+    return roots?.map((root) => complex(round(root.re, precision), round(root.im, precision)));
+  }
 
-/* Iterations: 1
-a0: 
-1.0 + 0.0i
-0.4 + 0.9i
-a1: 
-1.0 + 0.0i
-2.0 - 2.220446049250313E-16i */
+  findRoots(maxIterations = 20 * Math.pow(this.coefficients?.length, 2), precision = 6, tolerance = 10e-6) {
+    if (this.coefficients.length === 0) {
+      return [];
+    }
+
+    const initialResult = complex(0.4, 0.9);
+    const initialRoots: Complex[] = this.generateInitialRootGuess(this.coefficients.length, initialResult);
+    const roots = this.calculateRoots(initialRoots, initialResult, maxIterations, tolerance);
+    const rootsWithPrecision = this.setRootsPrecision(roots, precision);
+    return rootsWithPrecision;
+  }
+}
