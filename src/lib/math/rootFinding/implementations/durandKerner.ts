@@ -27,7 +27,7 @@ export class DurandKerner implements IRootFinding {
    */
   private toMonicForm = (coefficients: Complex[]) => {
     let monicCoefficients = [...coefficients];
-    if (!coefficients[0].equals(COMPLEX_ONE)) {
+    if (coefficients[0] && !coefficients[0].equals(COMPLEX_ONE)) {
       monicCoefficients = coefficients.map((coefficient) => divide(coefficient, coefficients[0]) as Complex);
     }
 
