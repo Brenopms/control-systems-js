@@ -2,7 +2,9 @@ import { abs, add, Complex, complex, divide, multiply, round, subtract } from 'm
 
 const COMPLEX_ONE = complex(1, 0);
 
-// Inspired by https://sites.google.com/site/drjohnbmatthews/polyroots/source
+/**
+ * Implementation of a root finding algorithm. Based on Dr. John B. Matthews [Java implementation](https://sites.google.com/site/drjohnbmatthews/polyroots/source)
+ */
 export class DurandKerner {
   /**
    * Monic form of passed coefficients
@@ -25,6 +27,13 @@ export class DurandKerner {
     return monicCoefficients;
   };
 
+  /**
+   * Check if the arrays have converged, meaning that the delta for each value inside both arrays
+   * are less than the tolerance passed
+   * @param valuesA
+   * @param valuesB
+   * @param tolerance
+   */
   private hasConverged(valuesA: Complex[], valuesB: Complex[], tolerance: number): boolean {
     for (const [index, a] of valuesA.entries()) {
       const b = valuesB[index];
@@ -33,6 +42,7 @@ export class DurandKerner {
         return false;
       }
 
+      // Check if difference between both values are within the tolerance
       const delta = subtract(a, b) as Complex;
       if (!(abs(delta.re) < tolerance) || !(abs(delta.im) < tolerance)) {
         return false;
@@ -42,6 +52,12 @@ export class DurandKerner {
     return true;
   }
 
+  /**
+   * Evaluates polynomial according to a given value.
+   * It uses the [Horner's method](https://en.wikipedia.org/wiki/Horner%27s_method) for evaluation
+   * @param coefficients
+   * @param value
+   */
   private evalPolynomial(coefficients: Complex[], value: Complex): Complex {
     // change to reduce
     let result = coefficients[0];
@@ -51,6 +67,11 @@ export class DurandKerner {
     return result;
   }
 
+  /**
+   * Creates an array with the initial root guesses
+   * @param polynomialOrder
+   * @param initialResult
+   */
   private generateInitialRootGuess(polynomialOrder: number, initialResult: Complex = complex(0.4, 0.9)): Complex[] {
     const initialGuess = [];
     initialGuess.push(COMPLEX_ONE);
@@ -60,6 +81,13 @@ export class DurandKerner {
     return initialGuess;
   }
 
+  /**
+   * Calculates the roots of a polynomial
+   * @param initialRoots
+   * @param initialResult
+   * @param maxIterations
+   * @param tolerance
+   */
   private calculateRoots(
     initialRoots: Complex[],
     initialResult: Complex,
@@ -93,10 +121,23 @@ export class DurandKerner {
     }
     return a1;
   }
+
+  /**
+   * Applies the precision to each calculated root
+   * @param roots
+   * @param precision
+   */
   private setRootsPrecision(roots: Complex[], precision: number): Complex[] {
     return roots?.map((root) => complex(round(root.re, precision), round(root.im, precision)));
   }
 
+  /**
+   * Find all the roots from a polynomial. It applies the Durand–Kerner (or Weierstrass) method.
+   * The array should have the highest order coefficient first.
+   * @param maxIterations
+   * @param precision
+   * @param tolerance
+   */
   findRoots(maxIterations = 20 * Math.pow(this.coefficients?.length, 2), precision = 6, tolerance = 10e-6) {
     if (this.coefficients.length === 0) {
       return [];
