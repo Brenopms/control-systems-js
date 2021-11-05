@@ -79,7 +79,7 @@ export class DurandKerner implements IRootFinding {
    * @param polynomialOrder
    * @param initialResult
    */
-  private generateInitialRootGuess(polynomialOrder: number, initialResult: Complex = complex(0.4, 0.9)): Complex[] {
+  private generateInitialRootGuess(polynomialOrder: number, initialResult: Complex): Complex[] {
     const initialGuess = [];
     initialGuess.push(COMPLEX_ONE);
     for (let i = 1; i < polynomialOrder - 1; i++) {
