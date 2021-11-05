@@ -13,22 +13,23 @@ export class TransferFunction {
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
 
-  constructor(transferFunctionInput: TransferFunctionInput) {
+  constructor(transferFunctionInput: TransferFunctionInput, _timeDelay = 0) {
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
-      numerator: transferFunctionInput[0].map((coefficient) => this.complexNumberToComplex(coefficient)),
-      denominator: transferFunctionInput[1].map((coefficient) => this.complexNumberToComplex(coefficient)),
+      numerator: this.complexNumberArrayToComplex(transferFunctionInput.numerator),
+      denominator: this.complexNumberArrayToComplex(transferFunctionInput.denominator),
     };
 
     this.zeros = this.calculateRoots(this.tf.numerator);
     this.poles = this.calculateRoots(this.tf.denominator);
   }
+
   private validateTransferFunctionInput(input: TransferFunctionInput): void {
-    if (!input || !input[0] || !input[1]) {
+    if (!input || !input.numerator || !input.denominator) {
       throw new Error('Please input a valid transfer function');
     }
 
-    if (input[0]?.length > input[0]?.length) {
+    if (input.numerator?.length > input.denominator?.length) {
       throw new Error(
         'The package only accepts transfer functions where the denominator is a higher order than the numerator'
       );
@@ -37,6 +38,10 @@ export class TransferFunction {
 
   private complexNumberToComplex(complexNumber: ComplexNumber): Complex {
     return complex(complexNumber.re, complexNumber.im);
+  }
+
+  private complexNumberArrayToComplex(complexArray: ComplexNumber[]): Complex[] {
+    return complexArray.map((num) => this.complexNumberToComplex(num));
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
