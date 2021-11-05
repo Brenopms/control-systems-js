@@ -18,4 +18,5 @@ module.exports = {
   clearMocks: true,
   roots: ['<rootDir>'],
   modulePaths: ['<rootDir>'],
+  injectGlobals: false
 }
