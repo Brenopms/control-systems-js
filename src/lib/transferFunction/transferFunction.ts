@@ -3,13 +3,13 @@ import { complex, Complex } from 'mathjs';
 import { expressionToString } from '../helpers/expressionToString';
 import { DurandKerner } from '../math/rootFinding/implementations/durandKerner';
 
-import { ComplexNumber, Expression, TransferFunctionInput } from './transferFunction.entities';
+import { ComplexNumber, Expression, ITransferFunction, TransferFunctionInput } from './transferFunction.entities';
 
 const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
 const TOLERANCE = 10e-7;
 
-export class TransferFunction {
+export class TransferFunction implements Partial<ITransferFunction> {
   private readonly tf: Expression;
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
@@ -53,6 +53,10 @@ export class TransferFunction {
     const numeratorString = expressionToString(this.tf.numerator);
     const denominatorString = expressionToString(this.tf.denominator);
     return `${numeratorString} / ${denominatorString}`;
+  }
+
+  getExpression() {
+    return this.tf;
   }
 
   pole() {
