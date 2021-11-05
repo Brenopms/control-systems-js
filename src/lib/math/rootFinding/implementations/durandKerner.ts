@@ -14,8 +14,8 @@ export class DurandKerner implements IRootFinding {
    */
   private readonly coefficients: Complex[];
   constructor(coefficients: Complex[]) {
-    if (!coefficients) {
-      throw new Error('Missing coefficients');
+    if (!coefficients || !Array.isArray(coefficients)) {
+      throw new Error('Missing or invalid coefficients');
     }
 
     this.coefficients = this.toMonicForm(coefficients);
@@ -44,10 +44,6 @@ export class DurandKerner implements IRootFinding {
   private hasConverged(valuesA: Complex[], valuesB: Complex[], tolerance: number): boolean {
     for (const [index, a] of valuesA.entries()) {
       const b = valuesB[index];
-
-      if (!a || !b) {
-        return false;
-      }
 
       // Check if difference between both values are within the tolerance
       const delta = subtract(a, b) as Complex;
@@ -138,7 +134,7 @@ export class DurandKerner implements IRootFinding {
    * @param precision
    */
   private setRootsPrecision(roots: Complex[], precision: number): Complex[] {
-    return roots?.map((root) => complex(round(root.re, precision), round(root.im, precision)));
+    return roots.map((root) => complex(round(root.re, precision), round(root.im, precision)));
   }
 
   /**
@@ -148,7 +144,7 @@ export class DurandKerner implements IRootFinding {
    * @param precision
    * @param tolerance
    */
-  findRoots(maxIterations = 20 * Math.pow(this.coefficients?.length, 2), precision = 6, tolerance = 10e-6) {
+  findRoots(maxIterations = 20 * Math.pow(this.coefficients.length, 2), precision = 6, tolerance = 10e-6) {
     if (this.coefficients.length === 0) {
       return [];
     }
