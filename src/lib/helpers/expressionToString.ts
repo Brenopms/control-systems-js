@@ -1,9 +1,13 @@
-const shouldAddNumberToExpression = (num: number, expressionLength: number, index: number) =>
-  index < expressionLength && Math.abs(num) !== 1;
+import { Complex } from 'mathjs';
+
+const shouldAddNumberToExpression = (num: Complex, expressionLength: number, index: number) =>
+  index < expressionLength && num.toString() !== '1';
 
 const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 0;
 const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 1;
 const shouldAddOperationSignalToExpression = (num: number, index: number) => index !== 0 || (index == 0 && num < 0);
+
+// TODO: improve this code as its hard to understand currently
 
 /**
  * Accepts a polynomial expression and return a string formatted
@@ -14,17 +18,19 @@ const shouldAddOperationSignalToExpression = (num: number, index: number) => ind
  * // return -x^2 - 2x + 3
  * expressionToString([-1, -2, 3], 'x')
  */
-export const expressionToString = (expr: number[], variable = 's'): string => {
+export const expressionToString = (expr: Complex[], variable = 's'): string => {
   let stringExpression = '';
   expr.forEach((num, index) => {
-    if (Math.abs(num) > 0) {
-      if (shouldAddOperationSignalToExpression(num, index)) {
-        const signal = num > 0 ? ' + ' : ' - ';
+    if (Math.abs(num.re) > 0 || Math.abs(num.im) > 0) {
+      if (shouldAddOperationSignalToExpression(num.re, index)) {
+        const isImaginary = Math.abs(num.im) > 0;
+        const signal = isImaginary ? ' + ' : num.re > 0 ? ' + ' : ' - ';
         stringExpression += signal;
       }
 
       if (shouldAddNumberToExpression(num, expr.length, index)) {
-        stringExpression += `${Math.abs(num)}`;
+        const numToAdd = num?.im !== 0 ? `(${num.toString()})` : `${Math.abs(num.re)}`;
+        stringExpression += numToAdd;
       }
 
       if (shouldAddVariableToExpression(expr.length, index)) {
