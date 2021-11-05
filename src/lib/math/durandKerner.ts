@@ -3,7 +3,8 @@ import { abs, add, Complex, complex, divide, multiply, round, subtract } from 'm
 const COMPLEX_ONE = complex(1, 0);
 
 /**
- * Implementation of a root finding algorithm. Based on Dr. John B. Matthews [Java implementation](https://sites.google.com/site/drjohnbmatthews/polyroots/source)
+ * Implementation of a root finding algorithm.
+ * Based on Dr. John B. Matthews's [Java implementation](https://sites.google.com/site/drjohnbmatthews/polyroots/source)
  */
 export class DurandKerner {
   /**
@@ -18,6 +19,10 @@ export class DurandKerner {
     this.coefficients = this.toMonicForm(coefficients);
   }
 
+  /**
+   * Transform polynomial coefficients to comply to a monic form
+   * @param coefficients
+   */
   private toMonicForm = (coefficients: Complex[]) => {
     let monicCoefficients = [...coefficients];
     if (!coefficients[0].equals(COMPLEX_ONE)) {
