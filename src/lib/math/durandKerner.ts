@@ -33,7 +33,7 @@ export class DurandKerner {
       }
 
       const delta = subtract(a, b) as Complex;
-      console.log({ a, b, delta });
+      //console.log({ a, b, delta });
       if (!(abs(delta.re) < tolerance) || !(abs(delta.im) < tolerance)) {
         return false;
       }
@@ -52,7 +52,7 @@ export class DurandKerner {
 
   private generateInitialGuess(polynomialOrder: number, initialResult: Complex = complex(0.4, 0.9)) {
     const initialGuess = [];
-    initialGuess.push(initialResult);
+    initialGuess.push(COMPLEX_ONE);
     for (let i = 1; i < polynomialOrder - 1; i++) {
       initialGuess[i] = multiply(initialGuess[i - 1], initialResult) as Complex;
     }
@@ -79,27 +79,13 @@ export class DurandKerner {
           }
         }
 
-        a1[i] = divide(subtract(a0[i], this.evalPolynomial(this.coefficients, a0[i])), result) as Complex;
+        a1[i] = subtract(a0[i], divide(this.evalPolynomial(this.coefficients, a0[i]), result)) as Complex;
       }
 
-      /*       a0.forEach((a0Val, indexI) => {
-        let result = COMPLEX_ONE;
-        a0.forEach((a0Val2, indexJ) => {
-          if (indexI !== indexJ) {
-            result = multiply(subtract(a0Val, a0Val2), result) as Complex;
-          }
-        });
-
-        a1[indexI] = divide(subtract(a0[indexI], this.evalPolynomial(this.coefficients, a0Val)), result) as Complex;
-      }); */
-
       iterCount += 1;
-      console.log({ a0, a1 });
       if (iterCount > maxIterations || this.hasConverged(a0, a1, tolerance)) {
         break;
       }
-
-      console.log({ iterCount });
 
       a0 = [...a1];
     }
@@ -107,3 +93,11 @@ export class DurandKerner {
     return a1;
   }
 }
+
+/* Iterations: 1
+a0: 
+1.0 + 0.0i
+0.4 + 0.9i
+a1: 
+1.0 + 0.0i
+2.0 - 2.220446049250313E-16i */
