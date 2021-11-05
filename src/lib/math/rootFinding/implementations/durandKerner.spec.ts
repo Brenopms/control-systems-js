@@ -1,21 +1,21 @@
-import test from 'ava';
+import { expect, test } from '@jest/globals';
 import { Complex } from 'mathjs';
 
 import { DurandKerner } from './durandKerner';
 
-test('DurandKerner should throw an error if no coefficients are passed', (t) => {
+test('DurandKerner should throw an error if no coefficients are passed', () => {
   const coefficients = null;
-  t.throws(() => {
+  expect(() => {
     return new DurandKerner(coefficients as unknown as []);
-  });
+  }).toThrow();
 });
 
-test('DurandKerner should return an empty array if the coefficients are empty', (t) => {
+test('DurandKerner should return an empty array if the coefficients are empty', () => {
   const coefficients: Complex[] = [];
   const durandKerner = new DurandKerner(coefficients);
   const roots = durandKerner.findRoots();
 
-  t.is(roots, []);
+  expect(roots).toMatchObject([]);
 });
 
 test.todo('DurandKerner should return the correct roots for the equation: x² - 3x + 2');

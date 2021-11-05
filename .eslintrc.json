@@ -10,7 +10,8 @@
   "ignorePatterns": [
     "node_modules",
     "build",
-    "coverage"
+    "coverage",
+    "jest.config.js"
   ],
   "plugins": [
     "import",
