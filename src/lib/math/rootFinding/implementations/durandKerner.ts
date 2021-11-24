@@ -119,7 +119,14 @@ export class DurandKerner implements IRootFinding {
       }
 
       iterCount += 1;
-      if (iterCount > maxIterations || this.hasConverged(a0, a1, tolerance)) {
+
+      if (iterCount > maxIterations) {
+        throw new Error(
+          'Could not calculate the roots for the given function, please try to increase the max iterations allowed'
+        );
+      }
+
+      if (this.hasConverged(a0, a1, tolerance)) {
         break;
       }
 
