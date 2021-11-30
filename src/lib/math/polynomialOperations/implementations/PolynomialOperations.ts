@@ -1,4 +1,4 @@
-import { add, MathType } from 'mathjs';
+import { add, MathType, subtract } from 'mathjs';
 
 import { range } from '../../../helpers/range';
 import { IPolynomialOperations, NumberOrComplexArray } from '../PolynomialOperations.entities';
@@ -59,6 +59,24 @@ export class PolynomialOperations implements Partial<IPolynomialOperations> {
     const resultPolynomial = [];
     for (const index of range(polynomialHighestOrder)) {
       const coefficient = add((orderedPol1[index] as MathType) || 0, (orderedPol2[index] as MathType) || 0) as T;
+      resultPolynomial.push(coefficient);
+    }
+
+    return this.reversePolynomial(resultPolynomial);
+  }
+
+  subtract<T extends NumberOrComplexArray>(pol1: T[], pol2: T[]): T[] {
+    const { isValid, error } = this.checkPolynomials(pol1, pol2);
+    if (!isValid) {
+      throw new Error(error);
+    }
+
+    const [orderedPol1, orderedPol2] = [this.reversePolynomial(pol1), this.reversePolynomial(pol2)];
+    const polynomialHighestOrder = this.getHighestPolynomialOrder(pol1, pol2);
+
+    const resultPolynomial = [];
+    for (const index of range(polynomialHighestOrder)) {
+      const coefficient = subtract((orderedPol1[index] as MathType) || 0, (orderedPol2[index] as MathType) || 0) as T;
       resultPolynomial.push(coefficient);
     }
 
