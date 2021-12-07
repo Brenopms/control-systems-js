@@ -1,4 +1,4 @@
-import { add, Complex, divide, MathType, multiply, subtract } from 'mathjs';
+import { add, Complex, MathType, multiply, subtract } from 'mathjs';
 
 import { range } from '../../../helpers/range';
 import { IPolynomialOperations } from '../PolynomialOperations.entities';
@@ -18,7 +18,7 @@ import { IPolynomialOperations } from '../PolynomialOperations.entities';
  * for more details
  *
  */
-export class PolynomialOperations implements Partial<IPolynomialOperations> {
+export class PolynomialOperations implements IPolynomialOperations {
   /**
    * Validates polynomials arrays
    * @param pol1
@@ -99,6 +99,11 @@ export class PolynomialOperations implements Partial<IPolynomialOperations> {
   }
 
   multiply<T extends number | Complex>(pol1: T[], pol2: T[]): T[] {
+    const { isValid, error } = this.checkPolynomials(pol1, pol2);
+    if (!isValid) {
+      throw new Error(error);
+    }
+
     const polSize1 = pol1.length;
     const polSize2 = pol2.length;
 
@@ -119,25 +124,9 @@ export class PolynomialOperations implements Partial<IPolynomialOperations> {
     return this.reversePolynomial(result) as T[];
   }
 
-  divide<T extends number | Complex>(pol1: T[], pol2: T[]): T[] {
-    const polSize1 = pol1.length;
-    const polSize2 = pol2.length;
-
-    const orderedPol1 = this.reversePolynomial(pol1);
-    const orderedPol2 = this.reversePolynomial(pol2);
-
-    const newPolSize = polSize1 + polSize2 - 1;
-
-    //Initializing result array with zeros
-    // TODO: find better typing for this
-    const result: any = Array<number>(newPolSize).fill(0);
-
-    for (const i of range(polSize1)) {
-      for (const j of range(polSize2)) {
-        result[i + j] = add(result[i + j], divide(orderedPol1[i], orderedPol2[j]));
-      }
-    }
-
-    return this.reversePolynomial(result) as T[];
+  // TODO: implement division
+  // https://en.wikipedia.org/wiki/Division_algorithm
+  divide<T extends number | Complex>(_pol1: T[], _pol2: T[]): T[] {
+    throw new Error('Not implemented!');
   }
 }
