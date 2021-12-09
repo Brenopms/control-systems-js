@@ -1,7 +1,8 @@
-import { add, complex, Complex, multiply } from 'mathjs';
+import { complex, Complex } from 'mathjs';
 
 import { expressionToString } from '../helpers/expressionToString';
 import { range } from '../helpers/range';
+import { PolynomialOperations } from '../math/polynomialOperations/implementations/PolynomialOperations';
 import { DurandKerner } from '../math/rootFinding/implementations/durandKerner';
 
 import { ComplexNumber, Expression, ITransferFunction, TransferFunctionInput } from './transferFunction.entities';
@@ -52,21 +53,9 @@ export class TransferFunction implements Partial<ITransferFunction> {
   };
 
   private getClosedLoopCoefficients(gain: number): Complex[] {
-    const coefficients: Complex[] = [];
-    const reverseDenominators = [...this.tf.denominator].reverse();
-    const reverseNumerators = [...this.tf.numerator].reverse();
-    reverseDenominators.forEach((denCoeff, index) => {
-      let newCoefficient = multiply(gain, denCoeff) as Complex;
-      newCoefficient =
-        reverseNumerators[index] !== undefined
-          ? (add(newCoefficient, reverseNumerators[index]) as Complex)
-          : newCoefficient;
-      coefficients.push(newCoefficient);
-    });
-
-    const closedLoopCoefficients = [...coefficients].reverse().filter((coeff) => coeff.re !== 0 && coeff.im !== 0);
-    console.log(this.tf);
-    console.log({ closedLoopCoefficients, gain });
+    const po = new PolynomialOperations();
+    const complexGain = complex(gain, 0);
+    const closedLoopCoefficients = po.add(po.multiply([complexGain], this.tf.numerator), this.tf.denominator);
     return closedLoopCoefficients;
   }
 
@@ -88,15 +77,17 @@ export class TransferFunction implements Partial<ITransferFunction> {
     return this.zeros;
   }
 
+  /**
+   * Calculate the root locus by finding the roots of 1+k*TF(s) where TF is self.num(s)/self.den(s) and each k is an element of kvect.
+   */
   rlocus2(k = DEFAULT_GAINS) {
-    const rlocusRoots = [];
-    for (const gain of k) {
+    const rlocusRoots = k.map((gain) => {
       const coefficients = this.getClosedLoopCoefficients(gain);
       const roots = this.calculateRoots(coefficients);
-      rlocusRoots.push(roots);
-    }
+      return roots;
+    });
 
-    console.log(rlocusRoots);
+    return rlocusRoots;
   }
 }
 
