@@ -10,8 +10,8 @@ import { IRootLocus } from './rootLocus.entities';
 const DEFAULT_GAINS = range(10);
 
 export class RootLocus implements Partial<IRootLocus> {
-  polOps: IPolynomialOperations;
-  rootFinder: IRootFinding;
+  private readonly polOps: IPolynomialOperations;
+  private readonly rootFinder: IRootFinding;
 
   constructor(polynomialOperations: IPolynomialOperations, rootFinder: IRootFinding) {
     this.polOps = polynomialOperations;

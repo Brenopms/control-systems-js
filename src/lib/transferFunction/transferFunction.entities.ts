@@ -41,8 +41,8 @@ export interface NyquistOutput {
 }
 
 export interface RootLocusOutput {
-  magnitude: ChartOutput;
   realAndImaginary: ChartOutput;
+  gains: number[];
 }
 
 /**
@@ -178,5 +178,5 @@ export interface ITransferFunction {
    * @param k Feedback gain
    * @alias rlocus
    */
-  rlocus(k?: number): RootLocusOutput;
+  rlocus(k?: number[]): RootLocusOutput;
 }

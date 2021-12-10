@@ -8,6 +8,7 @@ import { IRootLocus } from '../rootLocus/rootLocus.entities';
 import {
   ComplexNumber,
   ITransferFunction,
+  RootLocusOutput,
   TransferFunctionExpression,
   TransferFunctionInput,
 } from './transferFunction.entities';
@@ -90,12 +91,32 @@ export class TransferFunction implements Partial<ITransferFunction> {
     return this.zeros;
   }
 
+  private mapRootLocusRootsToChart(rootLocusRoots: Complex[][], gains: number[]): RootLocusOutput {
+    const roots = rootLocusRoots.flat();
+    const output: RootLocusOutput = {
+      gains,
+      realAndImaginary: {
+        x: {
+          label: 'Real Axis',
+          values: roots.map((root) => root.re),
+        },
+        y: {
+          label: 'Imaginary Axis',
+          values: roots.map((root) => root.im),
+        },
+      },
+    };
+
+    return output;
+  }
+
   /**
    * Calculate the root locus by finding the roots of 1+k*TF(s) where TF is self.num(s)/self.den(s) and each k is an element of kvect.
    */
-  rlocus2(k = DEFAULT_GAINS) {
+  rlocus(k = DEFAULT_GAINS) {
     const rootLocusRoots = this.rootLocus.findRootLocus(this.tf, k);
-    return rootLocusRoots;
+    const chartOutput = this.mapRootLocusRootsToChart(rootLocusRoots, k);
+    return chartOutput;
   }
 }
 

@@ -69,4 +69,4 @@ const tf = transferFunction({
 console.log(tf.zero());
 console.log(tf.pole());
 console.log(tf.toString());
-console.log(tf.rlocus2());
+console.log(tf.rlocus().realAndImaginary);
