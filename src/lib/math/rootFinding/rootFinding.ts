@@ -8,5 +8,5 @@ export interface IRootFinding {
    * @param precision
    * @param tolerance
    */
-  findRoots(maxIterations: number, precision: number, tolerance: number): Complex[];
+  findRoots(coefficients: Complex[], maxIterations?: number, precision?: number, tolerance?: number): Complex[];
 }

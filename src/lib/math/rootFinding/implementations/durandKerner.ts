@@ -10,18 +10,6 @@ const COMPLEX_ONE = complex(1, 0);
  */
 export class DurandKerner implements IRootFinding {
   /**
-   * Monic form of passed coefficients
-   */
-  private readonly coefficients: Complex[];
-  constructor(coefficients: Complex[]) {
-    if (!coefficients || !Array.isArray(coefficients)) {
-      throw new Error('Missing or invalid coefficients');
-    }
-
-    this.coefficients = this.toMonicForm(coefficients);
-  }
-
-  /**
    * Transform polynomial coefficients to comply to a monic form
    * @param coefficients
    */
@@ -151,14 +139,25 @@ export class DurandKerner implements IRootFinding {
    * @param precision
    * @param tolerance
    */
-  findRoots(maxIterations = 20 * Math.pow(this.coefficients.length, 2), precision = 6, tolerance = 10e-6) {
-    if (this.coefficients.length === 0) {
+  findRoots(
+    coefficients: Complex[],
+    maxIterations = 20 * Math.pow(coefficients.length, 2),
+    precision = 6,
+    tolerance = 10e-6
+  ) {
+    if (!coefficients || !Array.isArray(coefficients)) {
+      throw new Error('Missing or invalid coefficients');
+    }
+
+    const monicCoefficients = (coefficients = this.toMonicForm(coefficients));
+
+    if (monicCoefficients.length === 0) {
       return [];
     }
 
     const initialResult = complex(0.4, 0.9);
-    const initialRoots: Complex[] = this.generateInitialRootGuess(this.coefficients.length, initialResult);
-    const roots = this.calculateRoots(this.coefficients, initialRoots, initialResult, maxIterations, tolerance);
+    const initialRoots: Complex[] = this.generateInitialRootGuess(monicCoefficients.length, initialResult);
+    const roots = this.calculateRoots(monicCoefficients, initialRoots, initialResult, maxIterations, tolerance);
     const rootsWithPrecision = this.setRootsPrecision(roots, precision);
     return rootsWithPrecision;
   }

@@ -5,7 +5,12 @@ import { range } from '../helpers/range';
 import { PolynomialOperations } from '../math/polynomialOperations/implementations/PolynomialOperations';
 import { DurandKerner } from '../math/rootFinding/implementations/durandKerner';
 
-import { ComplexNumber, Expression, ITransferFunction, TransferFunctionInput } from './transferFunction.entities';
+import {
+  ComplexNumber,
+  ITransferFunction,
+  TransferFunctionExpression,
+  TransferFunctionInput,
+} from './transferFunction.entities';
 
 const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
@@ -13,7 +18,7 @@ const TOLERANCE = 10e-7;
 const DEFAULT_GAINS = range(10);
 
 export class TransferFunction implements Partial<ITransferFunction> {
-  private readonly tf: Expression;
+  private readonly tf: TransferFunctionExpression;
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
 
@@ -49,7 +54,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
-    return new DurandKerner(coefficients).findRoots(MAX_ITERATIONS_ROOT, PRECISION, TOLERANCE);
+    return new DurandKerner().findRoots(coefficients, MAX_ITERATIONS_ROOT, PRECISION, TOLERANCE);
   };
 
   private getClosedLoopCoefficients(gain: number): Complex[] {

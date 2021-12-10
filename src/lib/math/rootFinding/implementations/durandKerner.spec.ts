@@ -36,23 +36,23 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
   it('Should throw an error if no coefficients are passed', () => {
     const coefficients = null;
     expect(() => {
-      return new DurandKerner(coefficients as unknown as []);
+      return new DurandKerner().findRoots(coefficients as unknown as []);
     }).toThrow();
   });
 
   it('Should return an empty array if the coefficients are empty', () => {
     const coefficients: Complex[] = [];
-    const durandKerner = new DurandKerner(coefficients);
-    const roots = durandKerner.findRoots();
+    const durandKerner = new DurandKerner();
+    const roots = durandKerner.findRoots(coefficients);
 
     expect(roots).toMatchObject([]);
   });
 
   it('Should return the correct roots for the equation: x² - 3x + 2', () => {
     const coefficients = [complex('1'), complex('-3'), complex('2')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION);
 
     expect(roots).toMatchObject([
       { re: 1, im: 0 },
@@ -67,9 +67,9 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     ].sort(sortRoots);
 
     const coefficients = [complex('1'), complex('-2'), complex('1')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION).sort(sortRoots);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
       expect(result).toMatchObject({
@@ -89,9 +89,9 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     ].sort(sortRoots);
 
     const coefficients = [complex('1'), complex('0'), complex('-13'), complex('0'), complex('36'), complex('0')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION).sort(sortRoots);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
       expect(result).toMatchObject({
@@ -109,9 +109,9 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     ].sort(sortRoots);
 
     const coefficients = [complex('1'), complex('1'), complex('1'), complex('1')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION).sort(sortRoots);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
       expect(result).toMatchObject({
@@ -128,9 +128,9 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     ].sort(sortRoots);
 
     const coefficients = [complex('1 + 3i'), complex('2 + 2i'), complex('3 + i')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION).sort(sortRoots);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
       expect(result).toMatchObject({
@@ -148,9 +148,9 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     ].sort(sortRoots);
 
     const coefficients = [complex('1 + i'), complex('2 + 2i'), complex('3 + 3i'), complex('4 + 4i')];
-    const durandKerner = new DurandKerner(coefficients);
+    const durandKerner = new DurandKerner();
 
-    const roots = durandKerner.findRoots(MAX_ITERATIONS, PRECISION).sort(sortRoots);
+    const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
       expect(result).toMatchObject({

@@ -9,7 +9,7 @@ export interface TransferFunctionInput {
   denominator: ComplexNumber[];
 }
 
-export interface Expression {
+export interface TransferFunctionExpression {
   numerator: Complex[];
   denominator: Complex[];
 }
@@ -88,7 +88,7 @@ export interface ITransferFunction {
    * console.log(tf.getExpression())
    * // Output: { numerator: [-1, -2, 3], denominator: [1, -2] }
    */
-  getExpression(): Expression;
+  getExpression(): TransferFunctionExpression;
 
   /****************************
    *
