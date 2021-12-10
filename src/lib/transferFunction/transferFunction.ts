@@ -2,8 +2,8 @@ import { complex, Complex } from 'mathjs';
 
 import { expressionToString } from '../helpers/expressionToString';
 import { range } from '../helpers/range';
-import { PolynomialOperations } from '../math/polynomialOperations/implementations/PolynomialOperations';
-import { DurandKerner } from '../math/rootFinding/implementations/durandKerner';
+import { IRootFinding } from '../math/rootFinding/rootFinding';
+import { IRootLocus } from '../rootLocus/rootLocus.entities';
 
 import {
   ComplexNumber,
@@ -22,7 +22,21 @@ export class TransferFunction implements Partial<ITransferFunction> {
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
 
-  constructor(transferFunctionInput: TransferFunctionInput, _timeDelay = 0) {
+  private readonly rootFinder: IRootFinding;
+  private readonly rootLocus: IRootLocus;
+
+  constructor(
+    transferFunctionInput: TransferFunctionInput,
+    _timeDelay = 0,
+    rootFinder: IRootFinding,
+    rootLocus: IRootLocus
+  ) {
+    /**
+     * Dependency injection
+     */
+    this.rootFinder = rootFinder;
+    this.rootLocus = rootLocus;
+
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
       numerator: this.complexNumberArrayToComplex(transferFunctionInput.numerator),
@@ -54,15 +68,9 @@ export class TransferFunction implements Partial<ITransferFunction> {
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
-    return new DurandKerner().findRoots(coefficients, MAX_ITERATIONS_ROOT, PRECISION, TOLERANCE);
+    console.log(this.rootFinder);
+    return this.rootFinder.findRoots(coefficients, MAX_ITERATIONS_ROOT, PRECISION, TOLERANCE);
   };
-
-  private getClosedLoopCoefficients(gain: number): Complex[] {
-    const po = new PolynomialOperations();
-    const complexGain = complex(gain, 0);
-    const closedLoopCoefficients = po.add(po.multiply([complexGain], this.tf.numerator), this.tf.denominator);
-    return closedLoopCoefficients;
-  }
 
   toString(): string {
     const numeratorString = expressionToString(this.tf.numerator);
@@ -86,13 +94,8 @@ export class TransferFunction implements Partial<ITransferFunction> {
    * Calculate the root locus by finding the roots of 1+k*TF(s) where TF is self.num(s)/self.den(s) and each k is an element of kvect.
    */
   rlocus2(k = DEFAULT_GAINS) {
-    const rlocusRoots = k.map((gain) => {
-      const coefficients = this.getClosedLoopCoefficients(gain);
-      const roots = this.calculateRoots(coefficients);
-      return roots;
-    });
-
-    return rlocusRoots;
+    const rootLocusRoots = this.rootLocus.findRootLocus(this.tf, k);
+    return rootLocusRoots;
   }
 }
 
