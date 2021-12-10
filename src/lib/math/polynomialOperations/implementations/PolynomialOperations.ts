@@ -1,4 +1,4 @@
-import { add, Complex, MathType, multiply, subtract } from 'mathjs';
+import { add, Complex, multiply, subtract } from 'mathjs';
 
 import { range } from '../../../helpers/range';
 import { IPolynomialOperations } from '../PolynomialOperations.entities';
@@ -73,7 +73,7 @@ export class PolynomialOperations implements IPolynomialOperations {
 
     const resultPolynomial = [];
     for (const index of range(polynomialHighestOrder)) {
-      const coefficient = add((orderedPol1[index] as MathType) || 0, (orderedPol2[index] as MathType) || 0) as T;
+      const coefficient = add(orderedPol1[index] || 0, orderedPol2[index] || 0) as T;
       resultPolynomial.push(coefficient);
     }
 
@@ -91,7 +91,7 @@ export class PolynomialOperations implements IPolynomialOperations {
 
     const resultPolynomial = [];
     for (const index of range(polynomialHighestOrder)) {
-      const coefficient = subtract((orderedPol1[index] as MathType) || 0, (orderedPol2[index] as MathType) || 0) as T;
+      const coefficient = subtract(orderedPol1[index] || 0, orderedPol2[index] || 0) as T;
       resultPolynomial.push(coefficient);
     }
 
