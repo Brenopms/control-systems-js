@@ -40,8 +40,8 @@ export class TransferFunction implements Partial<ITransferFunction> {
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
-      numerator: this.complexNumberArrayToComplex(transferFunctionInput.numerator),
-      denominator: this.complexNumberArrayToComplex(transferFunctionInput.denominator),
+      numerator: this.castInputToComplex(transferFunctionInput.numerator),
+      denominator: this.castInputToComplex(transferFunctionInput.denominator),
     };
 
     this.zeros = this.calculateRoots(this.tf.numerator);
@@ -64,12 +64,19 @@ export class TransferFunction implements Partial<ITransferFunction> {
     return complex(complexNumber.re, complexNumber.im);
   }
 
-  private complexNumberArrayToComplex(complexArray: ComplexNumber[]): Complex[] {
-    return complexArray.map((num) => this.complexNumberToComplex(num));
+  private numberToComplex(number: number): Complex {
+    return complex(number, 0);
+  }
+
+  private castInputToComplex(input: (ComplexNumber | number)[]): Complex[] {
+    if (input.every((item) => typeof item === 'number')) {
+      return input.map((num) => this.numberToComplex(num as number));
+    }
+
+    return input.map((num) => this.complexNumberToComplex(num as ComplexNumber));
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
-    console.log(this.rootFinder);
     return this.rootFinder.findRoots(coefficients, MAX_ITERATIONS_ROOT, PRECISION, TOLERANCE);
   };
 
