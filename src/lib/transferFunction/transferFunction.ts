@@ -16,7 +16,7 @@ import {
 const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
 const TOLERANCE = 10e-7;
-const DEFAULT_GAINS = range(10);
+const DEFAULT_GAINS = range(100);
 
 export class TransferFunction implements Partial<ITransferFunction> {
   private readonly tf: TransferFunctionExpression;
@@ -110,9 +110,6 @@ export class TransferFunction implements Partial<ITransferFunction> {
     return output;
   }
 
-  /**
-   * Calculate the root locus by finding the roots of 1+k*TF(s) where TF is self.num(s)/self.den(s) and each k is an element of kvect.
-   */
   rlocus(k = DEFAULT_GAINS) {
     const rootLocusRoots = this.rootLocus.findRootLocus(this.tf, k);
     const chartOutput = this.mapRootLocusRootsToChart(rootLocusRoots, k);
