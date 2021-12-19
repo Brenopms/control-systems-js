@@ -12,6 +12,7 @@ import { TransferFunctionInput } from './lib/transferFunction/transferFunction.e
 );
  */
 
+// TODO: add dependency injection library to manage it
 //TODO: change every array generation to use lazy arrays
 //console.log(new NewtonRaphson('x^2 - 2x + 3', 2).findRoots('x'));
 /* const tf = new TransferFunction({
@@ -53,20 +54,25 @@ export const transferFunction = (transferFunctionInput: TransferFunctionInput) =
   return new TransferFunction(transferFunctionInput, 0, rootFinder, rootLocus);
 };
 
-const tf = transferFunction({
-  numerator: [
-    { re: 1, im: 0 },
-    { re: 3, im: 0 },
-  ],
-  denominator: [
-    { re: 1, im: 0 },
-    { re: 3, im: 0 },
-    { re: 5, im: 0 },
-    { re: 1, im: 0 },
-  ],
+// const tf = transferFunction({
+//   numerator: [
+//     { re: 1, im: 0 },
+//     { re: 3, im: 0 },
+//   ],
+//   denominator: [
+//     { re: 1, im: 0 },
+//     { re: 3, im: 0 },
+//     { re: 5, im: 0 },
+//     { re: 1, im: 0 },
+//   ],
+// });
+
+const tf2 = transferFunction({
+  numerator: [1, 3],
+  denominator: [1, 3, 5, 1],
 });
 
-console.log(tf.zero());
-console.log(tf.pole());
-console.log(tf.toString());
-console.log(tf.rlocus().realAndImaginary);
+console.log(tf2.zero());
+console.log(tf2.pole());
+console.log(tf2.toString());
+console.log(JSON.stringify(tf2.rlocus()));
