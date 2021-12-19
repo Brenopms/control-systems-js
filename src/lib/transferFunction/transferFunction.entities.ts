@@ -1,5 +1,7 @@
 import { Complex } from 'mathjs';
 
+import { ChartData } from '../shared/charts/charts.entities';
+
 export interface ComplexNumber {
   re: number;
   im: number;
@@ -41,7 +43,7 @@ export interface NyquistOutput {
 }
 
 export interface RootLocusOutput {
-  realAndImaginary: ChartOutput;
+  chartOutput: ChartData<number>;
   gains: number[];
 }
 

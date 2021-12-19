@@ -1,6 +1,7 @@
 import { complex, Complex } from 'mathjs';
 
 import { expressionToString } from '../helpers/expressionToString';
+import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
@@ -99,17 +100,19 @@ export class TransferFunction implements Partial<ITransferFunction> {
   }
 
   private mapRootLocusRootsToChart(rootLocusRoots: Complex[][], gains: number[]): RootLocusOutput {
-    const roots = rootLocusRoots.flat();
+    const groupedRoots = groupByIndex(rootLocusRoots);
     const output: RootLocusOutput = {
       gains,
-      realAndImaginary: {
-        x: {
-          label: 'Real Axis',
-          values: roots.map((root) => root.re),
-        },
-        y: {
-          label: 'Imaginary Axis',
-          values: roots.map((root) => root.im),
+      chartOutput: {
+        data: groupedRoots.map((roots) => ({ x: roots.map((root) => root.re), y: roots.map((root) => root.im) })),
+        details: {
+          name: 'Root Locus',
+          xAxis: {
+            label: 'Real Value',
+          },
+          yAxis: {
+            label: 'Imaginary Value',
+          },
         },
       },
     };
