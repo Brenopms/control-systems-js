@@ -1,14 +1,9 @@
+import { Point } from '../shared/charts/charts.entities';
 import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
-// TODO: move to chart entities
-export interface Point {
-  x: number;
-  y: number;
-}
-
 export interface BodeOutput {
-  phase: Point[];
-  magnitude: Point[];
+  phase: Point<number>[];
+  magnitude: Point<number>[];
 }
 
 export interface IBode {
