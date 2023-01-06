@@ -5,7 +5,9 @@ import { TransferFunctionExpression } from '../transferFunction/transferFunction
  * Set of points for phase and magnitude of a Bode plot
  */
 export interface BodeOutput {
+  // Phase measured in degrees
   phase: Point<number>[];
+  // Magnitude measured in Decibels
   magnitude: Point<number>[];
 }
 
