@@ -19,6 +19,7 @@
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
     "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "watch:build": "tsc -p tsconfig.json -w",
     "watch:test": "vitest",
     "doc": "run-s doc:html && open-cli build/docs/index.html",
@@ -37,9 +38,10 @@
     "mathjs": "^10.0.0"
   },
   "devDependencies": {
-    "vitest": "^0.26.3",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "@vitest/coverage-c8": "^0.26.3",
+    "c8": "^7.12.0",
     "cspell": "^4.1.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.8.0",
@@ -53,7 +55,8 @@
     "standard-version": "^9.0.0",
     "ts-node": "^9.0.0",
     "typedoc": "^0.19.0",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "vitest": "^0.26.3"
   },
   "files": [
     "build/main",
@@ -72,5 +75,10 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 120
+  },
+  "c8": {
+    "checkCoverage": true,
+    "lines": 75,
+    "statements": 75
   }
 }
