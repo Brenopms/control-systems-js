@@ -5,7 +5,7 @@ import { ICalculateTransferFunction } from '../calculateTransferFunction.entitie
 
 export class CalculateTransferFunction implements ICalculateTransferFunction {
   private evaluateExpressionValue(value: Complex, coeff: Complex, numOfCoeffs: number, currentIndex: number): Complex {
-    // numOfCoeffs - currentIndex - 1 is used to evaluate correctly the power of the variable, since
+    // (numOfCoeffs - currentIndex - 1) is used to evaluate correctly the power of the variable, since
     // the in the array of the coefficients, the first value is the highest power
     return multiply(coeff, pow(value, numOfCoeffs - currentIndex - 1)) as Complex;
   }
