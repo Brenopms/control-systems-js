@@ -15,6 +15,10 @@ export class Bode implements IBode {
     return result;
   }
 
+  private mag2db(value: number): number {
+    return 20 * Math.log10(value);
+  }
+
   calculatePoints(tf: TransferFunctionExpression, frequencyRange: number[]): BodeOutput {
     const magnitudeData: Point<number>[] = [];
     const phaseData: Point<number>[] = [];
@@ -25,7 +29,7 @@ export class Bode implements IBode {
       const calculatedTf = this.calculateTransferFunction.calculateValue(tf, s);
 
       // Calculate the magnitude and phase of the transfer function
-      const magnitude = 20 * Math.log10(this.calculateAbsoluteValue(calculatedTf));
+      const magnitude = this.mag2db(this.calculateAbsoluteValue(calculatedTf));
       const phase = (arg(calculatedTf) * 180) / Math.PI;
 
       magnitudeData.push({ x: f, y: magnitude });
