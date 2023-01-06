@@ -11,7 +11,7 @@
     "node_modules",
     "build",
     "coverage",
-    "jest.config.js"
+    "vitest.config.js"
   ],
   "plugins": [
     "import",

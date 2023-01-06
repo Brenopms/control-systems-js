@@ -1,5 +1,5 @@
-import { describe, expect, it } from '@jest/globals';
 import { complex, Complex } from 'mathjs';
+import { describe, expect, it } from 'vitest';
 
 import { closeTo } from '../../../../test/helpers/closeTo';
 

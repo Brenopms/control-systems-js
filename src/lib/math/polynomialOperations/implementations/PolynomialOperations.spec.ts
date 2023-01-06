@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it } from '@jest/globals';
 import { complex } from 'mathjs';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { IPolynomialOperations } from '../PolynomialOperations.entities';
 
