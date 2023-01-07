@@ -1,5 +1,7 @@
 import { complex, Complex } from 'mathjs';
 
+import { BodeOutput, IBode } from '../bode/bode.entities';
+import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
@@ -7,6 +9,7 @@ import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
 
 import {
+  BodeChart,
   ComplexNumber,
   ITransferFunction,
   RootLocusOutput,
@@ -26,18 +29,21 @@ export class TransferFunction implements Partial<ITransferFunction> {
 
   private readonly rootFinder: IRootFinding;
   private readonly rootLocus: IRootLocus;
+  private readonly bodeCalculator: IBode;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
     _timeDelay = 0,
     rootFinder: IRootFinding,
-    rootLocus: IRootLocus
+    rootLocus: IRootLocus,
+    bode: IBode
   ) {
     /**
      * Dependency injection
      */
     this.rootFinder = rootFinder;
     this.rootLocus = rootLocus;
+    this.bodeCalculator = bode;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -124,6 +130,38 @@ export class TransferFunction implements Partial<ITransferFunction> {
     const rootLocusRoots = this.rootLocus.findRootLocus(this.tf, k);
     const chartOutput = this.mapRootLocusRootsToChart(rootLocusRoots, k);
     return chartOutput;
+  }
+
+  private mapBodeOutputToChart(bodePoints: BodeOutput) {
+    const output: BodeChart = {
+      magnitude: {
+        x: {
+          label: 'Frequency',
+          values: [...bodePoints?.magnitude.map((item) => item?.x)],
+        },
+        y: {
+          label: 'Magnitude (dB)',
+          values: [...bodePoints?.magnitude.map((item) => item?.y)],
+        },
+      },
+      phase: {
+        x: {
+          label: 'Frequency',
+          values: [...bodePoints?.phase.map((item) => item?.x)],
+        },
+        y: {
+          label: 'Phase (deg)',
+          values: [...bodePoints?.phase.map((item) => item?.y)],
+        },
+      },
+    };
+    return output;
+  }
+
+  bode(): BodeChart {
+    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), boundaryRange(0.01, 100, 0.01));
+    const bodeChart = this.mapBodeOutputToChart(bodeOutput);
+    return bodeChart;
   }
 }
 

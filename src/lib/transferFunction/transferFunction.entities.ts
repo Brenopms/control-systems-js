@@ -32,7 +32,7 @@ export interface ChartOutput {
   y: Axis;
 }
 
-export interface BodeOutput {
+export interface BodeChart {
   magnitude: ChartOutput;
   phase: ChartOutput;
 }
@@ -124,10 +124,9 @@ export interface ITransferFunction {
    * Calculates the frequency response of a dynamic system.
    * Generates two objects, one for the magnitude in db
    * and the other for the phase in degrees of the system response as a function of frequency
-   * @param options
    * @alias bode
    */
-  bode(options?: ChartOptions): BodeOutput;
+  bode(): BodeChart;
 
   /**
    * Calculates the frequency response of a dynamic system.
