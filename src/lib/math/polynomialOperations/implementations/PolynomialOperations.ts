@@ -74,7 +74,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     const resultPolynomial = [];
     for (const index of range(polynomialHighestOrder)) {
       const coefficient = add(orderedPol1[index] || 0, orderedPol2[index] || 0) as T;
-      resultPolynomial.push(coefficient);
+      resultPolynomial.push(coefficient as T);
     }
 
     return this.reversePolynomial(resultPolynomial);
@@ -92,7 +92,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     const resultPolynomial = [];
     for (const index of range(polynomialHighestOrder)) {
       const coefficient = subtract(orderedPol1[index] || 0, orderedPol2[index] || 0) as T;
-      resultPolynomial.push(coefficient);
+      resultPolynomial.push(coefficient as T);
     }
 
     return this.reversePolynomial(resultPolynomial);
