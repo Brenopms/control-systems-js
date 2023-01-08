@@ -21,6 +21,8 @@ const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
 const TOLERANCE = 10e-7;
 const DEFAULT_GAINS = range(100);
+// TODO: Figure it out how to calculate ideal frequency range for each transfer function
+const DEFAULT_FREQUENCY_RANGE = boundaryRange(0.01, 100, 0.01);
 
 export class TransferFunction implements Partial<ITransferFunction> {
   private readonly tf: TransferFunctionExpression;
@@ -159,7 +161,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
   }
 
   bode(): BodeChart {
-    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), boundaryRange(0.01, 100, 0.01));
+    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
     const bodeChart = this.mapBodeOutputToChart(bodeOutput);
     return bodeChart;
   }
