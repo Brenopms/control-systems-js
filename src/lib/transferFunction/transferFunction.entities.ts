@@ -37,7 +37,7 @@ export interface BodeChart {
   phase: ChartOutput;
 }
 
-export interface NyquistOutput {
+export interface NyquistChart {
   magnitude: ChartOutput;
   realAndImaginary: ChartOutput;
 }
@@ -135,7 +135,7 @@ export interface ITransferFunction {
    * @param options
    * @alias nyquist
    */
-  nyquist(options?: ChartOptions): NyquistOutput;
+  nyquist(options?: ChartOptions): NyquistChart;
 
   /****************************
    *
