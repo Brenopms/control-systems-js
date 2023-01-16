@@ -37,9 +37,9 @@ export interface BodeChart {
   phase: ChartOutput;
 }
 
-export interface NyquistOutput {
-  magnitude: ChartOutput;
-  realAndImaginary: ChartOutput;
+export interface NyquistChart {
+  points: ChartOutput;
+  correspondingPoints: ChartOutput;
 }
 
 export interface RootLocusOutput {
@@ -129,13 +129,11 @@ export interface ITransferFunction {
   bode(): BodeChart;
 
   /**
-   * Calculates the frequency response of a dynamic system.
-   * Generates two objects, one for the magnitude in db
-   * and the other for the real and imaginary parts of the system response as a function of frequency
-   * @param options
+   * Given a frequency range, it calculates the real and
+   * imaginary part of the transform function evaluated at each frequency
    * @alias nyquist
    */
-  nyquist(options?: ChartOptions): NyquistOutput;
+  nyquist(): NyquistChart;
 
   /****************************
    *

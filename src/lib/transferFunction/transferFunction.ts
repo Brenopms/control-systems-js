@@ -6,12 +6,14 @@ import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
+import { INyquist, NyquistOutput } from '../nyquist/nyquist.entities';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
 
 import {
   BodeChart,
   ComplexNumber,
   ITransferFunction,
+  NyquistChart,
   RootLocusOutput,
   TransferFunctionExpression,
   TransferFunctionInput,
@@ -21,6 +23,8 @@ const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
 const TOLERANCE = 10e-7;
 const DEFAULT_GAINS = range(100);
+// TODO: Figure it out how to calculate ideal frequency range for each transfer function
+const DEFAULT_FREQUENCY_RANGE = boundaryRange(0.01, 100, 0.01);
 
 export class TransferFunction implements Partial<ITransferFunction> {
   private readonly tf: TransferFunctionExpression;
@@ -30,13 +34,15 @@ export class TransferFunction implements Partial<ITransferFunction> {
   private readonly rootFinder: IRootFinding;
   private readonly rootLocus: IRootLocus;
   private readonly bodeCalculator: IBode;
+  private readonly nyquistCalculator: INyquist;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
     _timeDelay = 0,
     rootFinder: IRootFinding,
     rootLocus: IRootLocus,
-    bode: IBode
+    bode: IBode,
+    nyquist: INyquist
   ) {
     /**
      * Dependency injection
@@ -44,6 +50,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
     this.rootFinder = rootFinder;
     this.rootLocus = rootLocus;
     this.bodeCalculator = bode;
+    this.nyquistCalculator = nyquist;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -159,9 +166,42 @@ export class TransferFunction implements Partial<ITransferFunction> {
   }
 
   bode(): BodeChart {
-    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), boundaryRange(0.01, 100, 0.01));
+    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
     const bodeChart = this.mapBodeOutputToChart(bodeOutput);
     return bodeChart;
+  }
+
+  private mapNyquistOutputToChart(nyquistPoints: NyquistOutput): NyquistChart {
+    const data: NyquistChart = {
+      points: {
+        x: {
+          label: 'Real Axis',
+          values: nyquistPoints.points.map((point) => point.x),
+        },
+        y: {
+          label: 'Imaginary Axis',
+          values: nyquistPoints.points.map((point) => point.y),
+        },
+      },
+      correspondingPoints: {
+        x: {
+          label: 'Real Axis',
+          values: nyquistPoints.correspondingPoints.map((point) => point.x),
+        },
+        y: {
+          label: 'Imaginary Axis',
+          values: nyquistPoints.correspondingPoints.map((point) => point.y),
+        },
+      },
+    };
+
+    return data;
+  }
+
+  nyquist(): NyquistChart {
+    const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
+    const nyquistChart = this.mapNyquistOutputToChart(nyquistPoints);
+    return nyquistChart;
   }
 }
 
