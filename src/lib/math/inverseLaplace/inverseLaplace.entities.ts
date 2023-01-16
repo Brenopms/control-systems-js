@@ -7,7 +7,7 @@ export interface IInverseLaplace {
   /**
    * Executes Inverse Laplace transformation and evaluates it given the time argument
    * @param fn Laplace function that accepts s as an argument and evaluates it
-   * @param time time to evaluate the function
+   * @param time time to evaluate the function at
    */
   execute(fn: (s: Complex) => Complex, time: number): number;
 }
