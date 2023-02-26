@@ -7,8 +7,8 @@ export interface ComplexNumber {
   im: number;
 }
 export interface TransferFunctionInput {
-  numerator: ComplexNumber[] | number[];
-  denominator: ComplexNumber[] | number[];
+  numerator: number[];
+  denominator: number[];
 }
 
 export interface TransferFunctionExpression {

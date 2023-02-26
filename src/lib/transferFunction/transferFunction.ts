@@ -6,6 +6,7 @@ import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
+import { IStability } from '../math/stability/stability.entities';
 import { INyquist, NyquistOutput } from '../nyquist/nyquist.entities';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
 
@@ -35,6 +36,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
   private readonly rootLocus: IRootLocus;
   private readonly bodeCalculator: IBode;
   private readonly nyquistCalculator: INyquist;
+  private readonly stability: IStability;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
@@ -42,7 +44,8 @@ export class TransferFunction implements Partial<ITransferFunction> {
     rootFinder: IRootFinding,
     rootLocus: IRootLocus,
     bode: IBode,
-    nyquist: INyquist
+    nyquist: INyquist,
+    stability: IStability
   ) {
     /**
      * Dependency injection
@@ -51,6 +54,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
     this.rootLocus = rootLocus;
     this.bodeCalculator = bode;
     this.nyquistCalculator = nyquist;
+    this.stability = stability;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -72,22 +76,14 @@ export class TransferFunction implements Partial<ITransferFunction> {
         'The package only accepts transfer functions where the denominator is a higher order than the numerator'
       );
     }
-  }
 
-  private complexNumberToComplex(complexNumber: ComplexNumber): Complex {
-    return complex(complexNumber.re, complexNumber.im);
-  }
-
-  private numberToComplex(number: number): Complex {
-    return complex(number, 0);
-  }
-
-  private castInputToComplex(input: (ComplexNumber | number)[]): Complex[] {
-    if (input.every((item) => typeof item === 'number')) {
-      return input.map((num) => this.numberToComplex(num as number));
+    if (this.stability.isStable(input.denominator)) {
+      throw new Error("The given system is unstable. The package doesn't support unstable transfer functions");
     }
+  }
 
-    return input.map((num) => this.complexNumberToComplex(num as ComplexNumber));
+  private castInputToComplex(input: number[]): Complex[] {
+    return input.map((num) => complex(num, 0));
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
