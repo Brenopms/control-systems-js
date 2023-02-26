@@ -6,6 +6,26 @@ import { IInverseLaplace } from '../inverseLaplace.entities';
 export class GaverStehfest implements IInverseLaplace {
   private readonly NUMBER_OF_COEFFICIENTS = 20;
 
+  private getCoefficients1(L: number): Complex[] {
+    const nn2 = L / 2;
+    const v: Complex[] = [];
+
+    for (let n = 1; n <= L; n++) {
+      let z = complex(0, 0);
+      for (let k = Math.floor((n + 1) / 2); k <= Math.min(n, nn2); k++) {
+        const num = pow(k, nn2);
+        const den = multiply(
+          multiply(multiply(multiply(factorial(nn2 - k), factorial(k)), factorial(k - 1)), factorial(n - k)),
+          factorial(2 * k - n)
+        );
+        const x = divide(multiply(num, factorial(2 * k)), den);
+        z = add(z, x) as Complex;
+      }
+      v[n - 1] = multiply(pow(-1, n + nn2), z) as Complex;
+    }
+    return v;
+  }
+
   /**
    * Based on the implementations of the following links
    * https://github.com/jlapeyre/InverseLaplace.jl/blob/master/src/gaverstehfest.jl
@@ -21,28 +41,13 @@ export class GaverStehfest implements IInverseLaplace {
    * @returns
    */
   private gavsteh(fn: (p: Complex) => Complex, t: number, L: number): Complex {
-    const nn2 = L / 2;
-    const v: Complex[] = [];
-
-    for (let n = 1; n <= L; n++) {
-      let z = complex(0, 0);
-      for (let k = Math.floor((n + 1) / 2); k <= Math.min(n, nn2); k++) {
-        const num = pow(k, nn2);
-        const den = multiply(
-          multiply(multiply(multiply(factorial(nn2 - k), factorial(k)), factorial(k - 1)), factorial(n - k)),
-          factorial(2 * k - n)
-        );
-        const x = divide(multiply(num, factorial(2 * k)), den);
-        z = add(z, x) as Complex;
-      }
-      v[n] = multiply(pow(-1, n + nn2), z) as Complex;
-    }
+    const coefficients = this.getCoefficients1(L);
 
     let sum = complex(0, 0);
     const ln2onT = divide(log(2.0), t);
     for (let n = 1; n <= L; n++) {
       const p = multiply(n, ln2onT);
-      sum = add(sum, multiply(v[n], fn(complex(p, 0)))) as Complex;
+      sum = add(sum, multiply(coefficients[n - 1], fn(complex(p, 0)))) as Complex;
     }
     return multiply(sum, ln2onT) as Complex;
   }
