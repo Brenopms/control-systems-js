@@ -38,4 +38,11 @@ describe('Routh-Hurwitz stability criterion algorithm', () => {
 
     expect(isStable).toBe(false);
   });
+
+  it('Should return false if every coefficient is zero', () => {
+    const expression = [0, 0, 0];
+    const isStable = stability.isStable(expression);
+
+    expect(isStable).toBe(false);
+  });
 });
