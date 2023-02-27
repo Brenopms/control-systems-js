@@ -1,4 +1,4 @@
-import { add, Complex, complex, divide, log, multiply, pow, smaller } from 'mathjs';
+import { add, Complex, complex, divide, log, multiply, pow } from 'mathjs';
 
 import { factorial } from '../../../helpers/factorial';
 import { IInverseLaplace } from '../inverseLaplace.entities';
