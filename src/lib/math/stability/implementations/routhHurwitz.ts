@@ -2,6 +2,12 @@ import { clone } from 'mathjs';
 
 import { IStability } from '../stability.entities';
 
+/**
+ * Routh-Hurwitz Stability Criterion algorithm implementation.
+ * Details of the theory and implementation can be seen [here](https://en.wikipedia.org/wiki/Routh%E2%80%93Hurwitz_stability_criterion)
+ *
+ * Implementation based on "Muchen He" code, which can be seen [here](https://github.com/FSXAC/RHCalc)
+ */
 export class RouthHurwitzStability implements IStability {
   private initializeRHTable(coefficients: number[]): number[][] {
     const cols = Math.ceil(coefficients.length / 2);
