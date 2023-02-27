@@ -1,3 +1,6 @@
+/**
+ * Checks the stability of a given system and it's properties
+ */
 export interface IStability {
   /**
    *  Check if the expression with the given coefficients are stable.
