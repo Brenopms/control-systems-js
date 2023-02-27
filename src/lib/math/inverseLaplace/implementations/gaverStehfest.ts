@@ -1,10 +1,11 @@
-import { add, Complex, complex, divide, log, multiply, pow } from 'mathjs';
+import { add, Complex, complex, divide, log, multiply, pow, smaller } from 'mathjs';
 
 import { factorial } from '../../../helpers/factorial';
 import { IInverseLaplace } from '../inverseLaplace.entities';
 
 export class GaverStehfest implements IInverseLaplace {
   private readonly NUMBER_OF_COEFFICIENTS = 20;
+  private readonly SMALL_NUMBER = 10e-9;
 
   private getCoefficients1(L: number): Complex[] {
     const nn2 = L / 2;
@@ -42,9 +43,10 @@ export class GaverStehfest implements IInverseLaplace {
    */
   private gavsteh(fn: (p: Complex) => Complex, t: number, L: number): Complex {
     const coefficients = this.getCoefficients1(L);
+    const nonZeroTime = t || this.SMALL_NUMBER;
 
     let sum = complex(0, 0);
-    const ln2onT = divide(log(2.0), t);
+    const ln2onT = divide(log(2.0), t || nonZeroTime); // Avoid division by zero
     for (let n = 1; n <= L; n++) {
       const p = multiply(n, ln2onT);
       sum = add(sum, multiply(coefficients[n - 1], fn(complex(p, 0)))) as Complex;
