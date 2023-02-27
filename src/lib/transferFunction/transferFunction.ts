@@ -9,10 +9,12 @@ import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IStability } from '../math/stability/stability.entities';
 import { INyquist, NyquistOutput } from '../nyquist/nyquist.entities';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
+import { Point } from '../shared/charts/charts.entities';
+import { IStep } from '../step/step.entities';
 
 import {
   BodeChart,
-  ComplexNumber,
+  ChartOutput,
   ITransferFunction,
   NyquistChart,
   RootLocusOutput,
@@ -26,6 +28,8 @@ const TOLERANCE = 10e-7;
 const DEFAULT_GAINS = range(100);
 // TODO: Figure it out how to calculate ideal frequency range for each transfer function
 const DEFAULT_FREQUENCY_RANGE = boundaryRange(0.01, 100, 0.01);
+// TODO: Figure it out how to calculate ideal time range for each transfer function
+const DEFAULT_TIME_RANGE = boundaryRange(0, 30, 0.1);
 
 export class TransferFunction implements Partial<ITransferFunction> {
   private readonly tf: TransferFunctionExpression;
@@ -37,6 +41,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
   private readonly bodeCalculator: IBode;
   private readonly nyquistCalculator: INyquist;
   private readonly stability: IStability;
+  private readonly stepCalculator: IStep;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
@@ -45,7 +50,8 @@ export class TransferFunction implements Partial<ITransferFunction> {
     rootLocus: IRootLocus,
     bode: IBode,
     nyquist: INyquist,
-    stability: IStability
+    stability: IStability,
+    step: IStep
   ) {
     /**
      * Dependency injection
@@ -55,6 +61,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
     this.bodeCalculator = bode;
     this.nyquistCalculator = nyquist;
     this.stability = stability;
+    this.stepCalculator = step;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -77,8 +84,10 @@ export class TransferFunction implements Partial<ITransferFunction> {
       );
     }
 
-    if (this.stability.isStable(input.denominator)) {
-      throw new Error("The given system is unstable. The package doesn't support unstable transfer functions");
+    if (!this.stability.isStable(input.denominator)) {
+      throw new Error(
+        `The given system is unstable. The package doesn't support unstable transfer functions. System: ${input}`
+      );
     }
   }
 
@@ -198,6 +207,25 @@ export class TransferFunction implements Partial<ITransferFunction> {
     const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
     const nyquistChart = this.mapNyquistOutputToChart(nyquistPoints);
     return nyquistChart;
+  }
+
+  private mapStepOutputToChart(points: Point<number>[]): ChartOutput {
+    const output: ChartOutput = {
+      x: {
+        label: 'Time (s)',
+        values: points.map((point) => point.x),
+      },
+      y: {
+        label: 'Magnitude',
+        values: points.map((point) => point.y),
+      },
+    };
+    return output;
+  }
+
+  step(): ChartOutput {
+    const stepPoints = this.stepCalculator.calculatePoints(this.tf, DEFAULT_TIME_RANGE);
+    return this.mapStepOutputToChart(stepPoints);
   }
 }
 

@@ -2,10 +2,6 @@ import { Complex } from 'mathjs';
 
 import { ChartData } from '../shared/charts/charts.entities';
 
-export interface ComplexNumber {
-  re: number;
-  im: number;
-}
 export interface TransferFunctionInput {
   numerator: number[];
   denominator: number[];
@@ -14,12 +10,6 @@ export interface TransferFunctionInput {
 export interface TransferFunctionExpression {
   numerator: Complex[];
   denominator: Complex[];
-}
-
-export interface ChartOptions {
-  initialXValue: number;
-  finalXValue: number;
-  points: number;
 }
 
 export interface Axis {
@@ -102,17 +92,16 @@ export interface ITransferFunction {
    * Calculates the unit impulse response of a dynamic system model.
    * The impulse response is the response to a Dirac input δ(t).
    * It returns a ready to input chart data, with x and y axis
-   * @param options
    * @alias impulse
    */
-  impulse(options?: ChartOptions): ChartOutput;
+  impulse(): ChartOutput;
 
   /**
    * Calculates the step response of a dynamic system model.
    * It returns a ready to input chart data, with x and y axis
-   * @alias impulse
+   * @alias step
    */
-  step(options?: ChartOptions): ChartOutput;
+  step(): ChartOutput;
 
   /****************************
    *
