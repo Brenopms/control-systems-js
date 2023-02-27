@@ -5,6 +5,7 @@ import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
+import { IImpulse } from '../impulse/impulse.entities';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IStability } from '../math/stability/stability.entities';
 import { INyquist, NyquistOutput } from '../nyquist/nyquist.entities';
@@ -42,6 +43,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
   private readonly nyquistCalculator: INyquist;
   private readonly stability: IStability;
   private readonly stepCalculator: IStep;
+  private readonly impulseCalculator: IImpulse;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
@@ -51,7 +53,8 @@ export class TransferFunction implements Partial<ITransferFunction> {
     bode: IBode,
     nyquist: INyquist,
     stability: IStability,
-    step: IStep
+    step: IStep,
+    impulse: IImpulse
   ) {
     /**
      * Dependency injection
@@ -62,6 +65,7 @@ export class TransferFunction implements Partial<ITransferFunction> {
     this.nyquistCalculator = nyquist;
     this.stability = stability;
     this.stepCalculator = step;
+    this.impulseCalculator = impulse;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -226,6 +230,25 @@ export class TransferFunction implements Partial<ITransferFunction> {
   step(): ChartOutput {
     const stepPoints = this.stepCalculator.calculatePoints(this.tf, DEFAULT_TIME_RANGE);
     return this.mapStepOutputToChart(stepPoints);
+  }
+
+  private mapImpulseOutputToChart(points: Point<number>[]): ChartOutput {
+    const output: ChartOutput = {
+      x: {
+        label: 'Time (s)',
+        values: points.map((point) => point.x),
+      },
+      y: {
+        label: 'Magnitude',
+        values: points.map((point) => point.y),
+      },
+    };
+    return output;
+  }
+
+  impulse(): ChartOutput {
+    const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, DEFAULT_TIME_RANGE);
+    return this.mapImpulseOutputToChart(impulsePoints);
   }
 }
 
