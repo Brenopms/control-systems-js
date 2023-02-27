@@ -25,8 +25,6 @@ export class Step implements IStep {
     // step response = tf * 1/s
     const responseFunction = this.convolution.execute(tf, stepExpression);
 
-    console.log(responseFunction);
-
     const points: Point<number>[] = timeRange.map((time) => {
       const timeResponse = this.inverseLaplace.execute(
         (s) => this.calculateTransferFunction.calculateValue(responseFunction, s),
