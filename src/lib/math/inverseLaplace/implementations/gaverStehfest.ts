@@ -4,7 +4,7 @@ import { factorial } from '../../../helpers/factorial';
 import { IInverseLaplace } from '../inverseLaplace.entities';
 
 export class GaverStehfest implements IInverseLaplace {
-  private readonly NUMBER_OF_COEFFICIENTS = 20;
+  private readonly NUMBER_OF_COEFFICIENTS = 22;
   private readonly SMALL_NUMBER = 10e-9;
 
   private getCoefficients1(L: number): Complex[] {
