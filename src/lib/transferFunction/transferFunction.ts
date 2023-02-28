@@ -32,7 +32,7 @@ const DEFAULT_FREQUENCY_RANGE = boundaryRange(0.01, 100, 0.01);
 // TODO: Figure it out how to calculate ideal time range for each transfer function
 const DEFAULT_TIME_RANGE = boundaryRange(0, 30, 0.1);
 
-export class TransferFunction implements Partial<ITransferFunction> {
+export class TransferFunction implements ITransferFunction {
   private readonly tf: TransferFunctionExpression;
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
