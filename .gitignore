@@ -7,3 +7,5 @@ coverage
 *.log
 yarn.lock
 junit.xml
+genDocs
+dist
