@@ -13,10 +13,130 @@
 <div class="tsd-page-title">
 <h2>systems-control-js - v0.0.1</h2></div>
 <div class="tsd-panel tsd-typography">
-<a href="#systems-control" id="systems-control" style="color: inherit; text-decoration: none;">
-  <h1>systems-control</h1>
+<a href="#systems-control-js" id="systems-control-js" style="color: inherit; text-decoration: none;">
+  <h1>Systems Control JS</h1>
 </a>
-<p>Systems Control Utility Library</p>
+<p><img src="https://github.com/Brenopms/systems-controls-js/workflows/publish/badge.svg" alt="Deploy">
+<img src="https://github.com/Brenopms/systems-controls-js/workflows/test/badge.svg" alt="Test">
+<a href="https://www.npmjs.com/package/systems-control-js" title="View this project on npm"><img src="https://img.shields.io/npm/v/systems-control-js" alt="npm version"></a>
+<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a>
+<a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg" alt="Conventional Commits"></a></p>
+<p>Systems Control Utility Library written in Typescript</p>
+
+<a href="#purpose" id="purpose" style="color: inherit; text-decoration: none;">
+  <h2>Purpose</h2>
+</a>
+<p>This library consists in a number of utility functions for aiding in system control analysis. The idea is to replicate and implement most of the basic functionalities present in <a href="https://www.mathworks.com/products/control.html">Matlab&#39;s</a>, <a href="https://octave.sourceforge.io/control/overview.html">Octave&#39;s</a> and <a href="https://python-control.readthedocs.io/en/0.9.3.post2/">Python&#39;s</a> similar packages, but with the practicality of having them in the web natively. This package relies on <a href="https://mathjs.org/">Mathjs</a> for complex number basic operations, but most of the core functionality is implemented in the repository.</p>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li>Fully typed functions with support for both CSJ and ESM modules</li>
+<li>Stability check using Routh–Hurwitz stability criterion</li>
+<li>Time response: Step and Impulse responses</li>
+<li>Frequency response: Bode and Nyquist plots</li>
+<li>Convolution of multiple transfer functions</li>
+<li>Inverse Laplace (Gaver-Stehfest simplified algorithm)</li>
+<li>Root Finding for Zeros and Poles (Durand-Kerner algorithm)</li>
+<li>Transfer function evaluation at any given time</li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p><code>npm install systems-control-js</code></p>
+<p>or</p>
+<p><code>yarn add systems-control-js</code></p>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>The most basic structure for the library is the TransferFunction object. This interface contains a number of methods available for analysis of a given system. You can create a transfer function object with the <code>transferFunction</code> method:</p>
+<pre><code class="language-typescript"><span class="hl-0">// Represents the following system:</span><br/><span class="hl-0">// (s + 3)/(s^3 + 3s^2 + 5s + 1)</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">tf</span><span class="hl-2"> = </span><span class="hl-4">transferFunction</span><span class="hl-2">({</span><br/><span class="hl-2">  </span><span class="hl-5">numerator:</span><span class="hl-2"> [</span><span class="hl-6">1</span><span class="hl-2">, </span><span class="hl-6">3</span><span class="hl-2">],</span><br/><span class="hl-2">  </span><span class="hl-5">denominator:</span><span class="hl-2"> [</span><span class="hl-6">1</span><span class="hl-2">, </span><span class="hl-6">3</span><span class="hl-2">, </span><span class="hl-6">5</span><span class="hl-2">, </span><span class="hl-6">1</span><span class="hl-2">],</span><br/><span class="hl-2">});</span>
+</code></pre>
+<p>The <em>numerator</em> and <em>denominator</em> properties represents the coefficients of the polynomial of a given function, ordered as the first index represents the coefficient of the highest order, similar to Matlab&#39;s implementation.</p>
+<p>It&#39;s important to know that the library only accepts physically realizable control system, meaning that the denominator should have higher order than numerator</p>
+<p>Also, it will throw an error if the passed system is not stable, as a couple of functions, especially the time-domain ones do not behave correctly if the function is unstable. Read more in the <em>limitations</em> section.</p>
+<p>In the transfer function you have a number of methods:</p>
+
+<a href="#zeros-and-poles" id="zeros-and-poles" style="color: inherit; text-decoration: none;">
+  <h3>Zeros and Poles</h3>
+</a>
+<p>We have two methods in the transfer function object, <em>zero</em> and <em>pole</em> which gives the values in which the system becomes zero and infinite respectively. The values of the poles and the zeros of a system determine whether the system is stable, and how well the system performs.</p>
+<p>The zeros and poles are calculated when <em>transferFunction</em> is called and are available in the following methods:</p>
+<pre><code class="language-typescript"><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">zero</span><span class="hl-2">();</span><br/><span class="hl-0">// output: [ { re: -3, im: 0 } ]</span><br/><br/><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">pole</span><span class="hl-2">();</span><br/><span class="hl-0">/* output:  [</span><br/><span class="hl-0">  { re: -1.385458, im: -1.563885 },</span><br/><span class="hl-0">  { re: -1.385458, im: 1.563885 },</span><br/><span class="hl-0">  { re: -0.229083, im: -0 }</span><br/><span class="hl-0">] */</span>
+</code></pre>
+
+<a href="#root-locus" id="root-locus" style="color: inherit; text-decoration: none;">
+  <h3>Root Locus</h3>
+</a>
+<p>We can also calculate the root locus of the SISO model sys, meaning, where the the closed-loop pole trajectories as a function of the feedback gain k (assuming negative feedback). This can be used to provide indirect information on the time and frequency responses.</p>
+<pre><code class="language-typescript"><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">gains</span><span class="hl-2"> = [</span><span class="hl-6">1</span><span class="hl-2">, </span><span class="hl-6">10</span><span class="hl-2">, </span><span class="hl-6">100</span><span class="hl-2">];</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">result</span><span class="hl-2"> = </span><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">rlocus</span><span class="hl-2">(</span><span class="hl-5">gains</span><span class="hl-2">);</span><br/><span class="hl-0">/* Output:  {</span><br/><span class="hl-0">    gains: [1, 10, 100],</span><br/><span class="hl-0">    chartOutput: {</span><br/><span class="hl-0">        data: [{ </span><br/><span class="hl-0">            x: [-1, -0.34407, -0.061797],</span><br/><span class="hl-0">            y: [-1.732051, -3.645646, -10.229402]</span><br/><span class="hl-0">        }, {...}],</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">} */</span>
+</code></pre>
+<p>In the <em>data</em> object, we have the location of each pole according to the passed gain.</p>
+
+<a href="#impulse-and-step" id="impulse-and-step" style="color: inherit; text-decoration: none;">
+  <h3>Impulse and Step</h3>
+</a>
+<p>It&#39;s also possible to calculate the time-domain response of a given transfer function with the methods <em>step</em> and <em>impulse</em>, where it calculates the values from a set of times.</p>
+<pre><code class="language-typescript"><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">times</span><span class="hl-2"> = [</span><span class="hl-6">0</span><span class="hl-2">, </span><span class="hl-6">5</span><span class="hl-2">, </span><span class="hl-6">10</span><span class="hl-2">];</span><br/><span class="hl-0">// Response from step input -&gt; tf * 1/s</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">stepResult</span><span class="hl-2"> = </span><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">step</span><span class="hl-2">(</span><span class="hl-5">times</span><span class="hl-2">)</span><br/><span class="hl-0">/* Output: {</span><br/><span class="hl-0">  x: { label: &#39;Time (s)&#39;, values: [ 0, 5, 10 ] },</span><br/><span class="hl-0">  y: {</span><br/><span class="hl-0">    label: &#39;Magnitude&#39;,</span><br/><span class="hl-0">    values: [ 5.000045238462707e-17, 1.9827148230507823, 2.676961175374944 ]</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><span class="hl-0">*/</span><br/><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">impulseResult</span><span class="hl-2"> = </span><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">impulse</span><span class="hl-2">(</span><span class="hl-5">times</span><span class="hl-2">)</span><br/><span class="hl-0">/* Output: {</span><br/><span class="hl-0">  x: { label: &#39;Time (s)&#39;, values: [ 0, 5, 10 ] },</span><br/><span class="hl-0">  y: {</span><br/><span class="hl-0">    label: &#39;Magnitude&#39;,</span><br/><span class="hl-0">    values: [ 1.0001256543898682e-8, 0.2332377966489039, 0.07454351806498688 ]</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><span class="hl-0">*/</span><br/>
+</code></pre>
+
+<a href="#bode-and-nyquist" id="bode-and-nyquist" style="color: inherit; text-decoration: none;">
+  <h3>Bode and Nyquist</h3>
+</a>
+<p>There are also frequency-domain analysis methods.</p>
+<p>We can calculate both Bode Plot and Nyquist Plot points, for frequency analysis.</p>
+<pre><code class="language-typescript"><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">frequencies</span><span class="hl-2"> = [</span><span class="hl-6">0</span><span class="hl-2">, </span><span class="hl-6">10</span><span class="hl-2">, </span><span class="hl-6">100</span><span class="hl-2">]</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">bodeResult</span><span class="hl-2"> = </span><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">bode</span><span class="hl-2">(</span><span class="hl-5">frequencies</span><span class="hl-2">)</span><br/><span class="hl-0">/*</span><br/><span class="hl-0">{</span><br/><span class="hl-0">  magnitude: {</span><br/><span class="hl-0">    x: { label: &#39;Frequency&#39;, values: [Array] },</span><br/><span class="hl-0">    y: { label: &#39;Magnitude (dB)&#39;, values: [Array] }</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  phase: {</span><br/><span class="hl-0">    x: { label: &#39;Frequency&#39;, values: [Array] },</span><br/><span class="hl-0">    y: { label: &#39;Phase (deg)&#39;, values: [Array] }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><span class="hl-0">*/</span><br/><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">nyquistResult</span><span class="hl-2"> = </span><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">nyquist</span><span class="hl-2">(</span><span class="hl-5">frequencies</span><span class="hl-2">)</span><br/><span class="hl-0">/*</span><br/><span class="hl-0">{</span><br/><span class="hl-0">  points: {</span><br/><span class="hl-0">    x: { label: &#39;Real Axis&#39;, values: [Array] },</span><br/><span class="hl-0">    y: { label: &#39;Imaginary Axis&#39;, values: [Array] }</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  correspondingPoints: {</span><br/><span class="hl-0">    x: { label: &#39;Real Axis&#39;, values: [Array] },</span><br/><span class="hl-0">    y: { label: &#39;Imaginary Axis&#39;, values: [Array] }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span><br/><span class="hl-0">*/</span>
+</code></pre>
+
+<a href="#utils" id="utils" style="color: inherit; text-decoration: none;">
+  <h3>Utils</h3>
+</a>
+<p>There are some utilities functions, for returning the transfer function expression for other usages and also for converting it to a string</p>
+<pre><code class="language-typescript"><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">getExpression</span><span class="hl-2">()</span><br/><span class="hl-0">/* Output: {</span><br/><span class="hl-0">  numerator: [ { re: 1, im: 0 }, { re: 3, im: 0 } ],</span><br/><span class="hl-0">  denominator: [</span><br/><span class="hl-0">    { re: 1, im: 0 },</span><br/><span class="hl-0">    { re: 3, im: 0 },</span><br/><span class="hl-0">    { re: 5, im: 0 },</span><br/><span class="hl-0">    { re: 1, im: 0 }</span><br/><span class="hl-0">  ]</span><br/><span class="hl-0">}</span><br/><span class="hl-0">*/</span><br/><br/><span class="hl-5">tf</span><span class="hl-2">.</span><span class="hl-4">toString</span><span class="hl-2">()</span><br/><span class="hl-0">// Output: (s + 3) / (s^3 + 3s^2 + 5s + 1)</span>
+</code></pre>
+
+<a href="#standalone-functions" id="standalone-functions" style="color: inherit; text-decoration: none;">
+  <h3>Standalone Functions</h3>
+</a>
+<p>It&#39;s also possible to use all of the above functions in a standalone format, separately from the <em>transferFunction</em> object. These are the available functions</p>
+<ul>
+<li><em>calculateTransferFunctionValue</em>: Evaluates the transfer function at a given <em>s</em> value</li>
+<li><em>findRoots</em>: Get the values of poles for a given set of gains in a closed-loop</li>
+<li><em>bode</em>: Calculates the frequency response of a dynamic system given a set of frequencies</li>
+<li><em>nyquist</em>: Given a frequency range, it calculates the real and imaginary part of the transform function evaluated at each frequency</li>
+<li><em>isStable</em>: Checks if a transfer function expression is stable according to Routh–Hurwitz criterion</li>
+<li><em>inverseLaplace</em>: Numerically calculates the inverse laplace of a given function and evaluates it</li>
+<li><em>convolute</em>: Convolves two transfer function expressions</li>
+<li><em>step</em>: Calculates the step response of a dynamic system model.</li>
+<li><em>impulse</em>: Calculates the impulse response of a dynamic system model.</li>
+</ul>
+
+<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
+  <h2>Limitations</h2>
+</a>
+<p>The library is in an early-stage, so it has a number of limitations of what it can do, especially comparing to more mature alternatives in other platforms. Here are a couple of them:</p>
+<ul>
+<li>The <strong>precision</strong>, especially for time-domain analysis is considerably bad (10e-1). This is related to the inverse laplace algorithm, where it behaves unpredictably according to the number of coefficients set. Also, may be related to JS float implementations. Further investigation is needed</li>
+<li>We cannot work with <strong>unstable systems</strong>. The <em>transferFunction</em> checks the stability of a given system and throws an error if it&#39;s not stable. This is also related to the inverse laplace implementation, that becomes quite a mess when dealing with unstable systems</li>
+<li>The package relies on <a href="https://mathjs.org/">Mathjs</a>, which makes it quite heavy for front-end usage</li>
+</ul>
+
+<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
+  <h2>Next Steps</h2>
+</a>
+<ul>
+<li>Improve Inverse Laplace to improve precision across the library</li>
+<li>Work with unstable systems</li>
+<li>Avoid using mathjs to make the package lighter</li>
+<li>Add the option for the user to set the desired precision for calculating values</li>
+<li>Improve performance</li>
+<li>Add State space methods</li>
+<li>Input with complex numbers</li>
+<li>Use dependency injection framework (possibly <a href="https://github.com/microsoft/tsyringe">TSyringe</a>)</li>
+</ul>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
