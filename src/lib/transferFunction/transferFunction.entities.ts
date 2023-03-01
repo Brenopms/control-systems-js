@@ -94,14 +94,14 @@ export interface ITransferFunction {
    * It returns a ready to input chart data, with x and y axis
    * @alias impulse
    */
-  impulse(): ChartOutput;
+  impulse(timeRange?: number[]): ChartOutput;
 
   /**
    * Calculates the step response of a dynamic system model.
    * It returns a ready to input chart data, with x and y axis
    * @alias step
    */
-  step(): ChartOutput;
+  step(timeRange?: number[]): ChartOutput;
 
   /****************************
    *
@@ -115,14 +115,14 @@ export interface ITransferFunction {
    * and the other for the phase in degrees of the system response as a function of frequency
    * @alias bode
    */
-  bode(): BodeChart;
+  bode(frequencyRange?: number[]): BodeChart;
 
   /**
    * Given a frequency range, it calculates the real and
    * imaginary part of the transform function evaluated at each frequency
    * @alias nyquist
    */
-  nyquist(): NyquistChart;
+  nyquist(frequencyRange?: number[]): NyquistChart;
 
   /****************************
    *

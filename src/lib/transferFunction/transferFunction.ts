@@ -176,8 +176,8 @@ export class TransferFunction implements ITransferFunction {
     return output;
   }
 
-  bode(): BodeChart {
-    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
+  bode(frequencyRange = DEFAULT_FREQUENCY_RANGE): BodeChart {
+    const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), frequencyRange);
     const bodeChart = this.mapBodeOutputToChart(bodeOutput);
     return bodeChart;
   }
@@ -209,8 +209,8 @@ export class TransferFunction implements ITransferFunction {
     return data;
   }
 
-  nyquist(): NyquistChart {
-    const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), DEFAULT_FREQUENCY_RANGE);
+  nyquist(frequencyRange = DEFAULT_FREQUENCY_RANGE): NyquistChart {
+    const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), frequencyRange);
     const nyquistChart = this.mapNyquistOutputToChart(nyquistPoints);
     return nyquistChart;
   }
@@ -229,8 +229,8 @@ export class TransferFunction implements ITransferFunction {
     return output;
   }
 
-  step(): ChartOutput {
-    const stepPoints = this.stepCalculator.calculatePoints(this.tf, DEFAULT_TIME_RANGE);
+  step(timeRange = DEFAULT_TIME_RANGE): ChartOutput {
+    const stepPoints = this.stepCalculator.calculatePoints(this.tf, timeRange);
     return this.mapStepOutputToChart(stepPoints);
   }
 
@@ -248,8 +248,8 @@ export class TransferFunction implements ITransferFunction {
     return output;
   }
 
-  impulse(): ChartOutput {
-    const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, DEFAULT_TIME_RANGE);
+  impulse(timeRange = DEFAULT_TIME_RANGE): ChartOutput {
+    const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, timeRange);
     return this.mapImpulseOutputToChart(impulsePoints);
   }
 }
