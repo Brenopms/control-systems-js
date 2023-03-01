@@ -1,7 +1,9 @@
 import { Complex } from 'mathjs';
 
-const shouldAddNumberToExpression = (num: Complex, expressionLength: number, index: number) =>
-  index < expressionLength && num.toString() !== '1';
+const shouldAddNumberToExpression = (num: Complex, expressionLength: number, index: number) => {
+  // Should cover last coefficient if the value is 1
+  return (index === expressionLength - 1 && num.toString() === '1') || num.toString() !== '1';
+};
 
 const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 0;
 const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 1;
