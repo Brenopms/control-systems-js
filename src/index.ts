@@ -1,5 +1,7 @@
+import { Complex } from 'mathjs';
+
 import { Bode } from './lib/bode/bode';
-import { IBode } from './lib/bode/bode.entities';
+import { BodeOutput, IBode } from './lib/bode/bode.entities';
 import { Impulse } from './lib/impulse/impulse';
 import { IImpulse } from './lib/impulse/impulse.entities';
 import { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
@@ -16,12 +18,23 @@ import { RouthHurwitzStability } from './lib/math/stability/implementations/rout
 import { IStability } from './lib/math/stability/stability.entities';
 import { Nyquist } from './lib/nyquist/nyquist';
 import { INyquist } from './lib/nyquist/nyquist.entities';
+import { NyquistOutput } from './lib/nyquist/nyquist.entities';
 import { RootLocus } from './lib/rootLocus/rootLocus';
 import { IRootLocus } from './lib/rootLocus/rootLocus.entities';
+import { AxisDetails, ChartData, Point, Trace } from './lib/shared/charts/charts.entities';
 import { Step } from './lib/step/step';
 import { IStep } from './lib/step/step.entities';
 import { TransferFunction } from './lib/transferFunction/transferFunction';
-import { TransferFunctionInput } from './lib/transferFunction/transferFunction.entities';
+import {
+  Axis,
+  BodeChart,
+  ChartOutput,
+  ITransferFunction,
+  NyquistChart,
+  RootLocusOutput,
+  TransferFunctionExpression,
+  TransferFunctionInput,
+} from './lib/transferFunction/transferFunction.entities';
 
 const _calculateTransferFunction: ICalculateTransferFunction = new CalculateTransferFunction();
 
@@ -38,7 +51,7 @@ const _convolution: IConvolution = new Convolution(_polynomialOperations);
 const _step: IStep = new Step(_calculateTransferFunction, _inverseLaplace, _convolution);
 const _impulse: IImpulse = new Impulse(_calculateTransferFunction, _inverseLaplace, _convolution);
 
-const transferFunction = (transferFunctionInput: TransferFunctionInput) => {
+const transferFunction = (transferFunctionInput: TransferFunctionInput): ITransferFunction => {
   return new TransferFunction(
     transferFunctionInput,
     0,
@@ -63,6 +76,32 @@ const step = _step.calculatePoints;
 const impulse = _impulse.calculatePoints;
 
 export {
+  ITransferFunction,
+  ICalculateTransferFunction,
+  IRootFinding,
+  IPolynomialOperations,
+  IBode,
+  INyquist,
+  IRootLocus,
+  IStability,
+  IInverseLaplace,
+  IConvolution,
+  IStep,
+  IImpulse,
+  TransferFunctionInput,
+  Axis,
+  ChartData,
+  TransferFunctionExpression,
+  Complex,
+  BodeOutput,
+  NyquistOutput,
+  NyquistChart,
+  BodeChart,
+  Point,
+  RootLocusOutput,
+  ChartOutput,
+  Trace,
+  AxisDetails,
   transferFunction,
   calculateTransferFunctionValue,
   findRoots,

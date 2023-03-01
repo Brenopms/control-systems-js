@@ -45,6 +45,7 @@
     "src/**/*.ts"
   ],
   "exclude": [
+    "dist/**",
     "build/**",
     "node_modules/**"
   ],
