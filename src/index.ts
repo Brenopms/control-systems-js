@@ -51,7 +51,7 @@ const _convolution: IConvolution = new Convolution(_polynomialOperations);
 const _step: IStep = new Step(_calculateTransferFunction, _inverseLaplace, _convolution);
 const _impulse: IImpulse = new Impulse(_calculateTransferFunction, _inverseLaplace, _convolution);
 
-const transferFunction = (transferFunctionInput: TransferFunctionInput): ITransferFunction => {
+const transferFunction = (transferFunctionInput: TransferFunctionInput): TransferFunction => {
   return new TransferFunction(
     transferFunctionInput,
     0,
@@ -65,15 +65,15 @@ const transferFunction = (transferFunctionInput: TransferFunctionInput): ITransf
   );
 };
 
-const calculateTransferFunctionValue = _calculateTransferFunction.calculateValue;
-const findRoots = _rootLocus.findRootLocus;
-const bode = _bode.calculatePoints;
-const nyquist = _nyquist.calculatePoints;
-const isStable = _stability.isStable;
-const inverseLaplace = _inverseLaplace.execute;
-const convolute = _convolution.execute;
-const step = _step.calculatePoints;
-const impulse = _impulse.calculatePoints;
+const calculateTransferFunctionValue = _calculateTransferFunction.calculateValue.bind(_calculateTransferFunction);
+const findRoots = _rootLocus.findRootLocus.bind(_rootLocus);
+const bode = _bode.calculatePoints.bind(_bode);
+const nyquist = _nyquist.calculatePoints.bind(_nyquist);
+const isStable = _stability.isStable.bind(_stability);
+const inverseLaplace = _inverseLaplace.execute.bind(_inverseLaplace);
+const convolute = _convolution.execute.bind(_convolution);
+const step = _step.calculatePoints.bind(_step);
+const impulse = _impulse.calculatePoints.bind(_impulse);
 
 export {
   ITransferFunction,
