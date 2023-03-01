@@ -90,7 +90,9 @@ export class TransferFunction implements ITransferFunction {
 
     if (!this.stability.isStable(input.denominator)) {
       throw new Error(
-        `The given system is unstable. The package doesn't support unstable transfer functions. System: ${input}`
+        `The given system is unstable. The package doesn't support unstable transfer functions. System: ${JSON.stringify(
+          input
+        )}`
       );
     }
   }
