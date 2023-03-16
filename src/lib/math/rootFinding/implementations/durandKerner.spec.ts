@@ -48,6 +48,14 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
     expect(roots).toMatchObject([]);
   });
 
+  it('Should return an empty array for a constant expression', () => {
+    const coefficients = [complex(1, 0)];
+    const durandKerner = new DurandKerner();
+    const roots = durandKerner.findRoots(coefficients);
+
+    expect(roots).toMatchObject([]);
+  });
+
   it('Should return the correct roots for the equation: x² - 3x + 2', () => {
     const coefficients = [complex('1'), complex('-3'), complex('2')];
     const durandKerner = new DurandKerner();

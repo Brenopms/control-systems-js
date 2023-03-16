@@ -149,11 +149,11 @@ export class DurandKerner implements IRootFinding {
       throw new Error('Missing or invalid coefficients');
     }
 
-    const monicCoefficients = (coefficients = this.toMonicForm(coefficients));
-
-    if (monicCoefficients.length === 0) {
+    if (coefficients.length === 0 || coefficients.length === 1) {
       return [];
     }
+
+    const monicCoefficients = (coefficients = this.toMonicForm(coefficients));
 
     const initialResult = complex(0.4, 0.9);
     const initialRoots: Complex[] = this.generateInitialRootGuess(monicCoefficients.length, initialResult);
