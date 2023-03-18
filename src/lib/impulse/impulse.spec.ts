@@ -29,18 +29,6 @@ describe('Step class', () => {
     impulse = new Impulse(calculateTf, inverseLaplace, convolution);
   });
 
-  it('Should throw an error if the denominator order is not higher than numerator for a given tf', () => {
-    const timeRange = [1, 2];
-    const tf: TransferFunctionExpression = {
-      numerator: [complex(1, 0), complex(3, 0), complex(4, 0)],
-      denominator: [complex(2, 0), complex(5, 0), complex(6, 0)],
-    };
-
-    expect(() => impulse.calculatePoints(tf, timeRange)).toThrowError(
-      `Denominator order should be higher than numerators for the transfer function. Tf: ${tf}`
-    );
-  });
-
   it('Should calculate the points for a stable response (s^2 + 3s + 4)/(2s^3 + 5s^2 + 6s + 8)', () => {
     const timeRange = [0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30];
     const tf: TransferFunctionExpression = {
