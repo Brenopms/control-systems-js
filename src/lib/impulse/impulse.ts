@@ -16,10 +16,6 @@ export class Impulse implements IImpulse {
   ) {}
 
   calculatePoints(tf: TransferFunctionExpression, timeRange: number[]): Point<number>[] {
-    if (tf.denominator.length <= tf.numerator.length) {
-      throw new Error(`Denominator order should be higher than numerators for the transfer function. Tf: ${tf}`);
-    }
-
     // impulse = delta(t)
     const impulseExpression: TransferFunctionExpression = {
       numerator: [complex(1, 0)],
