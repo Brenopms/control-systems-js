@@ -2,6 +2,7 @@ import { Complex } from 'mathjs';
 
 import { Bode } from './lib/bode/bode';
 import { BodeOutput, IBode } from './lib/bode/bode.entities';
+import { expressionToString } from './lib/helpers/expressionToString';
 import { Impulse } from './lib/impulse/impulse';
 import { IImpulse } from './lib/impulse/impulse.entities';
 import { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
@@ -75,7 +76,7 @@ const convolute = _convolution.execute.bind(_convolution);
 const step = _step.calculatePoints.bind(_step);
 const impulse = _impulse.calculatePoints.bind(_impulse);
 
-export {
+export type {
   ITransferFunction,
   ICalculateTransferFunction,
   IRootFinding,
@@ -102,6 +103,9 @@ export {
   ChartOutput,
   Trace,
   AxisDetails,
+};
+
+export {
   transferFunction,
   calculateTransferFunctionValue,
   findRoots,
@@ -112,4 +116,5 @@ export {
   convolute,
   step,
   impulse,
+  expressionToString,
 };

@@ -4,6 +4,7 @@
     "target": "es2017",
     "outDir": "dist/esm",
     "rootDir": "src",
+    "sourceRoot": "src",
     "moduleResolution": "node",
     "module": "ES2020",
     "declaration": true,
