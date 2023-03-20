@@ -1,6 +1,6 @@
 import { complex, Complex } from 'mathjs';
 
-import { BodeOutput, IBode } from '../bode/bode.entities';
+import { IBode } from '../bode/bode.entities';
 import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
@@ -8,17 +8,16 @@ import { range } from '../helpers/range';
 import { IImpulse } from '../impulse/impulse.entities';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IStability } from '../math/stability/stability.entities';
-import { INyquist, NyquistOutput } from '../nyquist/nyquist.entities';
+import { INyquist } from '../nyquist/nyquist.entities';
 import { IRootLocus } from '../rootLocus/rootLocus.entities';
 import { Point } from '../shared/charts/charts.entities';
 import { IStep } from '../step/step.entities';
 
 import {
-  BodeChart,
-  ChartOutput,
+  BodeData,
   ITransferFunction,
-  NyquistChart,
-  RootLocusOutput,
+  NyquistData,
+  RootLocusData,
   TransferFunctionExpression,
   TransferFunctionInput,
 } from './transferFunction.entities';
@@ -123,134 +122,40 @@ export class TransferFunction implements ITransferFunction {
     return this.zeros;
   }
 
-  private mapRootLocusRootsToChart(rootLocusRoots: Complex[][], gains: number[]): RootLocusOutput {
+  private mapRootLocusRootsToChart(rootLocusRoots: Complex[][], gains: number[]): RootLocusData {
     const groupedRoots = groupByIndex(rootLocusRoots);
-    const output: RootLocusOutput = {
+    const output: RootLocusData = {
       gains,
-      chartOutput: {
-        data: groupedRoots.map((roots) => ({ x: roots.map((root) => root.re), y: roots.map((root) => root.im) })),
-        details: {
-          name: 'Root Locus',
-          xAxis: {
-            label: 'Real Value',
-          },
-          yAxis: {
-            label: 'Imaginary Value',
-          },
-        },
-      },
+      roots: groupedRoots.map((roots) => roots.map((root) => ({ x: root.re, y: root.im }))),
     };
 
     return output;
   }
 
-  rlocus(k = DEFAULT_GAINS) {
+  rlocus(k = DEFAULT_GAINS): RootLocusData {
     const rootLocusRoots = this.rootLocus.findRootLocus(this.tf, k);
     const chartOutput = this.mapRootLocusRootsToChart(rootLocusRoots, k);
     return chartOutput;
   }
 
-  private mapBodeOutputToChart(bodePoints: BodeOutput) {
-    const output: BodeChart = {
-      magnitude: {
-        x: {
-          label: 'Frequency',
-          values: [...bodePoints?.magnitude.map((item) => item?.x)],
-        },
-        y: {
-          label: 'Magnitude (dB)',
-          values: [...bodePoints?.magnitude.map((item) => item?.y)],
-        },
-      },
-      phase: {
-        x: {
-          label: 'Frequency',
-          values: [...bodePoints?.phase.map((item) => item?.x)],
-        },
-        y: {
-          label: 'Phase (deg)',
-          values: [...bodePoints?.phase.map((item) => item?.y)],
-        },
-      },
-    };
-    return output;
-  }
-
-  bode(frequencyRange = DEFAULT_FREQUENCY_RANGE): BodeChart {
+  bode(frequencyRange = DEFAULT_FREQUENCY_RANGE): BodeData {
     const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), frequencyRange);
-    const bodeChart = this.mapBodeOutputToChart(bodeOutput);
-    return bodeChart;
+    return bodeOutput;
   }
 
-  private mapNyquistOutputToChart(nyquistPoints: NyquistOutput): NyquistChart {
-    const data: NyquistChart = {
-      points: {
-        x: {
-          label: 'Real Axis',
-          values: nyquistPoints.points.map((point) => point.x),
-        },
-        y: {
-          label: 'Imaginary Axis',
-          values: nyquistPoints.points.map((point) => point.y),
-        },
-      },
-      correspondingPoints: {
-        x: {
-          label: 'Real Axis',
-          values: nyquistPoints.correspondingPoints.map((point) => point.x),
-        },
-        y: {
-          label: 'Imaginary Axis',
-          values: nyquistPoints.correspondingPoints.map((point) => point.y),
-        },
-      },
-    };
-
-    return data;
-  }
-
-  nyquist(frequencyRange = DEFAULT_FREQUENCY_RANGE): NyquistChart {
+  nyquist(frequencyRange = DEFAULT_FREQUENCY_RANGE): NyquistData {
     const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), frequencyRange);
-    const nyquistChart = this.mapNyquistOutputToChart(nyquistPoints);
-    return nyquistChart;
+    return nyquistPoints;
   }
 
-  private mapStepOutputToChart(points: Point<number>[]): ChartOutput {
-    const output: ChartOutput = {
-      x: {
-        label: 'Time (s)',
-        values: points.map((point) => point.x),
-      },
-      y: {
-        label: 'Magnitude',
-        values: points.map((point) => point.y),
-      },
-    };
-    return output;
-  }
-
-  step(timeRange = DEFAULT_TIME_RANGE): ChartOutput {
+  step(timeRange = DEFAULT_TIME_RANGE): Point<number>[] {
     const stepPoints = this.stepCalculator.calculatePoints(this.tf, timeRange);
-    return this.mapStepOutputToChart(stepPoints);
+    return stepPoints;
   }
 
-  private mapImpulseOutputToChart(points: Point<number>[]): ChartOutput {
-    const output: ChartOutput = {
-      x: {
-        label: 'Time (s)',
-        values: points.map((point) => point.x),
-      },
-      y: {
-        label: 'Magnitude',
-        values: points.map((point) => point.y),
-      },
-    };
-    return output;
-  }
-
-  impulse(timeRange = DEFAULT_TIME_RANGE): ChartOutput {
+  impulse(timeRange = DEFAULT_TIME_RANGE): Point<number>[] {
     const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, timeRange);
-    return this.mapImpulseOutputToChart(impulsePoints);
+    return impulsePoints;
   }
 }
 

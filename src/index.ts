@@ -22,17 +22,15 @@ import { INyquist } from './lib/nyquist/nyquist.entities';
 import { NyquistOutput } from './lib/nyquist/nyquist.entities';
 import { RootLocus } from './lib/rootLocus/rootLocus';
 import { IRootLocus } from './lib/rootLocus/rootLocus.entities';
-import { AxisDetails, ChartData, Point, Trace } from './lib/shared/charts/charts.entities';
+import { Point } from './lib/shared/charts/charts.entities';
 import { Step } from './lib/step/step';
 import { IStep } from './lib/step/step.entities';
 import { TransferFunction } from './lib/transferFunction/transferFunction';
 import {
-  Axis,
-  BodeChart,
-  ChartOutput,
+  BodeData,
   ITransferFunction,
-  NyquistChart,
-  RootLocusOutput,
+  NyquistData,
+  RootLocusData,
   TransferFunctionExpression,
   TransferFunctionInput,
 } from './lib/transferFunction/transferFunction.entities';
@@ -90,19 +88,14 @@ export type {
   IStep,
   IImpulse,
   TransferFunctionInput,
-  Axis,
-  ChartData,
   TransferFunctionExpression,
   Complex,
   BodeOutput,
   NyquistOutput,
-  NyquistChart,
-  BodeChart,
+  NyquistData,
+  BodeData,
   Point,
-  RootLocusOutput,
-  ChartOutput,
-  Trace,
-  AxisDetails,
+  RootLocusData,
 };
 
 export {

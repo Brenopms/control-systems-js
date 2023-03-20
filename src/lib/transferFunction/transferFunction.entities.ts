@@ -1,6 +1,6 @@
 import { Complex } from 'mathjs';
 
-import { ChartData } from '../shared/charts/charts.entities';
+import { Point } from '../shared/charts/charts.entities';
 
 export interface TransferFunctionInput {
   numerator: number[];
@@ -12,28 +12,18 @@ export interface TransferFunctionExpression {
   denominator: Complex[];
 }
 
-export interface Axis {
-  label: string;
-  values: number[];
+export interface BodeData {
+  magnitude: Point<number>[];
+  phase: Point<number>[];
 }
 
-export interface ChartOutput {
-  x: Axis;
-  y: Axis;
+export interface NyquistData {
+  points: Point<number>[];
+  correspondingPoints: Point<number>[];
 }
 
-export interface BodeChart {
-  magnitude: ChartOutput;
-  phase: ChartOutput;
-}
-
-export interface NyquistChart {
-  points: ChartOutput;
-  correspondingPoints: ChartOutput;
-}
-
-export interface RootLocusOutput {
-  chartOutput: ChartData<number>;
+export interface RootLocusData {
+  roots: Point<number>[][];
   gains: number[];
 }
 
@@ -94,14 +84,14 @@ export interface ITransferFunction {
    * It returns a ready to input chart data, with x and y axis
    * @alias impulse
    */
-  impulse(timeRange?: number[]): ChartOutput;
+  impulse(timeRange?: number[]): Point<number>[];
 
   /**
    * Calculates the step response of a dynamic system model.
    * It returns a ready to input chart data, with x and y axis
    * @alias step
    */
-  step(timeRange?: number[]): ChartOutput;
+  step(timeRange?: number[]): Point<number>[];
 
   /****************************
    *
@@ -115,14 +105,14 @@ export interface ITransferFunction {
    * and the other for the phase in degrees of the system response as a function of frequency
    * @alias bode
    */
-  bode(frequencyRange?: number[]): BodeChart;
+  bode(frequencyRange?: number[]): BodeData;
 
   /**
    * Given a frequency range, it calculates the real and
    * imaginary part of the transform function evaluated at each frequency
    * @alias nyquist
    */
-  nyquist(frequencyRange?: number[]): NyquistChart;
+  nyquist(frequencyRange?: number[]): NyquistData;
 
   /****************************
    *
@@ -166,5 +156,5 @@ export interface ITransferFunction {
    * @param k Feedback gain
    * @alias rlocus
    */
-  rlocus(k?: number[]): RootLocusOutput;
+  rlocus(k?: number[]): RootLocusData;
 }
