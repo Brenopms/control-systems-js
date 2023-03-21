@@ -12,6 +12,8 @@ Systems Control Utility Library written in Typescript
 
 This library consists in a number of utility functions for aiding in system control analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package relies on [Mathjs](https://mathjs.org/) for complex number basic operations, but most of the core functionality is implemented in the repository.
 
+A demo of the library functionalities can be seen [here](https://brenopms.github.io/systems-controls-js-demo/)
+
 ## Features
 
 - Fully typed functions with support for both CSJ and ESM modules
