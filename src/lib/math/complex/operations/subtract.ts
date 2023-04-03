@@ -2,6 +2,11 @@ import { Complex } from '../complex';
 import { isComplex } from '../utils/isComplex';
 import { isNumber } from '../utils/isNumber';
 
+/**
+ * Subtract two numbers (a-b)
+ * @param a
+ * @param b
+ */
 export function subtract(a: Complex, b: Complex): Complex;
 export function subtract(a: Complex, b: number): Complex;
 export function subtract(a: number, b: Complex): Complex;

@@ -1,5 +1,10 @@
 import { Complex } from '../complex';
 
+/**
+ * Calculates log(sqrt(a^2+b^2)) in a way to avoid overflows
+ * @param value
+ * @returns
+ */
 export const logHypot = (value: Complex): number => {
   const { re, im } = value;
 

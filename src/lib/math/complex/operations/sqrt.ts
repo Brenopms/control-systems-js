@@ -3,6 +3,10 @@ import { isNumber } from '../utils/isNumber';
 
 import { abs } from './abs';
 
+/**
+ * Calculates the square root of a number
+ * @param value
+ */
 export function sqrt(value: number): number;
 export function sqrt(value: Complex): Complex;
 export function sqrt(value: number | Complex): number | Complex {

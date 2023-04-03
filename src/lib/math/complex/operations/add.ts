@@ -2,6 +2,11 @@ import { Complex } from '../complex';
 import { isComplex } from '../utils/isComplex';
 import { isNumber } from '../utils/isNumber';
 
+/**
+ * Add two or values a + b
+ * @param a
+ * @param b
+ */
 export function add(a: Complex, b: Complex): Complex;
 export function add(a: Complex, b: number): Complex;
 export function add(a: number, b: Complex): Complex;

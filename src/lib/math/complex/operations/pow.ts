@@ -52,6 +52,11 @@ const complexPow = (base: Complex, exponent: Complex): Complex => {
   };
 };
 
+/**
+ * Calculates the power of a number, given an exponent (base)^exponent
+ * @param base
+ * @param exponent
+ */
 export function pow(base: Complex, exponent: Complex): Complex;
 export function pow(base: number, exponent: Complex): Complex;
 export function pow(base: Complex, exponent: number): Complex;

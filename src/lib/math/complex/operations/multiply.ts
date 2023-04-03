@@ -2,6 +2,11 @@ import { Complex } from '../complex';
 import { isComplex } from '../utils/isComplex';
 import { isNumber } from '../utils/isNumber';
 
+/**
+ * Multiply two values (a*b)
+ * @param a
+ * @param b
+ */
 export function multiply(a: Complex, b: Complex): Complex;
 export function multiply(a: Complex, b: number): Complex;
 export function multiply(a: number, b: Complex): Complex;

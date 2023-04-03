@@ -2,6 +2,11 @@ import { Complex } from '../complex';
 import { isComplex } from '../utils/isComplex';
 import { isNumber } from '../utils/isNumber';
 
+/**
+ * Divides two values (a/b)
+ * @param a
+ * @param b
+ */
 export function divide(a: Complex, b: Complex): Complex;
 export function divide(a: Complex, b: number): Complex;
 export function divide(a: number, b: Complex): Complex;
