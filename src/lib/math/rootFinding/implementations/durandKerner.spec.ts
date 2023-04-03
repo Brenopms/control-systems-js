@@ -1,7 +1,6 @@
-import { complex, Complex } from 'mathjs';
 import { describe, expect, it } from 'vitest';
 
-import { closeTo } from '../../../../test/helpers/closeTo';
+import { complex, Complex } from '../../complex';
 
 import { DurandKerner } from './durandKerner';
 
@@ -57,7 +56,7 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
   });
 
   it('Should return the correct roots for the equation: x² - 3x + 2', () => {
-    const coefficients = [complex('1'), complex('-3'), complex('2')];
+    const coefficients = [complex(1, 0), complex(-3, 0), complex(2, 0)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION);
@@ -74,16 +73,14 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
       { re: 1, im: 0 },
     ].sort(sortRoots);
 
-    const coefficients = [complex('1'), complex('-2'), complex('1')];
+    const coefficients = [complex(1, 0), complex(-2, 0), complex(1, 0)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
-      expect(result).toMatchObject({
-        re: closeTo(expectedResults[index].re, PRECISION),
-        im: closeTo(expectedResults[index].im, PRECISION),
-      });
+      expect(result.re).toBeCloseTo(expectedResults[index].re);
+      expect(result.im).toBeCloseTo(expectedResults[index].im);
     }
   });
 
@@ -96,16 +93,14 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
       { re: 3, im: 0 },
     ].sort(sortRoots);
 
-    const coefficients = [complex('1'), complex('0'), complex('-13'), complex('0'), complex('36'), complex('0')];
+    const coefficients = [complex(1, 0), complex(0, 0), complex(-13, 0), complex(0, 0), complex(36, 0), complex(0, 0)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
-      expect(result).toMatchObject({
-        re: closeTo(expectedResults[index].re, PRECISION),
-        im: closeTo(expectedResults[index].im, PRECISION),
-      });
+      expect(result.re).toBeCloseTo(expectedResults[index].re);
+      expect(result.im).toBeCloseTo(expectedResults[index].im);
     }
   });
 
@@ -114,18 +109,16 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
       { re: -1, im: 0 },
       { re: 0, im: 1 },
       { re: 0, im: -1 },
-    ].sort(sortRoots);
+    ];
 
-    const coefficients = [complex('1'), complex('1'), complex('1'), complex('1')];
+    const coefficients = [complex(1, 0), complex(1, 0), complex(1, 0), complex(1, 0)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
-      expect(result).toMatchObject({
-        re: closeTo(expectedResults[index].re, PRECISION),
-        im: closeTo(expectedResults[index].im, PRECISION),
-      });
+      expect(result.re).toBeCloseTo(expectedResults[index].re);
+      expect(result.im).toBeCloseTo(expectedResults[index].im);
     }
   });
 
@@ -135,16 +128,14 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
       { re: 0, im: 1 },
     ].sort(sortRoots);
 
-    const coefficients = [complex('1 + 3i'), complex('2 + 2i'), complex('3 + i')];
+    const coefficients = [complex(1, 3), complex(2, 2), complex(3, 1)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
-      expect(result).toMatchObject({
-        re: closeTo(expectedResults[index].re, PRECISION),
-        im: closeTo(expectedResults[index].im, PRECISION),
-      });
+      expect(result.re).toBeCloseTo(expectedResults[index].re);
+      expect(result.im).toBeCloseTo(expectedResults[index].im);
     }
   });
 
@@ -155,16 +146,14 @@ describe('Testing DurandKerner class to find roots of a polynomial', () => {
       { re: -1.74685e-1, im: -1.5468688872 },
     ].sort(sortRoots);
 
-    const coefficients = [complex('1 + i'), complex('2 + 2i'), complex('3 + 3i'), complex('4 + 4i')];
+    const coefficients = [complex(1, 1), complex(2, 2), complex(3, 3), complex(4, 4)];
     const durandKerner = new DurandKerner();
 
     const roots = durandKerner.findRoots(coefficients, MAX_ITERATIONS, PRECISION).sort(sortRoots);
 
     for (const [index, result] of roots.entries()) {
-      expect(result).toMatchObject({
-        re: closeTo(expectedResults[index].re, PRECISION),
-        im: closeTo(expectedResults[index].im, PRECISION),
-      });
+      expect(result.re).toBeCloseTo(expectedResults[index].re);
+      expect(result.im).toBeCloseTo(expectedResults[index].im);
     }
   });
 });

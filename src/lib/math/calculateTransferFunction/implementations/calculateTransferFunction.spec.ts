@@ -1,7 +1,7 @@
-import { complex } from 'mathjs';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
+import { complex } from '../../complex';
 import { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
 
 import { CalculateTransferFunction } from './calculateTransferFunction';

@@ -1,5 +1,4 @@
-import { Complex } from 'mathjs';
-
+import { Complex } from '../math/complex';
 import { Point } from '../shared/charts/charts.entities';
 
 export interface TransferFunctionInput {

@@ -1,6 +1,5 @@
-import { add, Complex, multiply, subtract } from 'mathjs';
-
 import { range } from '../../../helpers/range';
+import { add, Complex, multiply, subtract } from '../../complex';
 import { IPolynomialOperations } from '../PolynomialOperations.entities';
 
 /**
@@ -35,7 +34,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     if (!Array.isArray(pol1) || !Array.isArray(pol2)) {
       return {
         isValid: false,
-        error: 'Invalid Polynomials type. They should be an array of umbers or complex numbers',
+        error: 'Invalid Polynomials type. They should be an array of numbers or complex numbers',
       };
     }
 
@@ -62,7 +61,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     return highestOrder;
   }
 
-  add<T extends number | Complex>(pol1: T[], pol2: T[]): T[] {
+  add<T extends Complex>(pol1: T[], pol2: T[]): T[] {
     const { isValid, error } = this.checkPolynomials(pol1, pol2);
     if (!isValid) {
       throw new Error(error);
@@ -80,7 +79,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     return this.reversePolynomial(resultPolynomial);
   }
 
-  subtract<T extends number | Complex>(pol1: T[], pol2: T[]): T[] {
+  subtract<T extends Complex>(pol1: T[], pol2: T[]): T[] {
     const { isValid, error } = this.checkPolynomials(pol1, pol2);
     if (!isValid) {
       throw new Error(error);
@@ -98,7 +97,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     return this.reversePolynomial(resultPolynomial);
   }
 
-  multiply<T extends number | Complex>(pol1: T[], pol2: T[]): T[] {
+  multiply<T extends Complex>(pol1: T[], pol2: T[]): T[] {
     const { isValid, error } = this.checkPolynomials(pol1, pol2);
     if (!isValid) {
       throw new Error(error);
@@ -113,7 +112,7 @@ export class PolynomialOperations implements IPolynomialOperations {
     const newPolSize = polSize1 + polSize2 - 1;
 
     //Initializing result array with zeros
-    const result: (number | Complex)[] = Array<number>(newPolSize).fill(0);
+    const result: Complex[] = Array<Complex>(newPolSize).fill({ re: 0, im: 0 });
 
     for (const i of range(polSize1)) {
       for (const j of range(polSize2)) {

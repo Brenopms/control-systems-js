@@ -1,8 +1,8 @@
-import { complex } from 'mathjs';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from '../math/calculateTransferFunction/implementations/calculateTransferFunction';
+import { complex } from '../math/complex';
 import { Convolution } from '../math/convolution/convolution';
 import { IConvolution } from '../math/convolution/convolution.entities';
 import { GaverStehfest } from '../math/inverseLaplace/implementations/gaverStehfest';

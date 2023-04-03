@@ -1,6 +1,5 @@
-import { complex } from 'mathjs';
-
 import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import { complex } from '../math/complex';
 import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 import { INyquist, NyquistOutput } from './nyquist.entities';

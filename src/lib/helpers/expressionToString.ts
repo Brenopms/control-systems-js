@@ -1,4 +1,4 @@
-import { Complex } from 'mathjs';
+import { Complex } from '../math/complex';
 
 const shouldAddNumberToExpression = (num: Complex, expressionLength: number, index: number) => {
   // Should cover last coefficient if the value is 1

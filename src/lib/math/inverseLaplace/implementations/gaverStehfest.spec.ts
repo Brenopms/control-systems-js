@@ -1,8 +1,8 @@
-import { complex } from 'mathjs';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
 import { CalculateTransferFunction } from '../../calculateTransferFunction/implementations/calculateTransferFunction';
+import { complex } from '../../complex';
 import { IInverseLaplace } from '../inverseLaplace.entities';
 
 import { GaverStehfest } from './gaverStehfest';

@@ -1,6 +1,5 @@
-import { complex } from 'mathjs';
-
 import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import { complex } from '../math/complex';
 import { IConvolution } from '../math/convolution/convolution.entities';
 import { IInverseLaplace } from '../math/inverseLaplace/inverseLaplace.entities';
 import { Point } from '../shared/charts/charts.entities';

@@ -1,4 +1,4 @@
-import { Complex } from 'mathjs';
+import { Complex } from '../complex';
 
 export interface IRootFinding {
   /**

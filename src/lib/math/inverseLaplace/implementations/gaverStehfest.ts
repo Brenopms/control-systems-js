@@ -1,6 +1,5 @@
-import { add, Complex, complex, divide, log, multiply, pow } from 'mathjs';
-
 import { factorial } from '../../../helpers/factorial';
+import { add, Complex, complex, divide, multiply, pow } from '../../complex';
 import { IInverseLaplace } from '../inverseLaplace.entities';
 
 export class GaverStehfest implements IInverseLaplace {
@@ -46,7 +45,7 @@ export class GaverStehfest implements IInverseLaplace {
     const nonZeroTime = t || this.SMALL_NUMBER;
 
     let sum = complex(0, 0);
-    const ln2onT = divide(log(2.0), t || nonZeroTime); // Avoid division by zero
+    const ln2onT = divide(Math.log(2.0), t || nonZeroTime); // Avoid division by zero
     for (let n = 1; n <= L; n++) {
       const p = multiply(n, ln2onT);
       sum = add(sum, multiply(coefficients[n - 1], fn(complex(p, 0)))) as Complex;

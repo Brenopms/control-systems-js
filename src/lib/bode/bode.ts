@@ -1,6 +1,5 @@
-import { add, arg, Complex, complex, pow, sqrt } from 'mathjs';
-
 import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import { add, arg, Complex, complex, pow, sqrt } from '../math/complex';
 import { Point } from '../shared/charts/charts.entities';
 import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 

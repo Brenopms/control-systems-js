@@ -1,5 +1,4 @@
-import { clone } from 'mathjs';
-
+import { deepClone } from '../../../helpers/deepClone';
 import { IStability } from '../stability.entities';
 
 /**
@@ -49,7 +48,7 @@ export class RouthHurwitzStability implements IStability {
   private computeRHTable(matrix: number[][]) {
     const rows = matrix.length;
     const cols = matrix[0].length;
-    const computedMatrix = clone(matrix);
+    const computedMatrix = deepClone(matrix);
 
     // for each of the remaining rows
     for (let i = 2; i < rows; i++) {

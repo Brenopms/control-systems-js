@@ -1,5 +1,3 @@
-import { Complex } from 'mathjs';
-
 import { Bode } from './lib/bode/bode';
 import { BodeOutput, IBode } from './lib/bode/bode.entities';
 import { expressionToString } from './lib/helpers/expressionToString';
@@ -7,6 +5,7 @@ import { Impulse } from './lib/impulse/impulse';
 import { IImpulse } from './lib/impulse/impulse.entities';
 import { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from './lib/math/calculateTransferFunction/implementations/calculateTransferFunction';
+import { Complex, complex } from './lib/math/complex';
 import { Convolution } from './lib/math/convolution/convolution';
 import { IConvolution } from './lib/math/convolution/convolution.entities';
 import { GaverStehfest } from './lib/math/inverseLaplace/implementations/gaverStehfest';
@@ -99,6 +98,7 @@ export type {
 };
 
 export {
+  complex,
   transferFunction,
   calculateTransferFunctionValue,
   findRoots,

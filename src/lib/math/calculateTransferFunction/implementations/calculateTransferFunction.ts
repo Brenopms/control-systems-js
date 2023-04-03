@@ -1,6 +1,5 @@
-import { add, Complex, complex, divide, multiply, pow } from 'mathjs';
-
 import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
+import { add, Complex, complex, divide, multiply, pow } from '../../complex';
 import { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
 
 export class CalculateTransferFunction implements ICalculateTransferFunction {

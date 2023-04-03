@@ -1,5 +1,4 @@
-import { complex, Complex } from 'mathjs';
-
+import { complex, Complex } from '../math/complex';
 import { IPolynomialOperations } from '../math/polynomialOperations/PolynomialOperations.entities';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';

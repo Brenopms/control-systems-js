@@ -1,5 +1,4 @@
-import { abs, add, Complex, complex, divide, multiply, round, subtract } from 'mathjs';
-
+import { abs, add, Complex, complex, divide, multiply, subtract } from '../../complex';
 import { IRootFinding } from '../rootFinding';
 
 const COMPLEX_ONE = complex(1, 0);
@@ -15,7 +14,7 @@ export class DurandKerner implements IRootFinding {
    */
   private toMonicForm = (coefficients: Complex[]) => {
     let monicCoefficients = [...coefficients];
-    if (coefficients[0] && !coefficients[0].equals(COMPLEX_ONE)) {
+    if (coefficients[0] && !(coefficients[0]?.re === 1 && coefficients[0]?.im === 0)) {
       monicCoefficients = coefficients.map((coefficient) => divide(coefficient, coefficients[0]) as Complex);
     }
 
@@ -129,7 +128,7 @@ export class DurandKerner implements IRootFinding {
    * @param precision
    */
   private setRootsPrecision(roots: Complex[], precision: number): Complex[] {
-    return roots.map((root) => complex(round(root.re, precision), round(root.im, precision)));
+    return roots.map((root) => complex(Number(root.re.toPrecision(precision)), Number(root.im.toPrecision(precision))));
   }
 
   /**

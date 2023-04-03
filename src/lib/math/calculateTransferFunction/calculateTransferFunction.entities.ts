@@ -1,6 +1,5 @@
-import { Complex } from 'mathjs';
-
 import { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
+import { Complex } from '../complex';
 
 /**
  * Evaluates a transfer function, given a complex value S

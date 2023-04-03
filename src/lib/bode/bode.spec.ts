@@ -1,8 +1,8 @@
-import { complex } from 'mathjs';
 import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest';
 
 import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from '../math/calculateTransferFunction/implementations/calculateTransferFunction';
+import { Complex, complex } from '../math/complex';
 import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 import { Bode } from './bode';
@@ -11,7 +11,7 @@ import { IBode } from './bode.entities';
 describe('Bode Class', () => {
   let bode: IBode;
   let calculateTransferFunction: ICalculateTransferFunction;
-  let calculationSpy: SpyInstance<[transferFunction: TransferFunctionExpression, s: math.Complex], math.Complex>;
+  let calculationSpy: SpyInstance<[transferFunction: TransferFunctionExpression, s: Complex], Complex>;
 
   beforeEach(() => {
     calculateTransferFunction = new CalculateTransferFunction();

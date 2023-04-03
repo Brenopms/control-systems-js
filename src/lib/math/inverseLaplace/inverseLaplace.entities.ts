@@ -1,4 +1,4 @@
-import { Complex } from 'mathjs';
+import { Complex } from '../complex';
 
 /**
  * Applies inverse laplace of a function and evaluates it given a passed time

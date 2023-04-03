@@ -1,11 +1,10 @@
-import { complex, Complex } from 'mathjs';
-
 import { IBode } from '../bode/bode.entities';
 import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
 import { IImpulse } from '../impulse/impulse.entities';
+import { Complex, toComplex } from '../math/complex';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IStability } from '../math/stability/stability.entities';
 import { INyquist } from '../nyquist/nyquist.entities';
@@ -68,8 +67,8 @@ export class TransferFunction implements ITransferFunction {
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
-      numerator: this.castInputToComplex(transferFunctionInput.numerator),
-      denominator: this.castInputToComplex(transferFunctionInput.denominator),
+      numerator: toComplex(transferFunctionInput.numerator),
+      denominator: toComplex(transferFunctionInput.denominator),
     };
 
     this.zeros = this.calculateRoots(this.tf.numerator);
@@ -94,10 +93,6 @@ export class TransferFunction implements ITransferFunction {
         )}`
       );
     }
-  }
-
-  private castInputToComplex(input: number[]): Complex[] {
-    return input.map((num) => complex(num, 0));
   }
 
   private calculateRoots = (coefficients: Complex[]) => {
