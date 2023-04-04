@@ -10,12 +10,13 @@ Systems Control Utility Library written in Typescript
 
 ## Purpose
 
-This library consists in a number of utility functions for aiding in system control analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package relies on [Mathjs](https://mathjs.org/) for complex number basic operations, but most of the core functionality is implemented in the repository.
+This library consists in a number of utility functions for aiding in system control analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package uses it's own complex number implementation basic operations, but is, for the most part, compatible with [complexjs](https://github.com/infusion/Complex.js/) and [mathjs](https://mathjs.org/).
 
 A demo of the library functionalities can be seen [here](https://brenopms.github.io/systems-controls-js-demo/)
 
 ## Features
 
+- No external dependencies
 - Fully typed functions with support for both CSJ and ESM modules
 - Stability check using Routh–Hurwitz stability criterion
 - Time response: Step and Impulse responses
@@ -81,12 +82,18 @@ const gains = [1, 10, 100];
 const result = tf.rlocus(gains);
 /* Output:  {
     gains: [1, 10, 100],
-    chartOutput: {
-        data: [{ 
-            x: [-1, -0.34407, -0.061797],
-            y: [-1.732051, -3.645646, -10.229402]
-        }, {...}],
-    }
+    roots: [
+      [
+        { x: -1, y: -1.73205 },
+        { x: -0.34407, y: -3.64565 },
+        { x: -0.0617972, y: -10.2294 }
+      ],
+      [
+        { x: -1, y: 1.73205 },
+        { x: -0.34407, y: 3.64565 },
+        { x: -0.0617972, y: 10.2294 }
+      ]...
+  ]
 } */
 ```
 
@@ -100,23 +107,19 @@ It's also possible to calculate the time-domain response of a given transfer fun
 const times = [0, 5, 10];
 // Response from step input -> tf * 1/s
 const stepResult = tf.step(times)
-/* Output: {
-  x: { label: 'Time (s)', values: [ 0, 5, 10 ] },
-  y: {
-    label: 'Magnitude',
-    values: [ 5.000045238462707e-17, 1.9827148230507823, 2.676961175374944 ]
-  }
-}
+/* Output: [
+  { x: 0, y: 5.0000346656356524e-17 },
+  { x: 5, y: 1.982714789998949 },
+  { x: 10, y: 2.6768427176048286 }
+]
 */
 
 const impulseResult = tf.impulse(times)
-/* Output: {
-  x: { label: 'Time (s)', values: [ 0, 5, 10 ] },
-  y: {
-    label: 'Magnitude',
-    values: [ 1.0001256543898682e-8, 0.2332377966489039, 0.07454351806498688 ]
-  }
-}
+/* Output: [
+  { x: 0, y: 1.0001579459073258e-8 },
+  { x: 5, y: 0.23298395857008558 },
+  { x: 10, y: 0.07467876616635728 }
+]
 */
 
 ```
@@ -130,30 +133,32 @@ We can calculate both Bode Plot and Nyquist Plot points, for frequency analysis.
 ```typescript
 const frequencies = [0, 10, 100]
 const bodeResult = tf.bode(frequencies)
-/*
-{
-  magnitude: {
-    x: { label: 'Frequency', values: [Array] },
-    y: { label: 'Magnitude (dB)', values: [Array] }
-  },
-  phase: {
-    x: { label: 'Frequency', values: [Array] },
-    y: { label: 'Phase (deg)', values: [Array] }
-  }
+/* Output: {
+  magnitude: [
+    { x: 1, y: -3.0102999566398125 },
+    { x: 10, y: -39.59041830161867 },
+    { x: 100, y: -79.99565961654912 }
+  ],
+  phase: [
+    { x: 1, y: -98.130102354156 },
+    { x: 10, y: -179.22853473338537 },
+    { x: 100, y: -179.9991981797909 }
+  ]
 }
 */
 
 const nyquistResult = tf.nyquist(frequencies)
-/*
-{
-  points: {
-    x: { label: 'Real Axis', values: [Array] },
-    y: { label: 'Imaginary Axis', values: [Array] }
-  },
-  correspondingPoints: {
-    x: { label: 'Real Axis', values: [Array] },
-    y: { label: 'Imaginary Axis', values: [Array] }
-  }
+/* Output: {
+  points: [
+    { x: -0.1, y: -0.7 },
+    { x: -0.010481892850193719, y: -0.00014114311811360206 },
+    { x: -0.00010004998298870205, y: -1.4001397479468424e-9 }
+  ],
+  correspondingPoints: [
+    { x: -0.1, y: 0.7 },
+    { x: -0.010481892850193719, y: 0.00014114311811360206 },
+    { x: -0.00010004998298870205, y: 1.4001397479468424e-9 }
+  ]
 }
 */
 ```
@@ -197,15 +202,14 @@ It's also possible to use all of the above functions in a standalone format, sep
 
 The library is in an early-stage, so it has a number of limitations of what it can do, especially comparing to more mature alternatives in other platforms. Here are a couple of them:
 
+- Frequency range and time range can be set, but if not it's not optimized for each system (fixed value)
 - The **precision**, especially for time-domain analysis is considerably bad (10e-1). This is related to the inverse laplace algorithm, where it behaves unpredictably according to the number of coefficients set. Also, may be related to JS float implementations. Further investigation is needed
 - We cannot work with **unstable systems**. The *transferFunction* checks the stability of a given system and throws an error if it's not stable. This is also related to the inverse laplace implementation, that becomes quite a mess when dealing with unstable systems
-- The package relies on [Mathjs](https://mathjs.org/), which makes it quite heavy for front-end usage
 
 ## Next Steps
 
 - Improve Inverse Laplace to improve precision across the library
 - Work with unstable systems
-- Avoid using mathjs to make the package lighter
 - Add the option for the user to set the desired precision for calculating values
 - Improve performance
 - Add State space methods
