@@ -5,6 +5,7 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "typings": "./dist/esm/index.d.ts",
+  "sideEffects": false,
   "repository": "https://github.com/Brenopms/systems-controls-js",
   "license": "MIT",
   "files": [
