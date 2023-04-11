@@ -1,16 +1,16 @@
-# Systems Control JS
+# Control Systems JS
 
-![Deploy](https://github.com/Brenopms/systems-controls-js/workflows/publish/badge.svg)
-![Test](https://github.com/Brenopms/systems-controls-js/workflows/test/badge.svg)
-[![npm version](https://img.shields.io/npm/v/systems-control-js)](https://www.npmjs.com/package/systems-control-js 'View this project on npm')
+![Deploy](https://github.com/Brenopms/control-systems-js/workflows/publish/badge.svg)
+![Test](https://github.com/Brenopms/control-systems-js/workflows/test/badge.svg)
+[![npm version](https://img.shields.io/npm/v/control-systems-js)](https://www.npmjs.com/package/control-systems-js 'View this project on npm')
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-Systems Control Utility Library written in Typescript
+Control Systems Utility Library written in Typescript
 
 ## Purpose
 
-This library consists in a number of utility functions for aiding in system control analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package uses it's own complex number implementation basic operations, but is, for the most part, compatible with [complexjs](https://github.com/infusion/Complex.js/) and [mathjs](https://mathjs.org/).
+This library consists in a number of utility functions for aiding in control systems analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package uses it's own complex number implementation basic operations, but is, for the most part, compatible with [complexjs](https://github.com/infusion/Complex.js/) and [mathjs](https://mathjs.org/).
 
 A demo of the library functionalities can be seen [here](https://brenopms.github.io/systems-controls-js-demo/)
 
@@ -28,11 +28,11 @@ A demo of the library functionalities can be seen [here](https://brenopms.github
 
 ## Installation
 
-`npm install systems-control-js`
+`npm install control-systems-js`
 
 or
 
-`yarn add systems-control-js`
+`yarn add control-systems-js`
 
 ## Usage
 
