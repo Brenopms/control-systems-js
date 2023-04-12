@@ -8,6 +8,8 @@ import { CalculateTransferFunction } from './lib/math/calculateTransferFunction/
 import { Complex, complex } from './lib/math/complex';
 import { Convolution } from './lib/math/convolution/convolution';
 import { IConvolution } from './lib/math/convolution/convolution.entities';
+import { FrequencyRange } from './lib/math/frequencyRange/frequencyRange';
+import { IFrequencyRange } from './lib/math/frequencyRange/frequencyRange.entities';
 import { GaverStehfest } from './lib/math/inverseLaplace/implementations/gaverStehfest';
 import { IInverseLaplace } from './lib/math/inverseLaplace/inverseLaplace.entities';
 import { IPolynomialOperations } from './lib/math/polynomialOperations/PolynomialOperations.entities';
@@ -49,6 +51,8 @@ const _convolution: IConvolution = new Convolution(_polynomialOperations);
 const _step: IStep = new Step(_calculateTransferFunction, _inverseLaplace, _convolution);
 const _impulse: IImpulse = new Impulse(_calculateTransferFunction, _inverseLaplace, _convolution);
 
+const _frequencyRange: IFrequencyRange = new FrequencyRange();
+
 const transferFunction = (transferFunctionInput: TransferFunctionInput): TransferFunction => {
   return new TransferFunction(
     transferFunctionInput,
@@ -59,7 +63,8 @@ const transferFunction = (transferFunctionInput: TransferFunctionInput): Transfe
     _nyquist,
     _stability,
     _step,
-    _impulse
+    _impulse,
+    _frequencyRange
   );
 };
 
@@ -72,6 +77,7 @@ const inverseLaplace = _inverseLaplace.execute.bind(_inverseLaplace);
 const convolute = _convolution.execute.bind(_convolution);
 const step = _step.calculatePoints.bind(_step);
 const impulse = _impulse.calculatePoints.bind(_impulse);
+const getDefaultFrequencyRange = _frequencyRange.getDefault.bind(_frequencyRange);
 
 export type {
   ITransferFunction,
@@ -110,4 +116,5 @@ export {
   step,
   impulse,
   expressionToString,
+  getDefaultFrequencyRange,
 };
