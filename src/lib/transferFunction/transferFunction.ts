@@ -5,6 +5,7 @@ import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
 import { IImpulse } from '../impulse/impulse.entities';
 import { Complex, toComplex } from '../math/complex';
+import { IFrequencyRange } from '../math/frequencyRange/frequencyRange.entities';
 import { IRootFinding } from '../math/rootFinding/rootFinding';
 import { IStability } from '../math/stability/stability.entities';
 import { INyquist } from '../nyquist/nyquist.entities';
@@ -25,15 +26,14 @@ const MAX_ITERATIONS_ROOT = 100;
 const PRECISION = 6;
 const TOLERANCE = 10e-7;
 const DEFAULT_GAINS = range(100);
-// TODO: Figure it out how to calculate ideal frequency range for each transfer function
-const DEFAULT_FREQUENCY_RANGE = boundaryRange(0.01, 100, 0.01);
-// TODO: Figure it out how to calculate ideal time range for each transfer function
 const DEFAULT_TIME_RANGE = boundaryRange(0, 30, 0.1);
 
 export class TransferFunction implements ITransferFunction {
   private readonly tf: TransferFunctionExpression;
   private readonly poles: Complex[];
   private readonly zeros: Complex[];
+  private readonly frequencyRange: number[];
+  private readonly timeRange: number[] = DEFAULT_TIME_RANGE;
 
   private readonly rootFinder: IRootFinding;
   private readonly rootLocus: IRootLocus;
@@ -42,6 +42,7 @@ export class TransferFunction implements ITransferFunction {
   private readonly stability: IStability;
   private readonly stepCalculator: IStep;
   private readonly impulseCalculator: IImpulse;
+  private readonly frequencyRangeCalculator: IFrequencyRange;
 
   constructor(
     transferFunctionInput: TransferFunctionInput,
@@ -52,7 +53,8 @@ export class TransferFunction implements ITransferFunction {
     nyquist: INyquist,
     stability: IStability,
     step: IStep,
-    impulse: IImpulse
+    impulse: IImpulse,
+    frequencyRange: IFrequencyRange
   ) {
     /**
      * Dependency injection
@@ -64,6 +66,7 @@ export class TransferFunction implements ITransferFunction {
     this.stability = stability;
     this.stepCalculator = step;
     this.impulseCalculator = impulse;
+    this.frequencyRangeCalculator = frequencyRange;
 
     this.validateTransferFunctionInput(transferFunctionInput);
     this.tf = {
@@ -73,6 +76,7 @@ export class TransferFunction implements ITransferFunction {
 
     this.zeros = this.calculateRoots(this.tf.numerator);
     this.poles = this.calculateRoots(this.tf.denominator);
+    this.frequencyRange = this.frequencyRangeCalculator.getDefault(this.poles, this.zeros);
   }
 
   private validateTransferFunctionInput(input: TransferFunctionInput): void {
@@ -133,22 +137,22 @@ export class TransferFunction implements ITransferFunction {
     return chartOutput;
   }
 
-  bode(frequencyRange = DEFAULT_FREQUENCY_RANGE): BodeData {
+  bode(frequencyRange = this.frequencyRange): BodeData {
     const bodeOutput = this.bodeCalculator.calculatePoints(this.getExpression(), frequencyRange);
     return bodeOutput;
   }
 
-  nyquist(frequencyRange = DEFAULT_FREQUENCY_RANGE): NyquistData {
+  nyquist(frequencyRange = this.frequencyRange): NyquistData {
     const nyquistPoints = this.nyquistCalculator.calculatePoints(this.getExpression(), frequencyRange);
     return nyquistPoints;
   }
 
-  step(timeRange = DEFAULT_TIME_RANGE): Point<number>[] {
+  step(timeRange = this.timeRange): Point<number>[] {
     const stepPoints = this.stepCalculator.calculatePoints(this.tf, timeRange);
     return stepPoints;
   }
 
-  impulse(timeRange = DEFAULT_TIME_RANGE): Point<number>[] {
+  impulse(timeRange = this.timeRange): Point<number>[] {
     const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, timeRange);
     return impulsePoints;
   }
