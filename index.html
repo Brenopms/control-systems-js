@@ -114,6 +114,7 @@
 <li><em>convolute</em>: Convolves two transfer function expressions</li>
 <li><em>step</em>: Calculates the step response of a dynamic system model.</li>
 <li><em>impulse</em>: Calculates the impulse response of a dynamic system model.</li>
+<li><em>getDefaultFrequencyRange</em>: Calculates an optimal array of frequencies for a given set of poles and zeros for frequency behavior visualization</li>
 </ul>
 
 <a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
@@ -121,7 +122,7 @@
 </a>
 <p>The library is in an early-stage, so it has a number of limitations of what it can do, especially comparing to more mature alternatives in other platforms. Here are a couple of them:</p>
 <ul>
-<li>Frequency range and time range can be set, but if not it&#39;s not optimized for each system (fixed value)</li>
+<li>Time range can be set, but if not it&#39;s not optimized for each system (fixed value)</li>
 <li>The <strong>precision</strong>, especially for time-domain analysis is considerably bad (10e-1). This is related to the inverse laplace algorithm, where it behaves unpredictably according to the number of coefficients set. Also, may be related to JS float implementations. Further investigation is needed</li>
 <li>We cannot work with <strong>unstable systems</strong>. The <em>transferFunction</em> checks the stability of a given system and throws an error if it&#39;s not stable. This is also related to the inverse laplace implementation, that becomes quite a mess when dealing with unstable systems</li>
 </ul>
@@ -189,6 +190,7 @@
 <li class="tsd-kind-function"><a href="functions/convolute.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>convolute</a></li>
 <li class="tsd-kind-function"><a href="functions/expressionToString.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>expression<wbr/>To<wbr/>String</a></li>
 <li class="tsd-kind-function"><a href="functions/findRoots.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>find<wbr/>Roots</a></li>
+<li class="tsd-kind-function"><a href="functions/getDefaultFrequencyRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>get<wbr/>Default<wbr/>Frequency<wbr/>Range</a></li>
 <li class="tsd-kind-function"><a href="functions/impulse.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>impulse</a></li>
 <li class="tsd-kind-function"><a href="functions/inverseLaplace.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>inverse<wbr/>Laplace</a></li>
 <li class="tsd-kind-function"><a href="functions/isStable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>is<wbr/>Stable</a></li>

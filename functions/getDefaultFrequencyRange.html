@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>inverseLaplace | control-systems-js - v1.0.0</title><meta name="description" content="Documentation for control-systems-js - v1.0.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>getDefaultFrequencyRange | control-systems-js - v1.0.0</title><meta name="description" content="Documentation for control-systems-js - v1.0.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,39 +13,44 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../modules.html">control-systems-js - v1.0.0</a></li>
-<li><a href="inverseLaplace.html">inverseLaplace</a></li></ul>
-<h1>Function inverseLaplace</h1></div>
+<li><a href="getDefaultFrequencyRange.html">getDefaultFrequencyRange</a></li></ul>
+<h1>Function getDefaultFrequencyRange</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures tsd-kind-function">
-<li class="tsd-signature tsd-anchor-link" id="inverseLaplace">inverse<wbr/>Laplace<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">)</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#inverseLaplace" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getDefaultFrequencyRange">get<wbr/>Default<wbr/>Frequency<wbr/>Range<span class="tsd-signature-symbol">(</span>poles<span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">[]</span>, zeros<span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">[]</span>, rangeFactor<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, numOfSamples<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><a href="#getDefaultFrequencyRange" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Executes Inverse Laplace transformation and evaluates it given the time argument</p>
+<div class="tsd-comment tsd-typography"><p>Calculates an array of frequencies for a given set of poles and zeros. The range of
+frequencies is determined by the minimum and maximum magnitude of the features and a
+range factor. The number of samples determines the resolution of the frequency range.</p>
+
+<h3>Returns</h3><p>An array of frequencies in radians/second.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>fn: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">)</span></h5>
-<div class="tsd-comment tsd-typography"><p>Laplace function that accepts s as an argument and evaluates it</p>
-</div>
-<ul class="tsd-parameters">
-<li class="tsd-parameter-signature">
-<ul class="tsd-signatures tsd-kind-type-literal">
-<li class="tsd-signature"><span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a></li>
-<li class="tsd-description">
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
+<h5>poles: <a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>An array of complex poles of the system</p>
+</div></li>
 <li>
-<h5>s: <a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a></h4></li></ul></li></ul></li>
+<h5>zeros: <a href="../interfaces/Complex.html" class="tsd-signature-type" data-tsd-kind="Interface">Complex</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>An array of complex zeros of the system</p>
+</div></li>
 <li>
-<h5>time: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>time to evaluate the function at</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> rangeFactor: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>The range factor determines the number of decades
+   covered by the frequency range. Increasing the range factor leads to a wider range
+   of frequencies.</p>
+</div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> numOfSamples: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>The number of samples determines the resolution
+   of the frequency range. Increasing the number of samples leads to a higher
+   resolution but also increases the computation time.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Brenopms/control-systems-js/blob/6640b27/src/lib/math/inverseLaplace/inverseLaplace.entities.ts#L12">lib/math/inverseLaplace/inverseLaplace.entities.ts:12</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/Brenopms/control-systems-js/blob/6640b27/src/lib/math/frequencyRange/frequencyRange.entities.ts#L20">lib/math/frequencyRange/frequencyRange.entities.ts:20</a></li></ul></aside></li></ul></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -96,9 +101,9 @@
 <li class="tsd-kind-function"><a href="convolute.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>convolute</a></li>
 <li class="tsd-kind-function"><a href="expressionToString.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>expression<wbr/>To<wbr/>String</a></li>
 <li class="tsd-kind-function"><a href="findRoots.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>find<wbr/>Roots</a></li>
-<li class="tsd-kind-function"><a href="getDefaultFrequencyRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>get<wbr/>Default<wbr/>Frequency<wbr/>Range</a></li>
+<li class="current tsd-kind-function"><a href="getDefaultFrequencyRange.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>get<wbr/>Default<wbr/>Frequency<wbr/>Range</a></li>
 <li class="tsd-kind-function"><a href="impulse.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>impulse</a></li>
-<li class="current tsd-kind-function"><a href="inverseLaplace.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>inverse<wbr/>Laplace</a></li>
+<li class="tsd-kind-function"><a href="inverseLaplace.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>inverse<wbr/>Laplace</a></li>
 <li class="tsd-kind-function"><a href="isStable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>is<wbr/>Stable</a></li>
 <li class="tsd-kind-function"><a href="nyquist.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>nyquist</a></li>
 <li class="tsd-kind-function"><a href="step.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>step</a></li>
