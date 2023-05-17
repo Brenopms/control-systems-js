@@ -197,12 +197,13 @@ It's also possible to use all of the above functions in a standalone format, sep
 - *convolute*: Convolves two transfer function expressions
 - *step*: Calculates the step response of a dynamic system model.
 - *impulse*: Calculates the impulse response of a dynamic system model.
+- *getDefaultFrequencyRange*: Calculates an optimal array of frequencies for a given set of poles and zeros for frequency behavior visualization
 
 ## Limitations
 
 The library is in an early-stage, so it has a number of limitations of what it can do, especially comparing to more mature alternatives in other platforms. Here are a couple of them:
 
-- Frequency range and time range can be set, but if not it's not optimized for each system (fixed value)
+- Time range can be set, but if not it's not optimized for each system (fixed value)
 - The **precision**, especially for time-domain analysis is considerably bad (10e-1). This is related to the inverse laplace algorithm, where it behaves unpredictably according to the number of coefficients set. Also, may be related to JS float implementations. Further investigation is needed
 - We cannot work with **unstable systems**. The *transferFunction* checks the stability of a given system and throws an error if it's not stable. This is also related to the inverse laplace implementation, that becomes quite a mess when dealing with unstable systems
 
