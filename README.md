@@ -12,7 +12,7 @@ Control Systems Utility Library written in Typescript
 
 This library consists in a number of utility functions for aiding in control systems analysis. The idea is to replicate and implement most of the basic functionalities present in [Matlab's](https://www.mathworks.com/products/control.html), [Octave's](https://octave.sourceforge.io/control/overview.html) and [Python's](https://python-control.readthedocs.io/en/0.9.3.post2/) similar packages, but with the practicality of having them in the web natively. This package uses it's own complex number implementation basic operations, but is, for the most part, compatible with [complexjs](https://github.com/infusion/Complex.js/) and [mathjs](https://mathjs.org/).
 
-A demo of the library functionalities can be seen [here](https://brenopms.github.io/systems-controls-js-demo/)
+A demo of the library functionalities can be seen [here](https://brenopms.github.io/control-systems-js-demo/)
 
 ## Features
 
