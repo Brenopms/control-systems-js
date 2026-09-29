@@ -7,7 +7,7 @@ import type { Complex } from '../complex';
 export interface ICalculateTransferFunction {
   /**
    * Calculates the value of a transfer function expression given a complex s
-   * @param tf Transfer function expression
+   * @param transferFunction Transfer function expression
    * @param s Laplace transform variable value
    */
   calculateValue(transferFunction: TransferFunctionExpression, s: Complex): Complex;

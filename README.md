@@ -3,6 +3,7 @@
 ![Deploy](https://github.com/Brenopms/control-systems-js/workflows/publish/badge.svg)
 ![Test](https://github.com/Brenopms/control-systems-js/workflows/test/badge.svg)
 [![npm version](https://img.shields.io/npm/v/control-systems-js)](https://www.npmjs.com/package/control-systems-js 'View this project on npm')
+[![codecov](https://codecov.io/gh/Brenopms/control-systems-js/branch/main/graph/badge.svg)](https://codecov.io/gh/Brenopms/control-systems-js)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 

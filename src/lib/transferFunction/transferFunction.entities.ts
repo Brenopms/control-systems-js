@@ -59,7 +59,6 @@ export interface ITransferFunction {
   /**
    * Returns the numerator and the denominator expression for a given
    * transfer function
-   * @param options
    * @alias tfdata
    * @example
    * const tf = new TransferFunction({
