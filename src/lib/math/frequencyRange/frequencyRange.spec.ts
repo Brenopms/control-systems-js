@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { Complex, complex } from '../complex';
+import { type Complex, complex } from '../complex';
 
 import { FrequencyRange } from './frequencyRange';
-import { IFrequencyRange } from './frequencyRange.entities';
+import type { IFrequencyRange } from './frequencyRange.entities';
 
 describe('FrequencyRange', () => {
   let frequencyRange: IFrequencyRange;

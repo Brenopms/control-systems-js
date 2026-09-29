@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
+import type { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
 import { CalculateTransferFunction } from '../../calculateTransferFunction/implementations/calculateTransferFunction';
 import { complex } from '../../complex';
-import { IInverseLaplace } from '../inverseLaplace.entities';
+import type { IInverseLaplace } from '../inverseLaplace.entities';
 
 import { GaverStehfest } from './gaverStehfest';
 
@@ -24,7 +24,7 @@ describe('GaverStehfest class', () => {
     };
     const timeDomainResult = gaverStehfest.execute(
       (s) => calculateTransferFunction.calculateValue(transferFunction, s),
-      1
+      1,
     );
     expect(timeDomainResult).toBeCloseTo(-0.728847);
   });
@@ -38,7 +38,7 @@ describe('GaverStehfest class', () => {
     };
     const timeDomainResult = gaverStehfest.execute(
       (s) => calculateTransferFunction.calculateValue(transferFunction, s),
-      10
+      10,
     );
     expect(timeDomainResult).toBeCloseTo(10);
   });
@@ -52,7 +52,7 @@ describe('GaverStehfest class', () => {
     };
     const timeDomainResult = gaverStehfest.execute(
       (s) => calculateTransferFunction.calculateValue(transferFunction, s),
-      Math.PI / 2
+      Math.PI / 2,
     );
     expect(timeDomainResult).toBeCloseTo(0.5);
   });
@@ -66,7 +66,7 @@ describe('GaverStehfest class', () => {
     };
     const timeDomainResult = gaverStehfest.execute(
       (s) => calculateTransferFunction.calculateValue(transferFunction, s),
-      Math.PI / 2
+      Math.PI / 2,
     );
     expect(timeDomainResult).toBeCloseTo((3 * Math.PI) / 4);
   });

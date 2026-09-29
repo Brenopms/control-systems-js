@@ -1,4 +1,4 @@
-import { complex, Complex } from '../complex';
+import { type Complex, complex } from '../complex';
 import { ONE } from '../constants/one';
 import { ZERO } from '../constants/zero';
 import { isComplex } from '../utils/isComplex';
@@ -21,17 +21,17 @@ const complexPow = (base: Complex, exponent: Complex): Complex => {
   // if exponent is real
   if (expIm === 0) {
     if (im === 0 && re > 0) {
-      return { re: Math.pow(re, expReal), im: 0 };
+      return { re: re ** expReal, im: 0 };
     } else if (re === 0) {
       switch (((expReal % 4) + 4) % 4) {
         case 0:
-          return { re: Math.pow(im, expReal), im: 0 };
+          return { re: im ** expReal, im: 0 };
         case 1:
-          return { re: 0, im: Math.pow(im, expReal) };
+          return { re: 0, im: im ** expReal };
         case 2:
-          return { re: -Math.pow(im, expReal), im: 0 };
+          return { re: -(im ** expReal), im: 0 };
         case 3:
-          return { re: 0, im: -Math.pow(im, expReal) };
+          return { re: 0, im: -(im ** expReal) };
       }
     }
   }
@@ -63,7 +63,7 @@ export function pow(base: Complex, exponent: number): Complex;
 export function pow(base: number, exponent: number): number;
 export function pow(base: number | Complex, exponent: number | Complex): number | Complex {
   if (isNumber(base) && isNumber(exponent)) {
-    return Math.pow(base, exponent);
+    return base ** exponent;
   }
 
   const complexBase = isComplex(base) ? base : complex(base, 0);

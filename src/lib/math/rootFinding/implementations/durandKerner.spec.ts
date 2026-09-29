@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { complex, Complex } from '../../complex';
+import { type Complex, complex } from '../../complex';
 
 import { DurandKerner } from './durandKerner';
 

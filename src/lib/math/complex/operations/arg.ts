@@ -1,4 +1,4 @@
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 /**
  * Calculates the argument value of a complex number. Calculates atan2(im/re)

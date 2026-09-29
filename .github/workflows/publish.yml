@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["test"]
     branches: [main]
-    types: 
+    types:
       - completed
 
 jobs:
@@ -12,10 +12,11 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }} && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 26
+          cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
       - name: Publish

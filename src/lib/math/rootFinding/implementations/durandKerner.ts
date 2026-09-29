@@ -1,5 +1,5 @@
-import { abs, add, Complex, complex, divide, multiply, subtract } from '../../complex';
-import { IRootFinding } from '../rootFinding';
+import { abs, add, type Complex, complex, divide, multiply, subtract } from '../../complex';
+import type { IRootFinding } from '../rootFinding';
 
 const COMPLEX_ONE = complex(1, 0);
 
@@ -83,14 +83,13 @@ export class DurandKerner implements IRootFinding {
     initialRoots: Complex[],
     initialResult: Complex,
     maxIterations: number,
-    tolerance: number
+    tolerance: number,
   ): Complex[] {
     let a0 = [...initialRoots];
     const a1 = [];
 
     let result = initialResult;
     let iterCount = 0;
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       for (let i = 0; i < a0.length; i++) {
         result = COMPLEX_ONE;
@@ -109,7 +108,7 @@ export class DurandKerner implements IRootFinding {
 
       if (iterCount > maxIterations) {
         throw new Error(
-          'Could not calculate the roots for the given function, please try to increase the max iterations allowed'
+          'Could not calculate the roots for the given function, please try to increase the max iterations allowed',
         );
       }
 
@@ -138,12 +137,7 @@ export class DurandKerner implements IRootFinding {
    * @param precision
    * @param tolerance
    */
-  findRoots(
-    coefficients: Complex[],
-    maxIterations = 20 * Math.pow(coefficients.length, 2),
-    precision = 6,
-    tolerance = 10e-6
-  ) {
+  findRoots(coefficients: Complex[], maxIterations = 20 * coefficients.length ** 2, precision = 6, tolerance = 10e-6) {
     if (!coefficients || !Array.isArray(coefficients)) {
       throw new Error('Missing or invalid coefficients');
     }
@@ -152,7 +146,7 @@ export class DurandKerner implements IRootFinding {
       return [];
     }
 
-    const monicCoefficients = (coefficients = this.toMonicForm(coefficients));
+    const monicCoefficients = this.toMonicForm(coefficients);
 
     const initialResult = complex(0.4, 0.9);
     const initialRoots: Complex[] = this.generateInitialRootGuess(monicCoefficients.length, initialResult);

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
+import type { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
 import { complex } from '../../complex';
-import { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
+import type { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
 
 import { CalculateTransferFunction } from './calculateTransferFunction';
 

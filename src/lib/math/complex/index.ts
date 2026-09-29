@@ -1,9 +1,6 @@
-export { Complex, complex } from './complex';
+export { type Complex, complex } from './complex';
 export { ONE } from './constants/one';
 export { ZERO } from './constants/zero';
-export { isComplex } from './utils/isComplex';
-export { isNumber } from './utils/isNumber';
-export { isZero } from './utils/isZero';
 export { abs } from './operations/abs';
 export { add } from './operations/add';
 export { arg } from './operations/arg';
@@ -13,4 +10,7 @@ export { multiply } from './operations/multiply';
 export { pow } from './operations/pow';
 export { sqrt } from './operations/sqrt';
 export { subtract } from './operations/subtract';
+export { isComplex } from './utils/isComplex';
+export { isNumber } from './utils/isNumber';
+export { isZero } from './utils/isZero';
 export { toComplex } from './utils/toComplex';

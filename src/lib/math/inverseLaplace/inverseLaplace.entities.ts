@@ -1,4 +1,4 @@
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 /**
  * Applies inverse laplace of a function and evaluates it given a passed time

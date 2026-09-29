@@ -1,9 +1,9 @@
-import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
-import { add, arg, Complex, complex, pow, sqrt } from '../math/complex';
-import { Point } from '../shared/charts/charts.entities';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import { add, arg, type Complex, complex, pow, sqrt } from '../math/complex';
+import type { Point } from '../shared/charts/charts.entities';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
-import { BodeOutput, IBode } from './bode.entities';
+import type { BodeOutput, IBode } from './bode.entities';
 
 export class Bode implements IBode {
   constructor(private calculateTransferFunction: ICalculateTransferFunction) {}

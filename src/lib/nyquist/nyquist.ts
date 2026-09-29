@@ -1,8 +1,8 @@
-import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import type { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { complex } from '../math/complex';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
-import { INyquist, NyquistOutput } from './nyquist.entities';
+import type { INyquist, NyquistOutput } from './nyquist.entities';
 
 export class Nyquist implements INyquist {
   constructor(private calculateTransferFunction: ICalculateTransferFunction) {}

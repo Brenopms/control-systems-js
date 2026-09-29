@@ -1,5 +1,5 @@
 import { deepClone } from '../../../helpers/deepClone';
-import { IStability } from '../stability.entities';
+import type { IStability } from '../stability.entities';
 
 /**
  * Routh-Hurwitz Stability Criterion algorithm implementation.
@@ -55,7 +55,7 @@ export class RouthHurwitzStability implements IStability {
       let divider = computedMatrix[i - 1][0];
 
       // if the 'b' value is 0, then set it to a small number
-      if (divider == 0) {
+      if (divider === 0) {
         divider = 1e-10;
       }
 

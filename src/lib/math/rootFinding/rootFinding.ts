@@ -1,4 +1,4 @@
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 export interface IRootFinding {
   /**

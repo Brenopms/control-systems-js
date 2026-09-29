@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 import { add } from './add';
 
@@ -39,8 +39,8 @@ describe('add function', () => {
 
   // Invalid input
   it('Should throw an error if given invalid input', () => {
-    const a = 'a';
-    const b = 'b';
-    expect(() => add(a as any, b as any)).toThrow('Wrong type values for operation a: a, b: b');
+    const a = 'a' as unknown as Complex;
+    const b = 'b' as unknown as Complex;
+    expect(() => add(a, b)).toThrow('Wrong type values for operation a: a, b: b');
   });
 });

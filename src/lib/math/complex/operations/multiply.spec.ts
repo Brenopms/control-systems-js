@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 import { multiply } from './multiply';
 
@@ -34,10 +34,8 @@ describe('multiply', () => {
   });
 
   it('Should throw error when given wrong input types', () => {
-    const a = 'not a number';
+    const a = 'not a number' as unknown as Complex;
     const b: Complex = { re: 3, im: 2 };
-    expect(() => multiply(a as any, b)).toThrowError(
-      'Wrong type values for operation a: not a number, b: [object Object]'
-    );
+    expect(() => multiply(a, b)).toThrowError('Wrong type values for operation a: not a number, b: [object Object]');
   });
 });

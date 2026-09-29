@@ -1,5 +1,5 @@
-import { Point } from '../shared/charts/charts.entities';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { Point } from '../shared/charts/charts.entities';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 export interface IStep {
   /**

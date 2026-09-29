@@ -16,7 +16,7 @@ describe('sqrt', () => {
   it('Should be able to calculate de square root of a float number', () => {
     const value = 2;
     const result = sqrt(value);
-    const expectedResult = 1.4142;
+    const expectedResult = Math.SQRT2;
 
     expect(result).toBeCloseTo(expectedResult);
   });

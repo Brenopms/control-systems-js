@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { IStability } from '../stability.entities';
+import type { IStability } from '../stability.entities';
 
 import { RouthHurwitzStability } from './routhHurwitz';
 

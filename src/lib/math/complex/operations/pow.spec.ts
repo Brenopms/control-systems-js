@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 import { pow } from './pow';
 

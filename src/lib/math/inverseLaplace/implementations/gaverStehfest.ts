@@ -1,6 +1,6 @@
 import { factorial } from '../../../helpers/factorial';
-import { add, Complex, complex, divide, multiply, pow } from '../../complex';
-import { IInverseLaplace } from '../inverseLaplace.entities';
+import { add, type Complex, complex, divide, multiply, pow } from '../../complex';
+import type { IInverseLaplace } from '../inverseLaplace.entities';
 
 export class GaverStehfest implements IInverseLaplace {
   private readonly NUMBER_OF_COEFFICIENTS = 22;
@@ -16,7 +16,7 @@ export class GaverStehfest implements IInverseLaplace {
         const num = pow(k, nn2);
         const den = multiply(
           multiply(multiply(multiply(factorial(nn2 - k), factorial(k)), factorial(k - 1)), factorial(n - k)),
-          factorial(2 * k - n)
+          factorial(2 * k - n),
         );
         const x = divide(multiply(num, factorial(2 * k)), den);
         z = add(z, x) as Complex;

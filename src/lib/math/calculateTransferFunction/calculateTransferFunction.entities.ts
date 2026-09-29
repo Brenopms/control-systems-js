@@ -1,5 +1,5 @@
-import { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
-import { Complex } from '../complex';
+import type { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
+import type { Complex } from '../complex';
 
 /**
  * Evaluates a transfer function, given a complex value S

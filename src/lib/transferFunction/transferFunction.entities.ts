@@ -1,5 +1,5 @@
-import { Complex } from '../math/complex';
-import { Point } from '../shared/charts/charts.entities';
+import type { Complex } from '../math/complex';
+import type { Point } from '../shared/charts/charts.entities';
 
 export interface TransferFunctionInput {
   numerator: number[];

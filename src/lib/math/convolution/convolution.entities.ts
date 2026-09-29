@@ -1,4 +1,4 @@
-import { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
+import type { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
 
 export interface IConvolution {
   /**

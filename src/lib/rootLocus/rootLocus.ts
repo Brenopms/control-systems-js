@@ -1,9 +1,9 @@
-import { complex, Complex } from '../math/complex';
-import { IPolynomialOperations } from '../math/polynomialOperations/PolynomialOperations.entities';
-import { IRootFinding } from '../math/rootFinding/rootFinding';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import { type Complex, complex } from '../math/complex';
+import type { IPolynomialOperations } from '../math/polynomialOperations/PolynomialOperations.entities';
+import type { IRootFinding } from '../math/rootFinding/rootFinding';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
-import { IRootLocus } from './rootLocus.entities';
+import type { IRootLocus } from './rootLocus.entities';
 
 /**
  * The root locus returns the closed-loop pole trajectories as a function of the feedback gain k (assuming negative feedback).
