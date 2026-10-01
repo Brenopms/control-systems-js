@@ -7,7 +7,10 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
   "sideEffects": false,
-  "repository": "Brenopms/control-systems-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brenopms/control-systems-js.git"
+  },
   "license": "MIT",
   "files": [
     "dist/"
