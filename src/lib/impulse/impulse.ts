@@ -1,17 +1,17 @@
-import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import type { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { complex } from '../math/complex';
-import { IConvolution } from '../math/convolution/convolution.entities';
-import { IInverseLaplace } from '../math/inverseLaplace/inverseLaplace.entities';
-import { Point } from '../shared/charts/charts.entities';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { IConvolution } from '../math/convolution/convolution.entities';
+import type { IInverseLaplace } from '../math/inverseLaplace/inverseLaplace.entities';
+import type { Point } from '../shared/charts/charts.entities';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
-import { IImpulse } from './impulse.entities';
+import type { IImpulse } from './impulse.entities';
 
 export class Impulse implements IImpulse {
   constructor(
     private readonly calculateTransferFunction: ICalculateTransferFunction,
     private readonly inverseLaplace: IInverseLaplace,
-    private readonly convolution: IConvolution
+    private readonly convolution: IConvolution,
   ) {}
 
   calculatePoints(tf: TransferFunctionExpression, timeRange: number[]): Point<number>[] {
@@ -27,7 +27,7 @@ export class Impulse implements IImpulse {
     const points: Point<number>[] = timeRange.map((time) => {
       const timeResponse = this.inverseLaplace.execute(
         (s) => this.calculateTransferFunction.calculateValue(responseFunction, s),
-        time
+        time,
       );
       return { x: time, y: timeResponse };
     });

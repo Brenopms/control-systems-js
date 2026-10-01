@@ -1,6 +1,6 @@
 import { range } from '../../../helpers/range';
-import { add, Complex, multiply, subtract } from '../../complex';
-import { IPolynomialOperations } from '../PolynomialOperations.entities';
+import { add, type Complex, multiply, subtract } from '../../complex';
+import type { IPolynomialOperations } from '../PolynomialOperations.entities';
 
 /**
  * This is a naive implementation. The computational time is O(mn) for multiplication and division and O(n) for addition and subtraction

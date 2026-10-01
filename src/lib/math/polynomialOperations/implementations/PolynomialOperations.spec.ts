@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { complex, toComplex } from '../../complex';
-import { IPolynomialOperations } from '../PolynomialOperations.entities';
+import { type Complex, complex, toComplex } from '../../complex';
+import type { IPolynomialOperations } from '../PolynomialOperations.entities';
 
 import { PolynomialOperations } from './PolynomialOperations';
 
@@ -15,9 +15,9 @@ describe('Testing Polynomial Operations class', () => {
   describe('Testing add operation', () => {
     it('Should throw an error if one of the polynomial is invalid', () => {
       const validPol = toComplex([1, 2, 3]);
-      const wrongPol = null;
-      expect(() => polynomialOperations.add(validPol, wrongPol as any)).toThrowError();
-      expect(() => polynomialOperations.add(wrongPol as any, validPol)).toThrowError();
+      const wrongPol = null as unknown as Complex[];
+      expect(() => polynomialOperations.add(validPol, wrongPol)).toThrowError();
+      expect(() => polynomialOperations.add(wrongPol, validPol)).toThrowError();
     });
 
     it('Should add real polynomials successfully', () => {
@@ -47,9 +47,9 @@ describe('Testing Polynomial Operations class', () => {
   describe('Testing subtraction operation', () => {
     it('Should throw an error if one of the polynomial is invalid', () => {
       const validPol = toComplex([1, 2, 3]);
-      const wrongPol = null;
-      expect(() => polynomialOperations.subtract(validPol, wrongPol as any)).toThrowError();
-      expect(() => polynomialOperations.subtract(wrongPol as any, validPol)).toThrowError();
+      const wrongPol = null as unknown as Complex[];
+      expect(() => polynomialOperations.subtract(validPol, wrongPol)).toThrowError();
+      expect(() => polynomialOperations.subtract(wrongPol, validPol)).toThrowError();
     });
 
     it('Should subtract real polynomials successfully', () => {
@@ -80,9 +80,9 @@ describe('Testing Polynomial Operations class', () => {
   describe('Testing multiplication operation', () => {
     it('Should throw an error if one of the polynomial is invalid', () => {
       const validPol = toComplex([1, 2, 3]);
-      const wrongPol = null;
-      expect(() => polynomialOperations.multiply(validPol, wrongPol as any)).toThrowError();
-      expect(() => polynomialOperations.multiply(wrongPol as any, validPol)).toThrowError();
+      const wrongPol = null as unknown as Complex[];
+      expect(() => polynomialOperations.multiply(validPol, wrongPol)).toThrowError();
+      expect(() => polynomialOperations.multiply(wrongPol, validPol)).toThrowError();
     });
 
     it('Should multiply real polynomials successfully', () => {
@@ -113,9 +113,9 @@ describe('Testing Polynomial Operations class', () => {
   describe('Testing division operation', () => {
     it.skip('Should throw an error if one of the polynomial is invalid', () => {
       const validPol = toComplex([1, 2, 3]);
-      const wrongPol = null;
-      expect(() => polynomialOperations.divide(validPol, wrongPol as any)).toThrowError();
-      expect(() => polynomialOperations.divide(wrongPol as any, validPol)).toThrowError();
+      const wrongPol = null as unknown as Complex[];
+      expect(() => polynomialOperations.divide(validPol, wrongPol)).toThrowError();
+      expect(() => polynomialOperations.divide(wrongPol, validPol)).toThrowError();
     });
 
     it.todo('Should divide real polynomials successfully');

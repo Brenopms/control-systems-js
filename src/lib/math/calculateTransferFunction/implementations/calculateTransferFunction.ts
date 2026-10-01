@@ -1,6 +1,6 @@
-import { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
-import { add, Complex, complex, divide, multiply, pow } from '../../complex';
-import { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
+import type { TransferFunctionExpression } from '../../../transferFunction/transferFunction.entities';
+import { add, type Complex, complex, divide, multiply, pow } from '../../complex';
+import type { ICalculateTransferFunction } from '../calculateTransferFunction.entities';
 
 export class CalculateTransferFunction implements ICalculateTransferFunction {
   private evaluateExpressionValue(value: Complex, coeff: Complex, numOfCoeffs: number, currentIndex: number): Complex {
@@ -14,12 +14,12 @@ export class CalculateTransferFunction implements ICalculateTransferFunction {
     const numerator = tf.numerator.reduce(
       (acc: Complex, coeff: Complex, index) =>
         add(acc, this.evaluateExpressionValue(s, coeff, tf.numerator.length, index)) as Complex,
-      complex(0, 0)
+      complex(0, 0),
     );
     const denominator = tf.denominator.reduce(
       (acc: Complex, coeff: Complex, index) =>
         add(acc, this.evaluateExpressionValue(s, coeff, tf.denominator.length, index)) as Complex,
-      complex(0, 0)
+      complex(0, 0),
     );
 
     return divide(numerator, denominator) as Complex;

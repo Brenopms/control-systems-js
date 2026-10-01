@@ -1,33 +1,32 @@
 import { Bode } from './lib/bode/bode';
-import { BodeOutput, IBode } from './lib/bode/bode.entities';
+import type { BodeOutput, IBode } from './lib/bode/bode.entities';
 import { expressionToString } from './lib/helpers/expressionToString';
 import { Impulse } from './lib/impulse/impulse';
-import { IImpulse } from './lib/impulse/impulse.entities';
-import { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
+import type { IImpulse } from './lib/impulse/impulse.entities';
+import type { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from './lib/math/calculateTransferFunction/implementations/calculateTransferFunction';
-import { Complex, complex } from './lib/math/complex';
+import { type Complex, complex } from './lib/math/complex';
 import { Convolution } from './lib/math/convolution/convolution';
-import { IConvolution } from './lib/math/convolution/convolution.entities';
+import type { IConvolution } from './lib/math/convolution/convolution.entities';
 import { FrequencyRange } from './lib/math/frequencyRange/frequencyRange';
-import { IFrequencyRange } from './lib/math/frequencyRange/frequencyRange.entities';
+import type { IFrequencyRange } from './lib/math/frequencyRange/frequencyRange.entities';
 import { GaverStehfest } from './lib/math/inverseLaplace/implementations/gaverStehfest';
-import { IInverseLaplace } from './lib/math/inverseLaplace/inverseLaplace.entities';
-import { IPolynomialOperations } from './lib/math/polynomialOperations/PolynomialOperations.entities';
+import type { IInverseLaplace } from './lib/math/inverseLaplace/inverseLaplace.entities';
 import { PolynomialOperations } from './lib/math/polynomialOperations/implementations/PolynomialOperations';
+import type { IPolynomialOperations } from './lib/math/polynomialOperations/PolynomialOperations.entities';
 import { DurandKerner } from './lib/math/rootFinding/implementations/durandKerner';
-import { IRootFinding } from './lib/math/rootFinding/rootFinding';
+import type { IRootFinding } from './lib/math/rootFinding/rootFinding';
 import { RouthHurwitzStability } from './lib/math/stability/implementations/routhHurwitz';
-import { IStability } from './lib/math/stability/stability.entities';
+import type { IStability } from './lib/math/stability/stability.entities';
 import { Nyquist } from './lib/nyquist/nyquist';
-import { INyquist } from './lib/nyquist/nyquist.entities';
-import { NyquistOutput } from './lib/nyquist/nyquist.entities';
+import type { INyquist, NyquistOutput } from './lib/nyquist/nyquist.entities';
 import { RootLocus } from './lib/rootLocus/rootLocus';
-import { IRootLocus } from './lib/rootLocus/rootLocus.entities';
-import { Point } from './lib/shared/charts/charts.entities';
+import type { IRootLocus } from './lib/rootLocus/rootLocus.entities';
+import type { Point } from './lib/shared/charts/charts.entities';
 import { Step } from './lib/step/step';
-import { IStep } from './lib/step/step.entities';
+import type { IStep } from './lib/step/step.entities';
 import { TransferFunction } from './lib/transferFunction/transferFunction';
-import {
+import type {
   BodeData,
   ITransferFunction,
   NyquistData,
@@ -64,7 +63,7 @@ const transferFunction = (transferFunctionInput: TransferFunctionInput): Transfe
     _stability,
     _step,
     _impulse,
-    _frequencyRange
+    _frequencyRange,
   );
 };
 
@@ -80,41 +79,41 @@ const impulse = _impulse.calculatePoints.bind(_impulse);
 const getDefaultFrequencyRange = _frequencyRange.getDefault.bind(_frequencyRange);
 
 export type {
-  ITransferFunction,
-  ICalculateTransferFunction,
-  IRootFinding,
-  IPolynomialOperations,
+  BodeData,
+  BodeOutput,
+  Complex,
   IBode,
+  ICalculateTransferFunction,
+  IConvolution,
+  IImpulse,
+  IInverseLaplace,
   INyquist,
+  IPolynomialOperations,
+  IRootFinding,
   IRootLocus,
   IStability,
-  IInverseLaplace,
-  IConvolution,
   IStep,
-  IImpulse,
-  TransferFunctionInput,
-  TransferFunctionExpression,
-  Complex,
-  BodeOutput,
-  NyquistOutput,
+  ITransferFunction,
   NyquistData,
-  BodeData,
+  NyquistOutput,
   Point,
   RootLocusData,
+  TransferFunctionExpression,
+  TransferFunctionInput,
 };
 
 export {
-  complex,
-  transferFunction,
-  calculateTransferFunctionValue,
-  findRoots,
   bode,
-  nyquist,
-  isStable,
-  inverseLaplace,
+  calculateTransferFunctionValue,
+  complex,
   convolute,
-  step,
-  impulse,
   expressionToString,
+  findRoots,
   getDefaultFrequencyRange,
+  impulse,
+  inverseLaplace,
+  isStable,
+  nyquist,
+  step,
+  transferFunction,
 };

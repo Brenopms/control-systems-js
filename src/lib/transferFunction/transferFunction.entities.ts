@@ -1,5 +1,5 @@
-import { Complex } from '../math/complex';
-import { Point } from '../shared/charts/charts.entities';
+import type { Complex } from '../math/complex';
+import type { Point } from '../shared/charts/charts.entities';
 
 export interface TransferFunctionInput {
   numerator: number[];
@@ -59,7 +59,6 @@ export interface ITransferFunction {
   /**
    * Returns the numerator and the denominator expression for a given
    * transfer function
-   * @param options
    * @alias tfdata
    * @example
    * const tf = new TransferFunction({

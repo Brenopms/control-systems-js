@@ -1,17 +1,17 @@
-import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest';
+import { beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 
-import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import type { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from '../math/calculateTransferFunction/implementations/calculateTransferFunction';
-import { Complex, complex } from '../math/complex';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import { type Complex, complex } from '../math/complex';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 import { Nyquist } from './nyquist';
-import { INyquist } from './nyquist.entities';
+import type { INyquist } from './nyquist.entities';
 
 describe('Nyquist class', () => {
   let nyquist: INyquist;
   let calculateTransferFunction: ICalculateTransferFunction;
-  let calculationSpy: SpyInstance<[transferFunction: TransferFunctionExpression, s: Complex], Complex>;
+  let calculationSpy: MockInstance<(transferFunction: TransferFunctionExpression, s: Complex) => Complex>;
 
   beforeEach(() => {
     calculateTransferFunction = new CalculateTransferFunction();

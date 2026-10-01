@@ -1,4 +1,4 @@
-import { complex, Complex } from '../complex';
+import { type Complex, complex } from '../complex';
 import { isNumber } from '../utils/isNumber';
 
 import { abs } from './abs';

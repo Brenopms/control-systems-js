@@ -1,5 +1,5 @@
-import { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
-import { Complex } from '../complex';
+import type { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
+import type { Complex } from '../complex';
 
 /**
  * Evaluates a transfer function, given a complex value S
@@ -7,7 +7,7 @@ import { Complex } from '../complex';
 export interface ICalculateTransferFunction {
   /**
    * Calculates the value of a transfer function expression given a complex s
-   * @param tf Transfer function expression
+   * @param transferFunction Transfer function expression
    * @param s Laplace transform variable value
    */
   calculateValue(transferFunction: TransferFunctionExpression, s: Complex): Complex;

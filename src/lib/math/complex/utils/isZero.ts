@@ -1,4 +1,4 @@
-import { Complex } from '../complex';
+import type { Complex } from '../complex';
 
 /**
  * Check if the real and imaginary part of a number is zero

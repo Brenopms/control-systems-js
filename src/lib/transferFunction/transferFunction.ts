@@ -1,19 +1,19 @@
-import { IBode } from '../bode/bode.entities';
+import type { IBode } from '../bode/bode.entities';
 import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
-import { IImpulse } from '../impulse/impulse.entities';
-import { Complex, toComplex } from '../math/complex';
-import { IFrequencyRange } from '../math/frequencyRange/frequencyRange.entities';
-import { IRootFinding } from '../math/rootFinding/rootFinding';
-import { IStability } from '../math/stability/stability.entities';
-import { INyquist } from '../nyquist/nyquist.entities';
-import { IRootLocus } from '../rootLocus/rootLocus.entities';
-import { Point } from '../shared/charts/charts.entities';
-import { IStep } from '../step/step.entities';
+import type { IImpulse } from '../impulse/impulse.entities';
+import { type Complex, toComplex } from '../math/complex';
+import type { IFrequencyRange } from '../math/frequencyRange/frequencyRange.entities';
+import type { IRootFinding } from '../math/rootFinding/rootFinding';
+import type { IStability } from '../math/stability/stability.entities';
+import type { INyquist } from '../nyquist/nyquist.entities';
+import type { IRootLocus } from '../rootLocus/rootLocus.entities';
+import type { Point } from '../shared/charts/charts.entities';
+import type { IStep } from '../step/step.entities';
 
-import {
+import type {
   BodeData,
   ITransferFunction,
   NyquistData,
@@ -54,7 +54,7 @@ export class TransferFunction implements ITransferFunction {
     stability: IStability,
     step: IStep,
     impulse: IImpulse,
-    frequencyRange: IFrequencyRange
+    frequencyRange: IFrequencyRange,
   ) {
     /**
      * Dependency injection
@@ -80,21 +80,21 @@ export class TransferFunction implements ITransferFunction {
   }
 
   private validateTransferFunctionInput(input: TransferFunctionInput): void {
-    if (!input || !input.numerator || !input.denominator) {
+    if (!input?.numerator || !input.denominator) {
       throw new Error('Please input a valid transfer function');
     }
 
     if (input.numerator?.length > input.denominator?.length) {
       throw new Error(
-        'The package only accepts transfer functions where the denominator is a higher order than the numerator'
+        'The package only accepts transfer functions where the denominator is a higher order than the numerator',
       );
     }
 
     if (!this.stability.isStable(input.denominator)) {
       throw new Error(
         `The given system is unstable. The package doesn't support unstable transfer functions. System: ${JSON.stringify(
-          input
-        )}`
+          input,
+        )}`,
       );
     }
   }

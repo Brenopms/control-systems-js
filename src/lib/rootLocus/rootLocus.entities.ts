@@ -1,5 +1,5 @@
-import { Complex } from '../math/complex';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { Complex } from '../math/complex';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 /**
  * The root locus returns the closed-loop pole trajectories as a function of the feedback gain k (assuming negative feedback).

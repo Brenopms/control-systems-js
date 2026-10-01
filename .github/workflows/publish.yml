@@ -4,21 +4,32 @@ on:
   workflow_run:
     workflows: ["test"]
     branches: [main]
-    types: 
+    types:
       - completed
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   publish:
     if: ${{ github.event.workflow_run.conclusion == 'success' }} && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
         with:
-          node-version: 18
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
       - name: Publish
         run: npm run release
     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_CONFIG_PROVENANCE: 'true'

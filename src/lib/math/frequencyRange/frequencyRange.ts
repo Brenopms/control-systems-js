@@ -1,6 +1,6 @@
-import { abs, Complex } from '../complex';
+import { abs, type Complex } from '../complex';
 
-import { IFrequencyRange } from './frequencyRange.entities';
+import type { IFrequencyRange } from './frequencyRange.entities';
 
 const RANGE_FACTOR = 10;
 const NUM_OF_SAMPLES = 1000;
@@ -12,18 +12,18 @@ export class FrequencyRange implements IFrequencyRange {
     const minFeature = Math.min(...features.map((f) => abs(f)));
     const maxFeature = Math.max(...features.map((f) => abs(f)));
 
-    const rangeMin = Math.max(Math.pow(10, Math.floor(Math.log10(minFeature)) - 1), EPSILON); // prevent issues with min feature at 0
-    const rangeMax = Math.pow(10, Math.ceil(Math.log10(maxFeature)) + 1);
+    const rangeMin = Math.max(10 ** (Math.floor(Math.log10(minFeature)) - 1), EPSILON); // prevent issues with min feature at 0
+    const rangeMax = 10 ** (Math.ceil(Math.log10(maxFeature)) + 1);
     const range = rangeMax / rangeMin;
-    const rangePerDecade = Math.pow(range, 1 / rangeFactor);
+    const rangePerDecade = range ** (1 / rangeFactor);
 
-    const omegaMin = rangeMin * Math.pow(rangePerDecade, -0.5);
-    const omegaMax = rangeMax * Math.pow(rangePerDecade, 0.5);
+    const omegaMin = rangeMin * rangePerDecade ** -0.5;
+    const omegaMax = rangeMax * rangePerDecade ** 0.5;
 
     const omega = new Array<number>(numOfSamples);
     for (let i = 0; i < numOfSamples; i++) {
       const alpha = i / (numOfSamples - 1);
-      omega[i] = omegaMin * Math.pow(omegaMax / omegaMin, alpha);
+      omega[i] = omegaMin * (omegaMax / omegaMin) ** alpha;
     }
     return omega;
   }

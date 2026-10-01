@@ -1,13 +1,13 @@
-import { Complex } from '../math/complex';
+import type { Complex } from '../math/complex';
 
 const shouldAddNumberToExpression = (num: Complex, expressionLength: number, index: number) => {
   // Should cover last coefficient if the value is 1
   return (index === expressionLength - 1 && num.toString() === '1') || num.toString() !== '1';
 };
 
-const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 0;
-const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 != 1;
-const shouldAddOperationSignalToExpression = (num: number, index: number) => index !== 0 || (index == 0 && num < 0);
+const shouldAddVariableToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 !== 0;
+const shouldAddPowToExpression = (expressionLength: number, index: number) => expressionLength - index - 1 !== 1;
+const shouldAddOperationSignalToExpression = (num: number, index: number) => index !== 0 || (index === 0 && num < 0);
 
 // TODO: improve this code as its hard to understand currently
 

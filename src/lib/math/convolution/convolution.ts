@@ -1,7 +1,7 @@
-import { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
-import { IPolynomialOperations } from '../polynomialOperations/PolynomialOperations.entities';
+import type { TransferFunctionExpression } from '../../transferFunction/transferFunction.entities';
+import type { IPolynomialOperations } from '../polynomialOperations/PolynomialOperations.entities';
 
-import { IConvolution } from './convolution.entities';
+import type { IConvolution } from './convolution.entities';
 
 export class Convolution implements IConvolution {
   constructor(private readonly polOps: IPolynomialOperations) {}

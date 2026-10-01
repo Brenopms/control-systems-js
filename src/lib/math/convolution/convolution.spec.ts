@@ -1,16 +1,16 @@
-import { beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest';
+import { beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 
-import { Complex, toComplex } from '../complex';
-import { IPolynomialOperations } from '../polynomialOperations/PolynomialOperations.entities';
+import { type Complex, toComplex } from '../complex';
 import { PolynomialOperations } from '../polynomialOperations/implementations/PolynomialOperations';
+import type { IPolynomialOperations } from '../polynomialOperations/PolynomialOperations.entities';
 
 import { Convolution } from './convolution';
-import { IConvolution } from './convolution.entities';
+import type { IConvolution } from './convolution.entities';
 
 describe('IConvolution', () => {
   let convolution: IConvolution;
   let polOps: IPolynomialOperations;
-  let polOpsMultiplySpy: SpyInstance<[pol1: Complex[], pol2: Complex[]], Complex[]>;
+  let polOpsMultiplySpy: MockInstance<(pol1: Complex[], pol2: Complex[]) => Complex[]>;
 
   beforeEach(() => {
     polOps = new PolynomialOperations();

@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
+import type { ICalculateTransferFunction } from '../math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from '../math/calculateTransferFunction/implementations/calculateTransferFunction';
 import { complex } from '../math/complex';
 import { Convolution } from '../math/convolution/convolution';
-import { IConvolution } from '../math/convolution/convolution.entities';
+import type { IConvolution } from '../math/convolution/convolution.entities';
 import { GaverStehfest } from '../math/inverseLaplace/implementations/gaverStehfest';
-import { IInverseLaplace } from '../math/inverseLaplace/inverseLaplace.entities';
-import { IPolynomialOperations } from '../math/polynomialOperations/PolynomialOperations.entities';
+import type { IInverseLaplace } from '../math/inverseLaplace/inverseLaplace.entities';
 import { PolynomialOperations } from '../math/polynomialOperations/implementations/PolynomialOperations';
-import { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
+import type { IPolynomialOperations } from '../math/polynomialOperations/PolynomialOperations.entities';
+import type { TransferFunctionExpression } from '../transferFunction/transferFunction.entities';
 
 import { Impulse } from './impulse';
-import { IImpulse } from './impulse.entities';
+import type { IImpulse } from './impulse.entities';
 
 describe('Step class', () => {
   let impulse: IImpulse;
