@@ -1,8 +1,6 @@
 import { Bode } from './lib/bode/bode';
 import type { BodeOutput, IBode } from './lib/bode/bode.entities';
 import { expressionToString } from './lib/helpers/expressionToString';
-import { Impulse } from './lib/impulse/impulse';
-import type { IImpulse } from './lib/impulse/impulse.entities';
 import type { ICalculateTransferFunction } from './lib/math/calculateTransferFunction/calculateTransferFunction.entities';
 import { CalculateTransferFunction } from './lib/math/calculateTransferFunction/implementations/calculateTransferFunction';
 import { type Complex, complex } from './lib/math/complex';
@@ -23,8 +21,8 @@ import type { INyquist, NyquistOutput } from './lib/nyquist/nyquist.entities';
 import { RootLocus } from './lib/rootLocus/rootLocus';
 import type { IRootLocus } from './lib/rootLocus/rootLocus.entities';
 import type { Point } from './lib/shared/charts/charts.entities';
-import { Step } from './lib/step/step';
-import type { IStep } from './lib/step/step.entities';
+import { TimeResponse } from './lib/timeResponse/timeResponse';
+import type { ITimeResponse } from './lib/timeResponse/timeResponse.entities';
 import { TransferFunction } from './lib/transferFunction/transferFunction';
 import type {
   BodeData,
@@ -47,8 +45,7 @@ const _stability: IStability = new RouthHurwitzStability();
 const _inverseLaplace: IInverseLaplace = new GaverStehfest();
 const _convolution: IConvolution = new Convolution(_polynomialOperations);
 
-const _step: IStep = new Step(_calculateTransferFunction, _inverseLaplace, _convolution);
-const _impulse: IImpulse = new Impulse(_calculateTransferFunction, _inverseLaplace, _convolution);
+const _timeResponse: ITimeResponse = new TimeResponse(_calculateTransferFunction, _inverseLaplace, _convolution);
 
 const _frequencyRange: IFrequencyRange = new FrequencyRange();
 
@@ -61,8 +58,7 @@ const transferFunction = (transferFunctionInput: TransferFunctionInput): Transfe
     _bode,
     _nyquist,
     _stability,
-    _step,
-    _impulse,
+    _timeResponse,
     _frequencyRange,
   );
 };
@@ -74,8 +70,8 @@ const nyquist = _nyquist.calculatePoints.bind(_nyquist);
 const isStable = _stability.isStable.bind(_stability);
 const inverseLaplace = _inverseLaplace.execute.bind(_inverseLaplace);
 const convolute = _convolution.execute.bind(_convolution);
-const step = _step.calculatePoints.bind(_step);
-const impulse = _impulse.calculatePoints.bind(_impulse);
+const step = _timeResponse.step.bind(_timeResponse);
+const impulse = _timeResponse.impulse.bind(_timeResponse);
 const getDefaultFrequencyRange = _frequencyRange.getDefault.bind(_frequencyRange);
 
 export type {
@@ -85,14 +81,13 @@ export type {
   IBode,
   ICalculateTransferFunction,
   IConvolution,
-  IImpulse,
   IInverseLaplace,
   INyquist,
   IPolynomialOperations,
   IRootFinding,
   IRootLocus,
   IStability,
-  IStep,
+  ITimeResponse,
   ITransferFunction,
   NyquistData,
   NyquistOutput,

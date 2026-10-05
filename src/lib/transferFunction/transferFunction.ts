@@ -3,7 +3,6 @@ import { boundaryRange } from '../helpers/boundaryRange';
 import { expressionToString } from '../helpers/expressionToString';
 import { groupByIndex } from '../helpers/groupByIndex';
 import { range } from '../helpers/range';
-import type { IImpulse } from '../impulse/impulse.entities';
 import { type Complex, toComplex } from '../math/complex';
 import type { IFrequencyRange } from '../math/frequencyRange/frequencyRange.entities';
 import type { IRootFinding } from '../math/rootFinding/rootFinding';
@@ -11,7 +10,7 @@ import type { IStability } from '../math/stability/stability.entities';
 import type { INyquist } from '../nyquist/nyquist.entities';
 import type { IRootLocus } from '../rootLocus/rootLocus.entities';
 import type { Point } from '../shared/charts/charts.entities';
-import type { IStep } from '../step/step.entities';
+import type { ITimeResponse } from '../timeResponse/timeResponse.entities';
 
 import type {
   BodeData,
@@ -40,8 +39,7 @@ export class TransferFunction implements ITransferFunction {
   private readonly bodeCalculator: IBode;
   private readonly nyquistCalculator: INyquist;
   private readonly stability: IStability;
-  private readonly stepCalculator: IStep;
-  private readonly impulseCalculator: IImpulse;
+  private readonly timeResponse: ITimeResponse;
   private readonly frequencyRangeCalculator: IFrequencyRange;
 
   constructor(
@@ -52,8 +50,7 @@ export class TransferFunction implements ITransferFunction {
     bode: IBode,
     nyquist: INyquist,
     stability: IStability,
-    step: IStep,
-    impulse: IImpulse,
+    timeResponse: ITimeResponse,
     frequencyRange: IFrequencyRange,
   ) {
     /**
@@ -64,8 +61,7 @@ export class TransferFunction implements ITransferFunction {
     this.bodeCalculator = bode;
     this.nyquistCalculator = nyquist;
     this.stability = stability;
-    this.stepCalculator = step;
-    this.impulseCalculator = impulse;
+    this.timeResponse = timeResponse;
     this.frequencyRangeCalculator = frequencyRange;
 
     this.validateTransferFunctionInput(transferFunctionInput);
@@ -148,13 +144,11 @@ export class TransferFunction implements ITransferFunction {
   }
 
   step(timeRange = this.timeRange): Point<number>[] {
-    const stepPoints = this.stepCalculator.calculatePoints(this.tf, timeRange);
-    return stepPoints;
+    return this.timeResponse.step(this.tf, timeRange);
   }
 
   impulse(timeRange = this.timeRange): Point<number>[] {
-    const impulsePoints = this.impulseCalculator.calculatePoints(this.tf, timeRange);
-    return impulsePoints;
+    return this.timeResponse.impulse(this.tf, timeRange);
   }
 }
 
